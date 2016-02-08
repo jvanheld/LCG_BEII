@@ -37,7 +37,7 @@ output:
     highlight: tango
     incremental: no
     keep_md: no
-    smaller: yes
+    smaller: no
     theme: cerulean
     toc: yes
     widescreen: yes
