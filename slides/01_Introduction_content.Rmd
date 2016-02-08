@@ -1,0 +1,97 @@
+---
+title: "LCG - BEII 2016 - Introduction and contents"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: default
+    highlight: tango
+    incremental: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
+  ioslides_presentation:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    font_adjustment: -2
+    highlight: tango
+    incremental: no
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+  slidy_presentation:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    font_adjustment: -1
+    highlight: tango
+    incremental: no
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+font-family: Garamond
+font-import: http://fonts.googleapis.com/css?family=Risque
+bibliography: ../bibliography_LCG_BEII.bib
+address: Lab.Technological Advances for Genomics and Clinics, Inserm Unit U1090
+transition: linear
+---
+
+
+## Scope of the course
+
+
+1. Detection of cis-regulatory elements and other types of nucleic sequence motifs.
+
+2. Applications to Next Generation Sequencing data about regulation
+
+    - ChIP-seq for transcription factors
+    - ChIP-seq for chromating marks (histone acetylation, methylation)
+    - RNA-seq (differentially expressed genes)
+        
+3. Underlying statistics
+
+
+## Statistics
+
+1. Topics
+
+    - Statistics of motif detection
+    - NGS statistics (read mapping, peak calling, differential expression)
+      
+2. Approach
+
+    - Minimalist theoretical elements
+    - Intuitive approach to the statisics: lots of graphs, simulations, controls
+
+3. Environment
+
+    - R statistical language (<https://www.r-project.org/>)
+    - Bioconductor: (<https://www.bioconductor.org/>)
+    - Environment: RStudio (<https://www.rstudio.com/>)
+
+## Technical skills
+
+- Writing reports in R markdown (<http://rmarkdown.rstudio.com/>)
+
+- Version management with git (<https://git-scm.com/>)
+      - see @Blischak:2016kr
+
+## Schedule
+
+| Day    | Topics |
+|--------|--------|
+| Day 1  | Regulatory sequences: cis-regulatory elements motif discovery  |
+| Day 2  | Regulatory sequences: predicting binding sites |
+| Day 3  | NGS statistics: read mapping and peak calling|
+| Day 4  | NGS statistics: differential gene expression |
+| Day 5  | Integrative exercises and evaluations |
+
+
+## References
