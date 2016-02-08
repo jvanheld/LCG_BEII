@@ -13,7 +13,7 @@ output:
     highlight: tango
     incremental: no
     keep_md: no
-    smaller: yes
+    smaller: no
     theme: cerulean
     toc: yes
     widescreen: yes
@@ -37,7 +37,7 @@ output:
     highlight: tango
     incremental: no
     keep_md: no
-    smaller: yes
+    smaller: no
     theme: cerulean
     toc: yes
     widescreen: yes
@@ -61,6 +61,16 @@ transition: linear
     - RNA-seq (differentially expressed genes)
         
 3. Underlying statistics
+
+## Schedule
+
+| Day    | Topics |
+|--------|--------|
+| Day 1  | Regulatory sequences: cis-regulatory elements intro + motif discovery  |
+| Day 2  | Regulatory sequences: predicting binding sites |
+| Day 3  | NGS statistics: read mapping and peak calling |
+| Day 4  | NGS statistics: differential gene expression + functional enrichment |
+| Day 5  | Integrative exercises and evaluations |
 
 
 ## Statistics
@@ -88,15 +98,6 @@ transition: linear
 - Version management with git (<https://git-scm.com/>)
       - see @Blischak:2016kr
 
-## Schedule
-
-| Day    | Topics |
-|--------|--------|
-| Day 1  | Regulatory sequences: cis-regulatory elements intro + motif discovery  |
-| Day 2  | Regulatory sequences: predicting binding sites |
-| Day 3  | NGS statistics: read mapping and peak calling |
-| Day 4  | NGS statistics: differential gene expression + functional enrichment |
-| Day 5  | Integrative exercises and evaluations |
 
 ## Resources for this course
 
@@ -104,6 +105,7 @@ transition: linear
 |---------|-------------------|
 | LCG_BEII | The course material for this course on github <http://jvanheld.github.io/LCG_BEII> |
 | RSAT | Regulatory Sequence Analysis Tools <http://rsat.eu/> |
+| RSAT course | Teaching material for the analysis of regulatory sequences <http://rsa-tools.github.io/course/> |
 
 ## Downloading a local copy of the course material
 
