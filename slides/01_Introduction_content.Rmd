@@ -3,35 +3,40 @@ title: "LCG - BEII 2016 - Introduction and contents"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
+  ioslides_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
+    highlight: tango
+    incremental: no
+    keep_md: no
+    smaller: no
+    theme: cerulean
+    toc: yes
+    widescreen: yes
   beamer_presentation:
     colortheme: dolphin
     fig_caption: yes
     fig_height: 6
     fig_width: 7
-    fonttheme: default
+    fonttheme: structurebold
     highlight: tango
     incremental: no
+    keep_tex: no
     slide_level: 2
     theme: Montpellier
     toc: yes
-  ioslides_presentation:
-    fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    font_adjustment: -2
-    highlight: tango
-    incremental: no
-    smaller: yes
-    theme: cerulean
-    toc: yes
-    widescreen: yes
   slidy_presentation:
     fig_caption: yes
     fig_height: 6
     fig_width: 7
-    font_adjustment: -1
+    footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
     highlight: tango
     incremental: no
+    keep_md: no
     smaller: yes
     theme: cerulean
     toc: yes
@@ -87,11 +92,33 @@ transition: linear
 
 | Day    | Topics |
 |--------|--------|
-| Day 1  | Regulatory sequences: cis-regulatory elements motif discovery  |
+| Day 1  | Regulatory sequences: cis-regulatory elements intro + motif discovery  |
 | Day 2  | Regulatory sequences: predicting binding sites |
-| Day 3  | NGS statistics: read mapping and peak calling|
-| Day 4  | NGS statistics: differential gene expression |
+| Day 3  | NGS statistics: read mapping and peak calling |
+| Day 4  | NGS statistics: differential gene expression + functional enrichment |
 | Day 5  | Integrative exercises and evaluations |
+
+## Resources for this course
+
+| Name    | Description + URL |
+|---------|-------------------|
+| LCG_BEII | The course material for this course on github <http://jvanheld.github.io/LCG_BEII> |
+| RSAT | Regulatory Sequence Analysis Tools <http://rsat.eu/> |
+
+### Servers for the course
+
+LCG students can access RSAT on the command line with the following commands
+
+```
+  ## Open an ssh connection to the local server
+  ssh tepeu
+
+  ## Load the RSAT configuration file
+  source /export/apps/rsat/RSAT_config.bashrc
+
+  ## Check that the paths are correct
+  supported-organisms
+```
 
 
 ## References
