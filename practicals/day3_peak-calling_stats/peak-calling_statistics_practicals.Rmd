@@ -1,0 +1,53 @@
+---
+title: "Practicals - basic peak-calling statistics"
+author: "Jacques van Helden"
+date: "10 February 2016"
+output: html_document
+---
+
+## Introduction
+
+
+The goal of this tutorial is to ....
+
+```{r}
+## We will print "Hello"
+print("Hello")
+```
+
+
+## Data loading
+
+We will first load the datasets.
+
+```{r}
+## Define the base URL of the course and store it in a variable
+url.course <- "http://jvanheld.github.io/EBA15_stats_RStudio/"
+
+## Define the fill path of the data directory, by concatenating the course URL and all the successive folders
+url.data <- file.path(url.course, "practicals", "02_peak-calling", "data")
+
+## Define URL of the ChIP file
+chip.bedg.file <- file.path(url.data, "FNR_200bp.bedg")
+print(chip.bedg.file)
+
+## Load the file content in an R data.frame
+chip.bedg <- read.table(chip.bedg.file)
+
+## Set column names
+names(chip.bedg) <- c("chrom", "start", "end","counts")
+
+
+## Check the dimensions of the bedgraph for the ChIP-seq
+dim(chip.bedg)
+```
+
+We loaded a tab-delimited file with the counts of reads per window in the FNR ChIP-seq sample. The table contains `r nrow(chip.bedg)` rows, each row corresponding to a genomic window. 
+
+
+
+
+
+
+
+
