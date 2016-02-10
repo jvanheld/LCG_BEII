@@ -2,7 +2,7 @@
 title: "Practicals - basic peak-calling statistics"
 author: "Jacques van Helden"
 date: "10 February 2016"
-output: html_document
+output: pdf_document
 ---
 
 ## Introduction
@@ -20,12 +20,20 @@ print("Hello")
 
 We will first load the datasets.
 
-```{r}
+We will load bedgraph-formatted files indicating the counts of reads per 200bp window along *E.coli* genome. 
+
+
+```{r path to the course}
 ## Define the base URL of the course and store it in a variable
 url.course <- "http://jvanheld.github.io/EBA15_stats_RStudio/"
 
 ## Define the fill path of the data directory, by concatenating the course URL and all the successive folders
 url.data <- file.path(url.course, "practicals", "02_peak-calling", "data")
+
+```
+
+
+```{r loading the ChIP-seq counts}
 
 ## Define URL of the ChIP file
 chip.bedg.file <- file.path(url.data, "FNR_200bp.bedg")
@@ -45,9 +53,197 @@ dim(chip.bedg)
 We loaded a tab-delimited file with the counts of reads per window in the FNR ChIP-seq sample. The table contains `r nrow(chip.bedg)` rows, each row corresponding to a genomic window. 
 
 
+```{r loading the input counts}
+## Define URL of the input file
+input.bedg.file <- file.path(url.data, "input_200bp.bedg")
+
+## Load the file content in an R data.frame
+input.bedg <- read.table(input.bedg.file)
+
+## Set column names
+names(input.bedg) <- c("chrom", "start", "end","counts")
+
+```
+
+## Histograms of counts per window
+
+We will first compare the distribution of counts per windows in ChIP-seq and input, respectively. 
+
+```{r count_histograms}
+
+par(mfrow=c(3,1))
+
+## Histogram of counts per window for the ChIP-seq sample
+hist(chip.bedg$counts,
+     main="ChIP-seq reads per window",
+     ylab="Number of windows",
+     xlab="Counts",
+     col="darkgreen", border = "darkgreen",
+     breaks= 1000)
+
+
+hist(chip.bedg$counts,
+     main="ChIP-seq reads per window (truncated)",
+     ylab="Number of windows",
+     xlab="Counts", xlim=c(0,800),
+     col="darkgreen", border = "darkgreen",
+     breaks= 2000)
+
+hist(input.bedg$counts,
+     main="Input reads per window (truncated)",
+     ylab="Number of windows",
+     xlab="Counts", xlim=c(0,800),
+     col="red", border = "red",
+     breaks= 2000)
+par(mfrow=c(1,1))
+
+```
+
+## Compute log2(counts)
+
+```{r}
+
+count.stats <- data.frame(chip.counts= chip.bedg$counts,
+                          input.counts = input.bedg$counts)
+
+
+epsilon <- 1/16
+count.stats$chip.epsilon <- count.stats$chip.counts
+count.stats$chip.epsilon[count.stats$chip.counts==0] <- epsilon
+count.stats$input.epsilon <- count.stats$input.counts
+count.stats$input.epsilon[count.stats$input.counts==0] <- epsilon
+
+count.stats$chip.log2.counts <- log2(count.stats$chip.epsilon)
+count.stats$input.log2.counts <- log2(count.stats$input.epsilon)
+
+summary(count.stats)
+
+```
+
+```{r count_histograms}
+
+par(mfrow=c(2,1))
+
+## Histogram of counts per window for the ChIP-seq sample
+hist(count.stats$input.log2.counts,
+     main="ChIP-seq reads per window",
+     ylab="Number of windows",
+     xlab="Counts", xlim=c(-4, 20),
+     col="darkgreen", border = "darkgreen",
+     breaks= 2000)
+
+hist(count.stats$chip.log2.counts,
+     main="Input reads per window (truncated)",
+     ylab="Number of windows",
+     xlab="Counts",  xlim=c(-4, 20), 
+     col="red", border = "red",
+     breaks= 2000)
+par(mfrow=c(1,1))
+
+```
+
+
+## Compute the mean position per window
+
+```{r}
+
+## Compute the middle position for each window
+chip.bedg$midpos <- (chip.bedg$start + chip.bedg$end)/2
+
+## Check the result
+head(chip.bedg)
+```
+
+## Plot the coverage profiles of the FNR ChIP-seq and input samples
+
+We will plot on top of each other the coverage profiles of the ChIP-seq (FNR) and input samples. 
+
+Figure 1 shows the coverage profiles of the ChIP-seq (top panel, darkgreen) and input (bottom panel, red) samples. 
+
+Note the huge difference of scale: the input has a maximum of `r max(input.bedg$counts)` counts per bin, whereas the highest ChIP-seq bin contains `r max(chip.bedg$counts)` counts.
+
+```{r covergage_profiles, fig.width=7, fig.height=12, fig.cap="**Figure 1.** Coverage profiles of the ChIP-seq (dark green) and input (red) samples. "}
+
+par(mfrow=c(2,1))
+
+plot(x = chip.bedg$midpos, 
+     y = chip.bedg$counts,
+     col="darkgreen", 
+     main="FNR ChIP",
+     xlab="Genomic position (200bp windows)", 
+     ylab="Read counts",
+     type="h")
+
+## Compute middle positions per window
+input.bedg$midpos <- (input.bedg$start + input.bedg$end)/2
+
+plot(input.bedg[, c("midpos", "counts")], 
+     col="red", 
+     main="Background (genomic input)",
+     xlab="Genomic position (200bp windows)", 
+     ylab= "Read counts",
+     type="h")
+
+
+par(mfrow=c(1,1))
+
+```
+
+
+## Normalization
+
+
+We would like to draw a differential profile, by substracting the input from the CHIP-seq. However, this must be done on the normalized counts, in order to compensate the differences of library sizes. 
+
+### Library sizes
+
+```{r}
+## Compute the library sizes and their ratio
+input.libsize <- sum(input.bedg$counts)
+chip.libsize <- sum(chip.bedg$counts)
+libsize.ratio <- chip.libsize / input.libsize
+```
+
+
+The library sizes are very different between the ChIP-seq sample (`r chip.libsize` reads) and the input (`r input.libsize`). We thus need to normalize the libraries in order to ensure a consistent scaling. 
+
+A naive way to normalize would be to multiply the input library by a scaling factor $s$, in order to bring it to the same size as the input. 
+
+$$s = N_{\text{chip}} / N_{\text{input}}$$
+
+
+### Median-based scaling
+
+The median is a robust estimate of the central tendency, since its value only depends on the centralmost part of hte distribution. We can use it as scaling factor to compensate the differences in library sizes.
+
+```{r median_noramlization}
+
+input.median <- median(count.stats$input.counts)
+chip.median <- median(count.stats$chip.counts)
+median.ratio <- chip.median / input.median
+
+count.stats$input.median.norm <- count.stats$input.counts * median.ratio
+```
 
 
 
 
+### Compute cumulative distribution of read counts per window
 
+```{r}
+
+```
+
+
+## Draw an XY plot with ChIP-seq versus input 
+
+
+```{r}
+plot(x= count.stats$input.counts, y= count.stats$chip.counts)
+
+plot(x= count.stats$input.median.norm, 
+     y= count.stats$chip.counts, 
+     xlim=c(0,800), ylim=c(0,800))
+
+```
 
