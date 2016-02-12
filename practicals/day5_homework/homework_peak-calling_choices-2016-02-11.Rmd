@@ -1,0 +1,51 @@
+---
+title: 'Homework: peak-calling choices'
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  word_document: default
+---
+
+
+## Introduction
+
+We saw that there are many peak callers, and that the number of peaks varies depending on some parametric choices. How to evaluate the choices ?
+
+A variety of approaches could be envisaged to deal with this question:
+
+
+1. **Significance**
+
+
+    - Compare discovered motif significance in actual peak with random genomic regions of the same sizes.
+
+2. **Consistency**
+
+    - Compare peak sets returned by different peak callers
+    Motif analysis
+    
+3. **Motif enrichment**
+
+    - Compare the enrichment of the different peak sets for the reference motif
+    - If no available reference motif: compare relative enrichment for discovered motifs
+
+4. **Peak annotation**
+
+    - Check the fraction of peaks in genomic regions compatible with regulation (promoters, introns)
+    - Eukaryotes: compare peak sets with histone marks associated with enhancers
+    - Bacteria/Fungi: evaluate the phylogenetic conservation of predicted binding sites (phylogenetic footprints)
+
+5. Comparison with a **golden standard dataset**
+
+    - If a reference collection of sites is available, evaluate the overlap. Note: we can only evaluate the sensitivity, not the specificity since all site databases are incomplete.
