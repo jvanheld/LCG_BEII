@@ -1,9 +1,23 @@
 ---
 title: "Practicals - basic peak-calling statistics"
 author: "Jacques van Helden"
-date: "10 February 2016"
-output: pdf_document
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  word_document: default
 ---
+
 
 ## Introduction
 
@@ -48,6 +62,7 @@ names(chip.bedg) <- c("chrom", "start", "end","counts")
 
 ## Check the dimensions of the bedgraph for the ChIP-seq
 dim(chip.bedg)
+summary(chip.bedg)
 ```
 
 We loaded a tab-delimited file with the counts of reads per window in the FNR ChIP-seq sample. The table contains `r nrow(chip.bedg)` rows, each row corresponding to a genomic window. 
@@ -120,7 +135,7 @@ summary(count.stats)
 
 ```
 
-```{r count_histograms}
+```{r log2_count_histograms}
 
 par(mfrow=c(2,1))
 
@@ -222,7 +237,7 @@ input.median <- median(count.stats$input.counts)
 chip.median <- median(count.stats$chip.counts)
 median.ratio <- chip.median / input.median
 
-count.stats$input.median.norm <- count.stats$input.counts * median.ratio
+count.stats$input.median.norm <- count.stats$input.counts * print(median.ratio)
 ```
 
 
@@ -231,6 +246,58 @@ count.stats$input.median.norm <- count.stats$input.counts * median.ratio
 ### Compute cumulative distribution of read counts per window
 
 ```{r}
+## Beware, we rank the bins by increasing counts to get the empty bins first and the densest bins last
+count.stats$chip.rank <- rank(count.stats$chip.counts)
+count.stats$input.rank <- rank(count.stats$input.counts)
+
+## Compare the ranks
+#plot(count.stats$chip.rank, count.stats$input.rank)
+
+## Compute cumulative counts per rank
+chip.cumsum <- cumsum (sort(count.stats$chip.counts))
+input.cumsum <- cumsum (sort(count.stats$input.counts))
+chip.cumpercent <- chip.cumsum / max(chip.cumsum)*100
+input.cumpercent <- input.cumsum / max(input.cumsum)*100
+nbins <- length(chip.cumsum)
+
+
+
+## Plot the cumulative distribution of read counts in input and ChIP samples, resp
+par(mfrow=c(2,1))
+
+# plot(input.cumsum, chip.cumsum)
+plot(1:nbins, input.cumpercent, type="l", 
+     ylab="Percent of cumulated reads",
+     xlab= "Bin rank",
+     col="red", lwd=2)
+grid(col="blue")
+lines(1:nbins, chip.cumpercent, type="l", col="darkgreen", lwd=2)
+abline(a=0, b=100/nbins, lty="dashed")
+
+## Compute the difference between cumulative distributions
+diff.cumpercent <- input.cumpercent- chip.cumpercent
+plot(1:nbins, diff.cumpercent, type="l", 
+     ylab="Differential cumulative distribution",
+     xlab= "Bin rank",
+     col="blue", lwd=2)
+grid(col="blue")
+abline(h=0, lty="dashed")
+
+rank.cutoff <- which.max(diff.cumpercent)
+arrows(x0=rank.cutoff, 4, rank.cutoff, 7.5)
+
+nbins
+max(input.cumsum)
+max(chip.cumsum)
+input.cumcounts.at.cutoff <- input.cumsum[rank.cutoff]
+chip.cumcounts.at.cutoff <- chip.cumsum[rank.cutoff]
+
+cumsum.norm.ratio <- chip.cumcounts.at.cutoff  /  input.cumcounts.at.cutoff
+
+## Choose the cumsum ratio as normalizing
+
+norm.factor <- cumsum.norm.ratio
+count.stats$input.counts.norm <- count.stats$input.counts * norm.factor
 
 ```
 
@@ -239,11 +306,86 @@ count.stats$input.median.norm <- count.stats$input.counts * median.ratio
 
 
 ```{r}
+par(mfrow=c(1,1))
 plot(x= count.stats$input.counts, y= count.stats$chip.counts)
 
-plot(x= count.stats$input.median.norm, 
-     y= count.stats$chip.counts, 
-     xlim=c(0,800), ylim=c(0,800))
+plot(x= count.stats$input.counts.norm, 
+     xlab="Bin-wise estimation of exp. counts",
+     ylab="ChIP-seq counts per bin",
+     y= count.stats$chip.counts, col="#888888",
+     xlim=c(0,500), ylim=c(0,500))
+grid(col="blue")
+abline(a=0, b=1, col="black", lty="dashed")
+
 
 ```
+
+```{r}
+## Same plot with log axes
+plot(x= count.stats$input.counts.norm, 
+     xlab="Bin-wise estimation of exp. counts",
+     ylab="ChIP-seq counts per bin",
+     y= count.stats$chip.counts, col="#888888", log="xy")
+grid(col="blue")
+abline(a=0, b=1, col="black", lty="dashed")
+
+```
+
+
+## Count ratios
+
+The most intuitive (and spontanous) way of comparing tow numbers is to comupte their ratio. However, the ratio can be problematic because it will emphasize small-number fluctuations.
+
+We can test this visually, by plotting the **count ratio** as a function of ...
+
+```{r}
+count.stats$count.ratio <- count.stats$chip.counts / count.stats$input.counts.norm
+plot(count.stats$input.counts.norm, count.stats$count.ratio)
+
+```
+
+
+## Log2-ratio
+
+```{r}
+
+count.stats$log2.ratio <- log2(count.stats$count.ratio)
+plot(count.stats$input.counts.norm, count.stats$log2.ratio)
+
+```
+
+## Compute the p-value
+
+In a first time, we will naively consider that the normalized input counts per bin can serve as estimate of the expected counts in the same bins. 
+
+
+```{r}
+count.stats$pval.binwise <- ppois(
+  q = count.stats$chip.counts - 1, 
+  lambda = count.stats$input.counts.norm, 
+  lower.tail=FALSE)
+count.stats$eval.binwise <- count.stats$pval.binwise * nbins
+
+plot(
+  count.stats$input.counts.norm,
+  -log10(count.stats$eval.binwise),
+  col="#BBBBBB"
+     )
+grid(col="blue")
+
+```
+
+```{r volcano plot}
+
+## Volcano plot
+plot(count.stats$log2.ratio, -log10(count.stats$pval.binwise),
+     col="#BBBBBB")
+grid(col="blue")
+
+abline(h=0, col="black")
+alpha=0.05
+abline(h=-log10(alpha), col="red")
+```
+
+
 
