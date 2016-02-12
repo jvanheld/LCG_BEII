@@ -49,3 +49,41 @@ A variety of approaches could be envisaged to deal with this question:
 5. Comparison with a **golden standard dataset**
 
     - If a reference collection of sites is available, evaluate the overlap. Note: we can only evaluate the sensitivity, not the specificity since all site databases are incomplete.
+
+## Goal of the homework
+
+Each student should choose one of the two chips-seq datasets seen during the course.
+
+1. Escherichia coli FNR 
+2. Arabidopsis thaliaba MYB3R
+
+The goal of the homework is to combine a subset of the approaches listed above in order to  compare two peak-calling results, and evaluate their respective relevance.  
+
+The comparison can take various modalities:
+
+- comparison between two programs (e.g. SWEMBL vs MACS2) 
+- comparison between peaksets returned by the same program with different parameter values
+- analysis of the "depth" of the peak set: evalution of the relevance of the peaks depending on their scores (available in the bed files).
+
+Note: no one is expected to perform all the comparisons between all peaksets with each of the approaches listed above. Rather, I ask each one to select a few peak sets and one or two approaches. 
+
+
+## Datasets
+
+The datasets are available on the server of the training (tepeu) in the root of the rsat user account.
+
+- ~rsat/FNR_Ecoli_chip-seq
+- ~rsat/Athaliana-Myb
+
+## Suggested tools
+
+
+| Tool | URL | Usage |
+|------|-----|-------|
+| bedtools | <http://bedtools.readthedocs.org/> | extremely useful and efficient suite to  analyse various types of genomic regions |
+| peak-motifs | <http://rsat.eu/> | Motif discovery in ChIP-seq peaks |
+| compare-features<br>convert-features |  <http://rsat.eu/> | Comparisons between genomic features (peak sets, genome annotations, reference binding sites, ...) |
+| matrix-quality | <http://rsat.eu/> | enrichment of sequences (e.g. peak set) for user-provided motifs (e.g. reference motif for the ChIP-ped factor) |
+
+* * * * * * 
+

@@ -55,6 +55,9 @@ img {
 <div id="TOC">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#goal-of-the-homework">Goal of the homework</a></li>
+<li><a href="#datasets">Datasets</a></li>
+<li><a href="#suggested-tools">Suggested tools</a></li>
 </ul>
 </div>
 
@@ -87,6 +90,65 @@ img {
 <li>If a reference collection of sites is available, evaluate the overlap. Note: we can only evaluate the sensitivity, not the specificity since all site databases are incomplete.</li>
 </ul></li>
 </ol>
+</div>
+<div id="goal-of-the-homework" class="section level2">
+<h2>Goal of the homework</h2>
+<p>Each student should choose one of the two chips-seq datasets seen during the course.</p>
+<ol style="list-style-type: decimal">
+<li>Escherichia coli FNR</li>
+<li>Arabidopsis thaliaba MYB3R</li>
+</ol>
+<p>The goal of the homework is to combine a subset of the approaches listed above in order to compare two peak-calling results, and evaluate their respective relevance.</p>
+<p>The comparison can take various modalities:</p>
+<ul>
+<li>comparison between two programs (e.g. SWEMBL vs MACS2)</li>
+<li>comparison between peaksets returned by the same program with different parameter values</li>
+<li>analysis of the “depth” of the peak set: evalution of the relevance of the peaks depending on their scores (available in the bed files).</li>
+</ul>
+<p>Note: no one is expected to perform all the comparisons between all peaksets with each of the approaches listed above. Rather, I ask each one to select a few peak sets and one or two approaches.</p>
+</div>
+<div id="datasets" class="section level2">
+<h2>Datasets</h2>
+<p>The datasets are available on the server of the training (tepeu) in the root of the rsat user account.</p>
+<ul>
+<li>~rsat/FNR_Ecoli_chip-seq</li>
+<li>~rsat/Athaliana-Myb</li>
+</ul>
+</div>
+<div id="suggested-tools" class="section level2">
+<h2>Suggested tools</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Tool</th>
+<th align="left">URL</th>
+<th align="left">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bedtools</td>
+<td align="left"><a href="http://bedtools.readthedocs.org/" class="uri">http://bedtools.readthedocs.org/</a></td>
+<td align="left">extremely useful and efficient suite to analyse various types of genomic regions</td>
+</tr>
+<tr class="even">
+<td align="left">peak-motifs</td>
+<td align="left"><a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></td>
+<td align="left">Motif discovery in ChIP-seq peaks</td>
+</tr>
+<tr class="odd">
+<td align="left">compare-features<br>convert-features</td>
+<td align="left"><a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></td>
+<td align="left">Comparisons between genomic features (peak sets, genome annotations, reference binding sites, …)</td>
+</tr>
+<tr class="even">
+<td align="left">matrix-quality</td>
+<td align="left"><a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></td>
+<td align="left">enrichment of sequences (e.g. peak set) for user-provided motifs (e.g. reference motif for the ChIP-ped factor)</td>
+</tr>
+</tbody>
+</table>
+<hr />
 </div>
 
 
