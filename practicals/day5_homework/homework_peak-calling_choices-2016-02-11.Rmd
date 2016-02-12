@@ -87,3 +87,48 @@ The datasets are available on the server of the training (tepeu) in the root of 
 
 * * * * * * 
 
+## Structure of the report
+
+- space limitation: max 3 pages of text. Non-included: figures, tables and supplemntary material
+
+- language: Español o Ingles
+
+- report should be structured as a mini-article (see sections below)
+
+### Organization of the report
+
+#### Title
+
+#### Authors
+
+- names + emails (1 or 2 authors per report)
+
+#### Introduction
+
+- context
+- general motivation of the analysis
+- particular questions/approaches addressed in this document
+
+#### Methods
+
+~  1/2 page + all details in supplementary material
+
+- list of the resources and tools
+- explanation of the main methodological choices
+
+#### Results
+
+~ 2 pages
+
+#### Conclusions/perspectives
+
+~ 1/2 page, with summary of the results, some consideration about their relevance, and a perspective (what coul be done next ?)
+
+#### Supplementary material
+
+An essential issue of scientific activity is  tractability (how were the results produced?) and reroducibility (can someone else reproduce the experiment, and get the same results?): the supmat must contain the precise list of all the commands / parameters used to achieve the results
+
+* * * * * * *
+
+
+

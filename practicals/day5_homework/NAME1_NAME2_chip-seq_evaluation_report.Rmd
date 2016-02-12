@@ -35,6 +35,7 @@ output:
 - explanation of the main methodological choices
 -->
 
+
 ## Results
 
 <!-- ~ 2 pages -->
@@ -54,5 +55,19 @@ output:
 <!--
 An essential issue of scientific activity is  tractability (how were the results produced?) and reroducibility (can someone else reproduce the experiment, and get the same results?): the supmat must contain the precise list of all the commands / parameters used to achieve the results
 -->
+
+### Data sources
+<!-- a complete list of the data sources: provide the original IDs of the datasets (e.g. Gene Expression Omnibus GSE or GSM IDs, ArrayExpress IDs) -->
+
+### Bioinformatics resources used for this work
+
+The Table below indicates the bioinformatics resources (tools, databases) used for this analysis.
+
+| Acronym | Description | URL | 
+|---------|-------------|-----|
+| RSAT | Regulatory Sequence Analysis Tools | <http://rsat.eu/> |
+
+### Complete list of commands and parameters
+
 
 * * * * * * *
