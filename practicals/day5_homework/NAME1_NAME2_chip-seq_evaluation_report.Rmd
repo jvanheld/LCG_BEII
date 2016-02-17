@@ -3,18 +3,18 @@ title: "Adapt this title to indicate what you did"
 author: "Student 1 name & Student 2 name"
 date: '`r Sys.Date()`'
 output:
-  word_document: default
-  pdf_document:
-    fig_caption: yes
-    highlight: zenburn
-    toc: yes
-    toc_depth: 3
   html_document:
     fig_caption: yes
     highlight: zenburn
     theme: cerulean
     toc: yes
     toc_depth: 3
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  word_document: default
 ---
 
 ## Introduction
