@@ -1,7 +1,6 @@
 ---
 title: "Practicals - basic peak-calling statistics"
 author: "Jacques van Helden"
-author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
   html_document:
@@ -369,21 +368,26 @@ count.stats$eval.binwise <- count.stats$pval.binwise * nbins
 plot(
   count.stats$input.counts.norm,
   -log10(count.stats$eval.binwise),
-  col="#BBBBBB"
+  col="#666666"
      )
 grid(col="blue")
 
 ```
 
 ```{r volcano plot}
+alpha=0.05
 
 ## Volcano plot
-plot(count.stats$log2.ratio, -log10(count.stats$pval.binwise),
-     col="#BBBBBB")
-grid(col="blue")
-
+plot(
+  count.stats$log2.ratio, 
+  -log10(count.stats$pval.binwise),
+  xlab="log2FC",
+  ylab="-log10(p-value)",
+  cex=0.5,
+  col="#888888")
 abline(h=0, col="black")
-alpha=0.05
+abline(v=0, col="black")
+grid(col="blue")
 abline(h=-log10(alpha), col="red")
 ```
 
