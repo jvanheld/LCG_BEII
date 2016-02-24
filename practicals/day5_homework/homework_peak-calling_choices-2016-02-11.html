@@ -61,7 +61,9 @@ img {
 <li><a href="#e.coli-fnr-chip-seq">E.coli FNR chip-seq</a></li>
 <li><a href="#a.thaliana-myb3r-chip-seq">A.thaliana MYB3R chip-seq</a></li>
 </ul></li>
-<li><a href="#suggested-tools">Suggested tools</a></li>
+<li><a href="#suggested-tools">Suggested tools</a><ul>
+<li><a href="#recommendations">Recommendations</a></li>
+</ul></li>
 <li><a href="#structure-of-the-report">Structure of the report</a></li>
 <li><a href="#format-of-the-report-to-be-delivered">Format of the report to be delivered</a></li>
 </ul>
@@ -195,19 +197,20 @@ img {
 <div id="e.coli-fnr-chip-seq" class="section level3">
 <h3>E.coli FNR chip-seq</h3>
 <pre><code>## Peak coordinate files
-find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed'
+find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed'  | grep -v 'summits'
 
 ## Peak sequence files corresponding to the bed files
-find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1</code></pre>
+find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed'  | grep -v 'summits' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1</code></pre>
+<p>Beware !</p>
 </div>
 <div id="a.thaliana-myb3r-chip-seq" class="section level3">
 <h3>A.thaliana MYB3R chip-seq</h3>
 <pre><code>## Peak coordinate files
-find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed'
+find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | grep -v 'summits'
 
 ## Peak sequence files corresponding to the bed files
 ## (ignore the bed files with no associated fasta)
-find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1</code></pre>
+find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed'  | grep -v 'summits' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1</code></pre>
 </div>
 </div>
 <div id="suggested-tools" class="section level2">
@@ -243,7 +246,13 @@ find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | perl -pe 's|\
 </tr>
 </tbody>
 </table>
+<div id="recommendations" class="section level3">
+<h3>Recommendations</h3>
+<ul>
+<li>For the bacterial dataset, I strongly recommend to activate <em>dyad-analysis</em> in the motif discovery options. Indeed, 90% of the transcription factors found in the proteome of E.coli contain an Helix-Turn-Helix domain. This class of TFs are known to form dimers which recognized spaced motifs, and these are exactly the kind of motifs for which <em>dyad-analysis</em> was designed.</li>
+</ul>
 <hr />
+</div>
 </div>
 <div id="structure-of-the-report" class="section level2">
 <h2>Structure of the report</h2>

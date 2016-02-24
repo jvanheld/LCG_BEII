@@ -112,21 +112,23 @@ For SWEMBL, the parameter "R" (background) strongly affects the number of peaks 
 
 ```
 ## Peak coordinate files
-find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed'
+find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed'  | grep -v 'summits'
 
 ## Peak sequence files corresponding to the bed files
-find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1
+find ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224 -name '*.bed'  | grep -v 'summits' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1
 ```
+
+Beware ! 
 
 ### A.thaliana MYB3R chip-seq
 
 ```
 ## Peak coordinate files
-find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed'
+find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | grep -v 'summits'
 
 ## Peak sequence files corresponding to the bed files
 ## (ignore the bed files with no associated fasta)
-find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1
+find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed'  | grep -v 'summits' | perl -pe 's|\.bed$|.fasta|' | xargs ls -1
 ```
 
 ## Suggested tools
@@ -138,6 +140,12 @@ find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | perl -pe 's|\
 | peak-motifs | <http://rsat.eu/> | Motif discovery in ChIP-seq peaks |
 | compare-features<br>convert-features |  <http://rsat.eu/> | Comparisons between genomic features (peak sets, genome annotations, reference binding sites, ...) |
 | matrix-quality | <http://rsat.eu/> | enrichment of sequences (e.g. peak set) for user-provided motifs (e.g. reference motif for the ChIP-ped factor) |
+
+
+### Recommendations
+
+- For the bacterial dataset, I strongly recommend to activate *dyad-analysis* in the motif discovery options. Indeed, 90% of the transcription factors found in the proteome of E.coli contain an Helix-Turn-Helix domain. This class of TFs are known to form dimers which recognized spaced motifs, and these are exactly the kind of motifs for which *dyad-analysis* was designed. 
+
 
 * * * * * * 
 
