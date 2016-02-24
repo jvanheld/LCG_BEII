@@ -77,6 +77,37 @@ The datasets are available on the server of the training (tepeu) in the root of 
 
 Each of these folders contains several Gigabytes of files organized in folders and sub-folders. Since you do not need the complete file sructure for your work, we indicate hereby a command that allows you to get the list of all the peak coordinates (.bed files) and peak sequences (.fasta files).
 
+
+### Subfolder organization
+
+InFor the E.coli project, the peak calling results are in the folder ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/
+
+
+The folder name indicate the peak-caller (macs2 or SWEMBL) and the parameter used to tune the stringency of the peak-calling. 
+
+For macs2, the q-value is the estiamtin of false discovery rate, the highest stringency is thus associated to the smaller q-values. 
+
+| Nb of peaks | File path |
+|-------------|-----------|
+|354|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.0001_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.0001_peaks.bed
+|390|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.001_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.001_peaks.bed
+|454|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.01_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.01_peaks.bed
+|534|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.05_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.05_peaks.bed
+|596|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.1_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.1_peaks.bed
+
+
+For SWEMBL, the parameter "R" (background) strongly affects the number of peaks returned. 
+
+| Nb of peaks | File path |
+|-------------|-----------|
+|2939|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.05/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.05.bed|
+|1610|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.06/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.06.bed|
+|834|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.07/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.07.bed|
+|306|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.1/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.1.bed|
+|167|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.2/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.2.bed|
+|105|/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.5/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.5.bed|
+
+
 ### E.coli FNR chip-seq
 
 ```
@@ -122,6 +153,16 @@ We provide a template report indicating the expected content and organization of
 
 - [Template report (Rmd)](NAME1_NAME2_chip-seq_evaluation_report.Rmd)
 - [Template report (docx)](NAME1_NAME2_chip-seq_evaluation_report.docx)
+
+## Format of the report to be delivered
+ 
+- The report should be delivered in a readable format (preferably HTML, but could also be pdf or docx) as well as the original Rmd file that served to generate it. 
+
+- The files should be deposited in the tareas area of the LCG server. 
+
+- Optionally you can also indicate in the report the URL of your github repository if you choose to define one (put it as supplementary material).
+
+
 
 * * * * * * *
 

@@ -10,7 +10,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2016-02-12" />
+<meta name="date" content="2016-02-24" />
 
 <title>Homework: peak-calling choices</title>
 
@@ -49,7 +49,7 @@ img {
 <div id="header">
 <h1 class="title">Homework: peak-calling choices</h1>
 <h4 class="author"><em>Jacques van Helden</em></h4>
-<h4 class="date"><em>2016-02-12</em></h4>
+<h4 class="date"><em>2016-02-24</em></h4>
 </div>
 
 <div id="TOC">
@@ -57,11 +57,13 @@ img {
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#goal-of-the-homework">Goal of the homework</a></li>
 <li><a href="#datasets">Datasets</a><ul>
+<li><a href="#subfolder-organization">Subfolder organization</a></li>
 <li><a href="#e.coli-fnr-chip-seq">E.coli FNR chip-seq</a></li>
 <li><a href="#a.thaliana-myb3r-chip-seq">A.thaliana MYB3R chip-seq</a></li>
 </ul></li>
 <li><a href="#suggested-tools">Suggested tools</a></li>
 <li><a href="#structure-of-the-report">Structure of the report</a></li>
+<li><a href="#format-of-the-report-to-be-delivered">Format of the report to be delivered</a></li>
 </ul>
 </div>
 
@@ -119,6 +121,77 @@ img {
 <li>~rsat/Athaliana-Myb</li>
 </ul>
 <p>Each of these folders contains several Gigabytes of files organized in folders and sub-folders. Since you do not need the complete file sructure for your work, we indicate hereby a command that allows you to get the list of all the peak coordinates (.bed files) and peak sequences (.fasta files).</p>
+<div id="subfolder-organization" class="section level3">
+<h3>Subfolder organization</h3>
+<p>InFor the E.coli project, the peak calling results are in the folder ~rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/</p>
+<p>The folder name indicate the peak-caller (macs2 or SWEMBL) and the parameter used to tune the stringency of the peak-calling.</p>
+<p>For macs2, the q-value is the estiamtin of false discovery rate, the highest stringency is thus associated to the smaller q-values.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Nb of peaks</th>
+<th align="left">File path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">354</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.0001_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.0001_peaks.bed</td>
+</tr>
+<tr class="even">
+<td align="left">390</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.001_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.001_peaks.bed</td>
+</tr>
+<tr class="odd">
+<td align="left">454</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.01_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.01_peaks.bed</td>
+</tr>
+<tr class="even">
+<td align="left">534</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.05_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.05_peaks.bed</td>
+</tr>
+<tr class="odd">
+<td align="left">596</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/macs2-qval0.1_peaks/GSM1010219_vs_GSM1010224_bowtie2_macs2-qval0.1_peaks.bed</td>
+</tr>
+</tbody>
+</table>
+<p>For SWEMBL, the parameter “R” (background) strongly affects the number of peaks returned.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Nb of peaks</th>
+<th align="left">File path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2939</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.05/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.05.bed</td>
+</tr>
+<tr class="even">
+<td align="left">1610</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.06/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.06.bed</td>
+</tr>
+<tr class="odd">
+<td align="left">834</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.07/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.07.bed</td>
+</tr>
+<tr class="even">
+<td align="left">306</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.1/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.1.bed</td>
+</tr>
+<tr class="odd">
+<td align="left">167</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.2/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.2.bed</td>
+</tr>
+<tr class="even">
+<td align="left">105</td>
+<td align="left">/home/rsat/FNR_Ecoli_chip-seq/results/GSM1010219_vs_GSM1010224/swembl-R0.5/GSM1010219_vs_GSM1010224_bowtie2_swembl-R0.5.bed</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="e.coli-fnr-chip-seq" class="section level3">
 <h3>E.coli FNR chip-seq</h3>
 <pre><code>## Peak coordinate files
@@ -183,6 +256,14 @@ find ~rsat/Athaliana-Myb/GSM1482283_vs_GSM1482284/ -name '*.bed' | perl -pe 's|\
 <ul>
 <li><a href="NAME1_NAME2_chip-seq_evaluation_report.Rmd">Template report (Rmd)</a></li>
 <li><a href="NAME1_NAME2_chip-seq_evaluation_report.docx">Template report (docx)</a></li>
+</ul>
+</div>
+<div id="format-of-the-report-to-be-delivered" class="section level2">
+<h2>Format of the report to be delivered</h2>
+<ul>
+<li><p>The report should be delivered in a readable format (preferably HTML, but could also be pdf or docx) as well as the original Rmd file that served to generate it.</p></li>
+<li><p>The files should be deposited in the tareas area of the LCG server.</p></li>
+<li><p>Optionally you can also indicate in the report the URL of your github repository if you choose to define one (put it as supplementary material).</p></li>
 </ul>
 <hr />
 </div>
