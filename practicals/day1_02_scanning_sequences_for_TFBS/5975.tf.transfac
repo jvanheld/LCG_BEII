@@ -1,0 +1,85 @@
+AC  5975|ECK120004526(RegulonDB 7.5)
+XX
+FA  AraC
+XX
+OS  ECK12
+XX
+SQ  MAEAQNDPLLPGYSFNAHLVAGLTPIEANGYLDFFIDRPLGMKGYILNLTIRGQGVVKNQ
+SQ  GREFVCRPGDILLFPPGEIHHYGRHPEAREWYHQWVYFRPRAYWHEWLNWPSIFANTGFF
+SQ  RPDEAHQPHFSDLFGQIINAGQGEGRYSELLAINLLEQLLLRRMEAINESLHPPMDNRVR
+SQ  EACQYISDHLADSNFDIASVAQHVCLSPSRLSHLFRQQLGISVLSWREDQRISQAKLLLS
+SQ  TTRMPIATVGRNVGFDDQLYFSRVFKKCTGASPSEFRAGCEEKVNDVAVKLS*
+XX
+LN  http://floresta.eead.csic.es/footprintdb/index.php?tf=7ec52c3a5d30851fa554a28e7c8577f1
+XX
+FF  The arabinose regulator, AraC, is a transcription factor that regulates transcription of several genes and operons involved in arabinose catabolism and transport; It coregulates with another transcriptional regulator, CRP; both are transcription factors involved in l-arabinose degradation; These regulators bind cooperatively to activate transcription of five operons related to transport, catabolism, and autoregulation of l-arabinose; Transcription of these operons is induced when E. coli is grown in the absence of glucose and when the physiological inducer, l-arabinose, binds to the AraC regulator; In the absence of glucose, cellular cyclic AMP levels are high and cyclic AMP forms a dimeric complex with CRP to coregulate with AraC Gallegos MT,1997; Reeder T,1991; Stoner C,1983; Hendrickson W,1992; Seabold RR,1998; Hendrickson W,1990; Miyada CG,1984AraC binds to five target sites in the araBp region; AraC binds to the less-conserved site (-42.5) with less strength; this binding occurs only in the 
+presence of arabinose, and it is absolutely required for expression of araBp Lobell RB,1990; Hamilton EP,1988; Lee N,1987; Martin K,1986; Carra JH,1993 AraC binding to the distal site (-123.5) has been shown to down-regulate expression of araBp and araCp Lee DH,1992; Hamilton EP,1988 In the absence of arabinose, AraC is unable to activate araBp, but it regulates its own expression by repressing araCp and araBp simultaneously Lobell RB,1990; Martin K,1986 Arabinose triggers AraC-dependent activation of araBp and relieves AraC-dependent repression of araCp Hamilton EP,1988; Martin K,1986 The araBAD operon is located upstream of araC and in the opposite direction.In the presence of arabinose, this regulator activates transcription by overlapping the -35 box of the core promoters, and the central position of the binding site is located near bp -41.5; The binding targets for AraC consist of 17-nucleotide-long direct repeat sequences that possess conserved motifs; each monomer binds to one of these conserved 
+sequences Gallegos MT,1997; Niland P,1996 The AraC regulator belongs to the AraC/XylS family and occurs as both a monomer and a homodimer; It is composed of two domains; The solution structure of the C-terminal DNA-binding domain has been solved; It consists of two helix-turn-helix regions connected by an &alpha;-helix Rodgers ME,2009 The N-terminal domain is responsible for dimerization and L-arabinose binding Gallegos MT,1997; Gallegos MT,1993 Its crystal structure Soisson SM,1997; Soisson SM,1997reveals that the sugar molecule is bound within a &beta;-barrel, buried by the N-terminal arm of the protein; It has been suggested that this N-terminal arm plays a key role in the regulation of the arabinose-dependent DNA-binding properties of the protein; In the absence of arabinose it interacts with the DNA-binding domain and constrains this domain, and it releases it in the presence of arabinose Soisson SM,1997; Rodgers ME,2009 This interaction appears to be affected by a mutation in the interdomain linker 
+Seedorff J,2011.; Transcription related; repressor; activator; operon; carbon compounds; cytoplasm; sequence-specific DNA binding; arabinose catabolic process; intracellular; sequence-specific DNA binding transcription factor activity; DNA binding; transcription, DNA-dependent; regulation of transcription, DNA-dependent;
+XX
+MX  3040;
+XX
+BS  14667;
+BS  14668;
+BS  14669;
+BS  14670;
+BS  14671;
+BS  14672;
+BS  14742;
+BS  14859;
+BS  14860;
+BS  14890;
+BS  14891;
+BS  15064;
+BS  15339;
+BS  15974;
+BS  15975;
+XX
+RX  PUBMED: 2237403
+RL  Lobell RB., Schleif RF. DNA looping and unlooping by AraC protein. Science. 250(4980):528-32 (1990).
+RX  PUBMED: 3279415
+RL  Hamilton EP., Lee N. Three binding sites for AraC protein are required for autoregulation of araC in Escherichia coli. Proc Natl Acad Sci U S A. 85(6):1749-53 (1988).
+RX  PUBMED: 2962192
+RL  Lee N., Francklyn C., Hamilton EP. Arabinose-induced binding of AraC protein to araI2 activates the araBAD operon promoter. Proc Natl Acad Sci U S A. 84(24):8814-8 (1987).
+RX  PUBMED: 3520549
+RL  Martin K., Huo L., Schleif RF. The DNA loop model for ara repression: AraC protein occupies the proposed loop sites in vivo and repression-negative mutations lie in these same sites. Proc Natl Acad Sci U S A. 83(11):3654-8 (1986).
+RX  PUBMED: 8428590
+RL  Carra JH., Schleif RF. Variation of half-site organization and DNA looping by AraC protein. EMBO J. 12(1):35-44 (1993).
+RX  PUBMED: 1560456
+RL  Lee DH., Huo L., Schleif R. Repression of the araBAD promoter from araO1. J Mol Biol. 224(2):335-41 (1992).
+RX  PUBMED: 8980677
+RL  Niland P., Huhne R., Muller-Hill B. How AraC interacts specifically with its target DNAs. J Mol Biol. 264(4):667-74 (1996).
+RX  PUBMED: 19422057
+RL  Rodgers ME., Schleif R. Solution structure of the DNA binding domain of AraC protein. Proteins. 77(1):202-8 (2009).
+RX  PUBMED: 8451183
+RL  Gallegos MT., Michan C., Ramos JL. The XylS/AraC family of regulators. Nucleic Acids Res. 21(4):807-10 (1993).
+RX  PUBMED: 9367758
+RL  Soisson SM., MacDougall-Shackleton B., Schleif R., Wolberger C. The 1.6 A crystal structure of the AraC sugar-binding and dimerization domain complexed with D-fucose. J Mol Biol. 273(1):226-37 (1997).
+RX  PUBMED: 9103202
+RL  Soisson SM., MacDougall-Shackleton B., Schleif R., Wolberger C. Structural basis for ligand-regulated oligomerization of AraC. Science. 276(5311):421-5 (1997).
+RX  PUBMED: 18561170
+RL  Rodgers ME., Holder ND., Dirla S., Schleif R. Functional modes of the regulatory arm of AraC. Proteins. 74(1):81-91 (2009).
+RX  PUBMED: 21840981
+RL  Seedorff J., Schleif R. Active role of the interdomain linker of AraC. J Bacteriol. 193(20):5737-46 (2011).
+RX  PUBMED: 9409145
+RL  Gallegos MT., Schleif R., Bairoch A., Hofmann K., Ramos JL. Arac/XylS family of transcriptional regulators. Microbiol Mol Biol Rev. 61(4):393-410 (1997).
+RX  PUBMED: 1744033
+RL  Reeder T., Schleif R. Mapping, sequence, and apparent lack of function of araJ, a gene of the Escherichia coli arabinose regulon. J Bacteriol. 173(24):7765-71 (1991).
+RX  PUBMED: 6319708
+RL  Stoner C., Schleif R. The araE low affinity L-arabinose transport promoter. Cloning, sequence, transcription start site and DNA binding sites of regulatory proteins. J Mol Biol. 171(4):369-81 (1983).
+RX  PUBMED: 1400237
+RL  Hendrickson W., Flaherty C., Molz L. Sequence elements in the Escherichia coli araFGH promoter. J Bacteriol. 174(21):6862-71 (1992).
+RX  PUBMED: 9600836
+RL  Seabold RR., Schleif RF. Apo-AraC actively seeks to loop. J Mol Biol. 278(3):529-38 (1998).
+RX  PUBMED: 2231717
+RL  Hendrickson W., Stoner C., Schleif R. Characterization of the Escherichia coli araFGH and araJ promoters. J Mol Biol. 215(4):497-510 (1990).
+RX  PUBMED: 6377308
+RL  Miyada CG., Stoltzfus L., Wilcox G. Regulation of the araC gene of Escherichia coli: catabolite repression, autoregulation, and effect on araBAD expression. Proc Natl Acad Sci U S A. 81(13):4120-4 (1984).
+RX  PUBMED: 21749723
+RL  Madar D., Dekel E., Bren A., Alon U. Negative auto-regulation increases the input dynamic-range of the arabinose system of Escherichia coli. BMC Syst Biol. 5(1):111 (2011).
+RX  PUBMED: 19815018
+RL  Frato KE., Schleif RF. A DNA-assisted binding assay for weak protein-protein interactions. J Mol Biol. 394(5):805-14 (2009).
+RX  PUBMED: 24234003
+RL  Sebastian, A., Contreras-Moreira, B. footprintDB: a database of transcription factors with annotated cis elements and binding interfaces. Bioinformatics 30, 258-65 (2014).
+XX
+//

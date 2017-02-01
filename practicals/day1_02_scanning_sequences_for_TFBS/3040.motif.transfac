@@ -1,0 +1,54 @@
+AC  3040|AraC(RegulonDB 7.5)
+XX
+NA  AraC
+XX
+DE  AraC
+XX
+OS  ECK12
+XX
+BF  5975;
+XX
+P0      A      C      G      T
+01      0      2      1     12      T
+02     11      0      4      0      R
+03      1      0      3     11      T
+04      2      0     11      2      G
+05      0      3      8      4      k
+06     10      3      1      1      a
+07      1      8      0      6      y
+08      3      0      3      9      t
+09      8      2      0      5      w
+10      4      4      0      7      h
+11      2      8      0      5      y
+12      3      4      1      7      y
+13      1      3      4      7      k
+14      4      0      8      3      r
+15      0     13      0      2      C
+16      2      1      1     11      T
+17      4      4      7      0      v
+18      3      4      0      8      y
+19      3      0      5      7      k
+XX
+BS  14667;
+BS  14668;
+BS  14669;
+BS  14670;
+BS  14671;
+BS  14672;
+BS  14742;
+BS  14859;
+BS  14860;
+BS  14890;
+BS  14891;
+BS  15064;
+BS  15339;
+BS  15974;
+BS  15975;
+XX
+LN  http://floresta.eead.csic.es/footprintdb/index.php?motif=7d2fd7543e9bbbbe286e597bc3ff3da4
+XX
+RN  [1];
+RX  PUBMED: 24234003
+RL  Sebastian, A., Contreras-Moreira, B. footprintDB: a database of transcription factors with annotated cis elements and binding interfaces. Bioinformatics 30, 258-65 (2014).
+XX
+//
