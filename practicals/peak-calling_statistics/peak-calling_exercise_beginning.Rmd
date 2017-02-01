@@ -19,7 +19,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, eval = TRUE, comment = "", fig.width = 7, fig.height = 5)
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, comment = "", fig.width = 7, fig.height = 5)
 ```
 
 # Title 1
