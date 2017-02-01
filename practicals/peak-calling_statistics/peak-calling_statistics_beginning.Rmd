@@ -22,22 +22,36 @@ output:
 knitr::opts_chunk$set(echo = TRUE, eval = TRUE, comment = "", fig.width = 7, fig.height = 5)
 ```
 
-# Title 1
+# Tasks
 
-## Title 2
+1. **Load** the ChIP-seq coverage profile and the genomic input. 
 
-### Title 3
+2. Plot the **coverage profiles**. 
 
-Hola me llamo Jacques. 
+3. Compute and represent graphically the **distributions of counts per bin**.
 
-*Italicos*
+4. Compute and draw the **Lorenz curves** for the ChIP-seq data and for the genomic input^[Tip: you can use the R `cumsum()` function. ]. 
 
-**bold or Bold**
+5. **Normalize** the counts per library (ChIP-seq, input) in order to compensate for the different sequencing depths. For this, you need to define a normalizing factor, which will multiply the counts in each sample. As normalizing factor, you can use the *libsum* (sum of read counts per sequencing library), but you might also think about more robust normalization factor, for example the median count, or the  $90^{th}$ percentile of the counts per bins.
 
-***bold and italics***^[This is a footnote]
+6. Compute various scores that might be used to **compare the counts** per bin between ChIP-ped and input datasets. For each of the metrics, draw a plot to show the values of the comparison metrics. We might for example think about the following metrics:
 
+    - $d = f_{i,C} - f_{i,G}$, the **difference** between normalized frequencies of the chip ($C$) and genomic input ($G$);
+    - $r = \frac{f_{i,C}}{f_{i,G}}$, ChIP_seq / input ratio between normalized counts;
+    - $log2FC = log_2(\frac{f_{i,C}}{f_{i,G}})$, the log-fold-change, i.e. the log2(ratio) between normalized frequencies;
+    - $LLR = f_{i,G} \cdot ln(\frac{f_{i,C}}{f_{i,G}})$, i.e. background frequency multiplied by the log2(ratio);
+    - ...
+    
+7. Based on the Poisson distribution, compute a **p-value** per bin, as well as an **adjusted p-value** (corrected for multiple testing). 
 
-<!-- Mi secreto -->
+8. Draw a **volcano plot** with the log2-fold-change as measure of the effect size (abscissa) and the $-log_{10}(p_{adj})$ on the ordinate.
+
+9. Select the **significant bins**.
+
+10. **View the results in IGV** and compare the peaks identified with this rudimentary strategy with those returned by a real peak-caller. 
+
+****************************************************************
+
 
 # Probabilities
 

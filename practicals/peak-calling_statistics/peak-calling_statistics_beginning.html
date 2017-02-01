@@ -250,19 +250,28 @@ div.tocify {
 </div>
 
 
-<div id="title-1" class="section level1">
-<h1>Title 1</h1>
-<div id="title-2" class="section level2">
-<h2>Title 2</h2>
-<div id="title-3" class="section level3">
-<h3>Title 3</h3>
-<p>Hola me llamo Jacques.</p>
-<p><em>Italicos</em></p>
-<p><strong>bold or Bold</strong></p>
-<p><strong><em>bold and italics</em></strong><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
-<!-- Mi secreto -->
-</div>
-</div>
+<div id="tasks" class="section level1">
+<h1>Tasks</h1>
+<ol style="list-style-type: decimal">
+<li><p><strong>Load</strong> the ChIP-seq coverage profile and the genomic input.</p></li>
+<li><p>Plot the <strong>coverage profiles</strong>.</p></li>
+<li><p>Compute and represent graphically the <strong>distributions of counts per bin</strong>.</p></li>
+<li><p>Compute and draw the <strong>Lorenz curves</strong> for the ChIP-seq data and for the genomic input<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p></li>
+<li><p><strong>Normalize</strong> the counts per library (ChIP-seq, input) in order to compensate for the different sequencing depths. For this, you need to define a normalizing factor, which will multiply the counts in each sample. As normalizing factor, you can use the <em>libsum</em> (sum of read counts per sequencing library), but you might also think about more robust normalization factor, for example the median count, or the <span class="math inline">\(90^{th}\)</span> percentile of the counts per bins.</p></li>
+<li><p>Compute various scores that might be used to <strong>compare the counts</strong> per bin between ChIP-ped and input datasets. For each of the metrics, draw a plot to show the values of the comparison metrics. We might for example think about the following metrics:</p>
+<ul>
+<li><span class="math inline">\(d = f_{i,C} - f_{i,G}\)</span>, the <strong>difference</strong> between normalized frequencies of the chip (<span class="math inline">\(C\)</span>) and genomic input (<span class="math inline">\(G\)</span>);</li>
+<li><span class="math inline">\(r = \frac{f_{i,C}}{f_{i,G}}\)</span>, ChIP_seq / input ratio between normalized counts;</li>
+<li><span class="math inline">\(log2FC = log_2(\frac{f_{i,C}}{f_{i,G}})\)</span>, the log-fold-change, i.e. the log2(ratio) between normalized frequencies;</li>
+<li><span class="math inline">\(LLR = f_{i,G} \cdot ln(\frac{f_{i,C}}{f_{i,G}})\)</span>, i.e. background frequency multiplied by the log2(ratio);</li>
+<li>…</li>
+</ul></li>
+<li><p>Based on the Poisson distribution, compute a <strong>p-value</strong> per bin, as well as an <strong>adjusted p-value</strong> (corrected for multiple testing).</p></li>
+<li><p>Draw a <strong>volcano plot</strong> with the log2-fold-change as measure of the effect size (abscissa) and the <span class="math inline">\(-log_{10}(p_{adj})\)</span> on the ordinate.</p></li>
+<li><p>Select the <strong>significant bins</strong>.</p></li>
+<li><p><strong>View the results in IGV</strong> and compare the peaks identified with this rudimentary strategy with those returned by a real peak-caller.</p></li>
+</ol>
+<hr />
 </div>
 <div id="probabilities" class="section level1">
 <h1>Probabilities</h1>
@@ -358,7 +367,7 @@ input.bedg &lt;-<span class="st"> </span><span class="kw">read.table</span>(inpu
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>This is a footnote<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>Tip: you can use the R <code>cumsum()</code> function.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p><a href="http://jvanheld.github.io/stats_avec_RStudio_EBA//practicals/02_peak-calling/data/FNR_200bp.bedg" class="uri">http://jvanheld.github.io/stats_avec_RStudio_EBA//practicals/02_peak-calling/data/FNR_200bp.bedg</a><a href="#fnref2">↩</a></p></li>
 <li id="fn3"><p><a href="http://jvanheld.github.io/stats_avec_RStudio_EBA//practicals/02_peak-calling/data/input_200bp.bedg" class="uri">http://jvanheld.github.io/stats_avec_RStudio_EBA//practicals/02_peak-calling/data/input_200bp.bedg</a><a href="#fnref3">↩</a></p></li>
 </ol>
