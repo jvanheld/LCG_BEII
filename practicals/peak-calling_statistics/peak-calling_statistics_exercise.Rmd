@@ -31,13 +31,13 @@ We will use a dataset from the bacteria *Escherichia coli K12*. Since bacteria h
 
 1. Load the ChIP-seq coverage profile and the genomic input. 
 2. Plot the coverage profiles. 
-2. Compute and represent graphically the distributions of counts per bin.
-3. Compute and draw the Lorenz curves for the ChIP-seq data and for the genomic input. 
-4. Compute various scores that might be used to compare the counts per bin between ChIP-ped and input datasets. 
-5. Based on the Poisson distribution, compute a value per bin, as well as an adjusted p-value (corrected for multiple testing). 
-6. Draw a volcano plot with the log2-fold-change as measure of the effect size (abscissa) and the $-log_{10}(p_{adj})$ on the ordinate.
-7. Select the significant bins.
-8. Load the results in IGV and compare the results with the peaks returned by a real peak-caller. 
+3. Compute and represent graphically the distributions of counts per bin.
+4. Compute and draw the Lorenz curves for the ChIP-seq data and for the genomic input. 
+5. Compute various scores that might be used to compare the counts per bin between ChIP-ped and input datasets. 
+6. Based on the Poisson distribution, compute a value per bin, as well as an adjusted p-value (corrected for multiple testing). 
+7. Draw a volcano plot with the log2-fold-change as measure of the effect size (abscissa) and the $-log_{10}(p_{adj})$ on the ordinate.
+8. Select the significant bins.
+9. Load the results in IGV and compare the results with the peaks returned by a real peak-caller. 
 
 ****************************************************************
 
