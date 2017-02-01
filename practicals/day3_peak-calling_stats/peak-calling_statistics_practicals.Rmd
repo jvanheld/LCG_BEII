@@ -38,7 +38,7 @@ We will load bedgraph-formatted files indicating the counts of reads per 200bp w
 
 ```{r path to the course}
 ## Define the base URL of the course and store it in a variable
-url.course <- "http://jvanheld.github.io/EBA15_stats_RStudio/"
+url.course <- "http://jvanheld.github.io/stats_avec_RStudio_EBA/"
 
 ## Define the fill path of the data directory, by concatenating the course URL and all the successive folders
 url.data <- file.path(url.course, "practicals", "02_peak-calling", "data")
