@@ -1,0 +1,113 @@
+---
+title: "LCG - BEII 2016 - Introduction to the ChIP-seq technology"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  ioslides_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
+    highlight: tango
+    incremental: no
+    keep_md: no
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
+  slidy_presentation:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
+    highlight: tango
+    incremental: no
+    keep_md: no
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+font-family: Garamond
+font-import: http://fonts.googleapis.com/css?family=Risque
+bibliography: ../bibliography_LCG_BEII.bib
+address: Lab.Technological Advances for Genomics and Clinics, Inserm Unit U1090
+transition: linear
+---
+
+
+## Schema of a ChIP-seq experiment
+
+1. cross-link DNA with protein (covalent linkage with formaldehyde)
+2. DNA fragmentation by sonication
+3. immunoprecipitation
+4. unlink DNA from protein
+5. fragment size selection (typically ~300bp)
+6. sequencing
+
+## Typical result
+
+- A hard drive with huge files
+
+    - one or several files per sample (one per run)
+    - several 10s of million reads per file
+    - read length: typically between 50 and 150bp
+    - Sequence format: fastq
+    - Quality index associated to each nucleotide of each read
+
+## Example of fastq file
+
+```
+@SRR576933.1 HWUSI-EAS1789_0000:2:20:1269:14140/1
+AAGCATGGAATAACCGCCTGGTGAATGCTCGCCATA
++
+dcd`\dddddaeacecdac`c\cca`bTbbdddYd_
+@SRR576933.2 HWUSI-EAS1789_0000:2:20:1270:19579/1
+TGGAGGCTGACCACGATAAGCTGCCGCTGGTGGTGC
++
+dceYc^\cddd^dddTccc`daYdbdaad`]``XTU
+@SRR576933.3 HWUSI-EAS1789_0000:2:20:1270:17351/1
+AGTGCGATGCCGTTCACCCGGTTTTCTTTATCATTA
++
+dddddc\cc^`c\ccddadcdaadbbc]]]aa^ddT
+...
+```
+
+## Analysis steps
+
+- **read quality**: checking the quality of the raw short reads
+- **read mapping**: aligning the reads against the reference genome, to identify their genomic location
+- **peak-calling**: identification of genomic regions that are enriched in reads in immunoprecipitated samples versus background (genomic input, mock, ...)
+
+## Peak-calling comparison workflow
+
+![**Peak-calling comparison workflow**. Various software tools and parameters were tested on the same ChIP-seq dataset (Abd-A TF in *Drosophila melanogaster*). Analysis and figure by Claire Rioualen, 2016. ](images_chip-seq/Rioualen_Drosophila_AbdA_rulegraph.png)
+
+
+
+## From reads to peaks
+
+![**IGV map of read mapping (upper tracks) and peak calling (lower track) results.** Analysis and figure by Claire Rioualen, 2016. ](images_chip-seq/rioualen_drosophila_abda_igv_detail_960x458.png)
+
+
+## From reads to peaks
+
+
+<img src="images_chip-seq/rioualen_drosophila_abda_igv_detail.png" data-canonical-src="images_chip-seq/rioualen_drosophila_abda_igv_detail.png" width="960" height="448" />
+
+
+
+## References
