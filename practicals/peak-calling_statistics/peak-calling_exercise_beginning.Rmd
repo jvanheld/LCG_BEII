@@ -1,0 +1,141 @@
+---
+title: "Peak-calling statistics exercise"
+author: "Jacques van Helden"
+date: "2/1/2017"
+output:
+  html_document:
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE, comment = "", fig.width = 7, fig.height = 5)
+```
+
+# Title 1
+
+## Title 2
+
+### Title 3
+
+Hola me llamo Jacques. 
+
+*Italicos*
+
+**bold or Bold**
+
+***bold and italics***^[This is a footnote]
+
+
+<!-- Mi secreto -->
+
+# Probabilities
+
+## Poisson density
+
+$$P(X = x) = \frac{\lambda e^{-\lambda}}{k!}$$
+
+```{r poisson_density, fig.width=10, fig.height=5, fig.cap="**Poisson density**, with $\\lambda = 3$. "}
+x <- 0:20
+#print(x)
+
+p <- dpois(x, lambda=3)
+
+plot(x, p, type="h", lwd=3,
+     main="Poisson density",
+     col="blue",
+     xlab="X", ylab="P(X = x)")
+
+```
+
+
+# Data Loading
+
+```{r parameters}
+## Define the base URL of the course and store it in a variable
+url.course <- "http://jvanheld.github.io/stats_avec_RStudio_EBA/"
+
+## Define the fill path of the data directory, by concatenating the course URL and all the successive folders
+url.data <- file.path(url.course, "practicals", "02_peak-calling", "data")
+```
+
+
+```{r load_chip_coverage}
+## Define URL of the ChIP file
+chip.bedg.file <- file.path(url.data, "FNR_200bp.bedg")
+#print(chip.bedg.file)
+
+## Load the file content in an R data.frame
+chip.bedg <- read.table(chip.bedg.file)
+
+## Set column names
+names(chip.bedg) <- c("chrom", "start", "end","counts")
+
+```
+
+We loaded the ChIP-seq coverage profile from a bedgraph file^[`r chip.bedg.file`]. The file contained  `r nrow(chip.bedg)` lines corresponding to genomic bins. 
+
+
+```{r load_genomic_input}
+## Define URL of the input file
+input.bedg.file <- file.path(url.data, "input_200bp.bedg")
+
+## Load the file content in an R data.frame
+input.bedg <- read.table(input.bedg.file)
+
+## Set column names
+names(input.bedg) <- c("chrom", "start", "end","counts")
+```
+
+The background was estimated with a genomic input^[`r input.bedg.file`] containing `r nrow(input.bedg)` lines.
+
+********************************
+# Results
+
+## Distribution of read  counts per bin
+
+```{r count distribution, fig.width=10, fig.height=8, fig.cap="**Coverage profiles**."}
+
+par(mfrow=c(2,1))
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$counts,
+     main="ChIP-seq coverage",
+     xlab="Bin start position (Kb)",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1,
+     ylab="Read counts per bin")
+
+plot(x = input.bedg$start/1000,
+     y = input.bedg$counts,
+     main="Genomic input coverage",
+     xlab="Bin start position (Kb)",
+     #     cex=0.5,
+     col="grey",
+     type="h",
+     las=1,
+     ylab="Read counts per bin")
+par(mfrow=c(1,1))
+
+```
+
+### Interpretation of the coverage profiles
+
+- The coverage profile of the ChIP-ped sample shows striking peaks at different genomic positions. 
+
+- The genomic input shows fluctuations, but no such peaks. 
+
+- Note that the scales are different: genomic input varies from `r min(input.bedg$counts)` to `r  max(input.bedg$counts)`, whereas the ChIP-seq peaks reach `r max(chip.bedg$counts)`.
+
+
