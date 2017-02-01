@@ -9,6 +9,7 @@ output:
     theme: cerulean
     toc: yes
     toc_depth: 3
+    toc_float: yes
   pdf_document:
     fig_caption: yes
     highlight: zenburn
@@ -29,6 +30,7 @@ We will use a dataset from the bacteria *Escherichia coli K12*. Since bacteria h
 # Tasks
 
 1. Load the ChIP-seq coverage profile and the genomic input. 
+2. Plot the coverage profiles. 
 2. Compute and represent graphically the distributions of counts per bin.
 3. Compute and draw the Lorenz curves for the ChIP-seq data and for the genomic input. 
 4. Compute various scores that might be used to compare the counts per bin between ChIP-ped and input datasets. 
