@@ -1,0 +1,97 @@
+---
+title: "Practicals - basic peak-calling statistics"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  word_document: default
+---
+
+
+# Introduction
+
+
+The goal of this tutorial is to explore ChIP-seq data and to evaluate various statistics and graphical modes in order to detect peaks, i.e. regions with a significantly higher number of reads than what would be expected based on some background model. 
+
+We will use a dataset from the bacteria *Escherichia coli K12*. Since bacteria have a relatively small genome compared to metazoans, the ChIP-seq dataset achieves a very high coverage, which gives us particularly interesting conditions to assess the validity of our prior assumptions.
+
+
+# Tasks
+
+1. Load the ChIP-seq coverage profile and the genomic input. 
+2. Compute and represent graphically the distributions of counts per bin.
+3. Compute and draw the Lorenz curves for the ChIP-seq data and for the genomic input. 
+4. Compute various scores that might be used to compare the counts per bin between ChIP-ped and input datasets. 
+5. Based on the Poisson distribution, compute a value per bin, as well as an adjusted p-value (corrected for multiple testing). 
+6. Draw a volcano plot with the log2-fold-change as measure of the effect size (abscissa) and the $-log_{10}(p_{adj})$ on the ordinate.
+7. Select the significant bins.
+8. Load the results in IGV and compare the results with the peaks returned by a real peak-caller. 
+
+****************************************************************
+
+# Data loading
+
+We will first load the datasets.
+
+We will load bedgraph-formatted files indicating the counts of reads per 200bp window along *E.coli* genome. 
+
+
+```{r path to the course}
+## Define the base URL of the course and store it in a variable
+url.course <- "http://jvanheld.github.io/stats_avec_RStudio_EBA/"
+
+## Define the fill path of the data directory, by concatenating the course URL and all the successive folders
+url.data <- file.path(url.course, "practicals", "02_peak-calling", "data")
+
+```
+
+
+```{r loading the ChIP-seq counts}
+
+## Define URL of the ChIP file
+chip.bedg.file <- file.path(url.data, "FNR_200bp.bedg")
+print(chip.bedg.file)
+
+## Load the file content in an R data.frame
+chip.bedg <- read.table(chip.bedg.file)
+
+## Set column names
+names(chip.bedg) <- c("chrom", "start", "end","counts")
+
+
+## Check the dimensions of the bedgraph for the ChIP-seq
+dim(chip.bedg)
+summary(chip.bedg)
+```
+
+We loaded a tab-delimited file with the counts of reads per window in the FNR ChIP-seq sample. The table contains `r nrow(chip.bedg)` rows, each row corresponding to a genomic window. 
+
+
+```{r loading the input counts}
+## Define URL of the input file
+input.bedg.file <- file.path(url.data, "input_200bp.bedg")
+
+## Load the file content in an R data.frame
+input.bedg <- read.table(input.bedg.file)
+
+## Set column names
+names(input.bedg) <- c("chrom", "start", "end","counts")
+
+```
+
+
+# Results
+
+
+... TO DO ...
+
