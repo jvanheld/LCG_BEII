@@ -32,6 +32,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <https://drive.google.com/drive/folders/0B3E_lqSoPRv2YVU3U19DN2ZKUzA?usp=sharing>
 
+Quick access to narrow peaks
+<http://hgdownload.cse.ucsc.edu/goldenpath/hg19/encodeDCC/wgEncodeAwgTfbsUniform/>
+
 # Resources
 
 | Name | URL / description |
@@ -39,6 +42,7 @@ knitr::opts_chunk$set(echo = TRUE)
 | ENCODE | ENCODE access page at UCSC (<https://genome.ucsc.edu/ENCODE/>) |
 |        | [Encode data matrix](https://genome.ucsc.edu/ENCODE/dataMatrix/encodeDataMatrixHuman.html)
 |        | [ENCODE ChIP-seq experiment matrix](https://genome.ucsc.edu/ENCODE/dataMatrix/encodeChipMatrixHuman.html) |
+| | Narrow peaks from goldenpath <http://hgdownload.cse.ucsc.edu/goldenpath/hg19/encodeDCC/wgEncodeAwgTfbsUniform/> |
 | HOCOMOCO | Human + Mouse transcription factor database (<http://hocomoco.autosome.ru/>)|
 | JASPAR | Eukaryote transcription factor database (<http://hocomoco.autosome.ru/>)|
 | RSAT | Regulatory Sequence Analysis Tools (<http://rsat.eu/>) |
