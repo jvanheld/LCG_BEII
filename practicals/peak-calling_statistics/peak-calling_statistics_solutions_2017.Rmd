@@ -10,6 +10,8 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
+    collapsed: true
+    code_folding: hide
   pdf_document:
     fig_caption: yes
     highlight: zenburn
@@ -71,7 +73,8 @@ We will load bedgraph-formatted files indicating the counts of reads per 200bp w
 
 ```{r path to the course}
 ## Define the base URL of the course and store it in a variable
-url.course <- "http://jvanheld.github.io/stats_avec_RStudio_EBA/"
+url.course <- "~/stats_avec_RStudio_EBA/"
+#url.course <- "http://jvanheld.github.io/stats_avec_RStudio_EBA/"
 
 ## Define the fill path of the data directory, by concatenating the course URL and all the successive folders
 url.data <- file.path(url.course, "practicals", "02_peak-calling", "data")
@@ -232,6 +235,9 @@ par(mfrow=c(1,1))
 ```
 
 
+
+
+
 ## Compute and draw the **Lorenz curves** for the ChIP-seq data and for the genomic input^[Tip: you can use the R `cumsum()` function. ]. 
 
 ```{r lorenz_curves}
@@ -303,6 +309,42 @@ par(mfrow=c(1,1))
 ```
 
 
+```{r hist_with_ggplot, fig.width=8, fig.height=3}
+## A solution to superpose the two histograms with ggplot()
+## provided by Teresa Romero (2017-02-03)
+library(ggplot2)
+
+## Superposed histograms of the log2-counts
+ggplot(chip.bedg,aes(x=log2counts)) +
+  geom_histogram(aes(fill="ChIP-Seq"), alpha = 0.6, binwidth = 0.04) +
+  geom_histogram(data=input.bedg, aes(fill="Genome input"), alpha = 0.6, binwidth = 0.04) +
+  theme(panel.background = element_rect(fill = "white")) +
+  theme(axis.line.x = element_line(color="black", size = 0.08),
+        axis.line.y = element_line(color="black", size =0.08)) +
+  scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0)) +
+  labs(fill= " ") + labs(x="log2(counts per bin)") + labs(y="Number of bins") +
+  ggtitle("Combined histogram of ChIP-Seq/Genome input") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold"))
+```
+
+```{r hist_with_ggplot_norm, fig.width=8, fig.height=4}
+## Superposed histograms of the log2-counts
+chip.bedg$log2counts.norm <- chip.bedg$log2counts
+ggplot(chip.bedg,aes(x=log2counts.norm)) +
+  geom_histogram(aes(fill="ChIP-Seq"), alpha = 0.6, binwidth = 0.04) +
+  geom_histogram(data=input.bedg, aes(fill="Genome input"), alpha = 0.6, binwidth = 0.04) +
+  theme(panel.background = element_rect(fill = "white")) +
+  theme(axis.line.x = element_line(color="black", size = 0.08),
+        axis.line.y = element_line(color="black", size =0.08)) +
+  scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0)) +
+  labs(fill= " ") + labs(x="log2(counts + 0.5)") + labs(y="Number of bins") +
+  ggtitle("Combined histogram of ChIP-Seq/Genome input") +
+  theme(plot.title = element_text(hjust = 0.5, face="bold"))
+
+```
+
+
+
 ## Compute various scores that might be used to **compare the counts** per bin
 
 ... between ChIP-ped and input datasets. For each of the metrics, draw a plot to show the values of the comparison metrics. We might for example think about the following metrics:
@@ -313,6 +355,78 @@ par(mfrow=c(1,1))
 - $LLR = f_{i,G} \cdot ln(\frac{f_{i,C}}{f_{i,G}})$, i.e. background frequency multiplied by the log2(ratio);
 - ...
 
+```{r chip_vs_input_scores, fig.width=8, fig.height=10}
+par(mfrow=c(4,1))
+
+## Difference between chip and (normalised) input counts
+chip.bedg$bg <- input.bedg$counts.norm
+chip.bedg$diff <- chip.bedg$counts - chip.bedg$bg
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$diff,
+     main="ChIP-seq - normalized input",
+     xlab="Bin start position (Kb)",
+     ylab="Count difference",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1)
+abline(h=0)
+
+## Ratio between chip and (normalised) input counts
+chip.bedg$count.ratio <- (chip.bedg$counts + epsilon) / (chip.bedg$bg + epsilon)
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$count.ratio,
+     main="ratio ChIP-seq / normalized input",
+     xlab="Bin start position (Kb)",
+     ylab="Count ratio",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1)
+abline(h=1)
+
+## Log-ratio between chip and (normalised) input counts
+chip.bedg$log2.ratio <- log2(chip.bedg$count.ratio)
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$log2.ratio,
+     main="Log2 fold-change",
+     xlab="Bin start position (Kb)",
+     ylab="log2(ratio)",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1)
+abline(h=0)
+
+## Log-ratio between chip and (normalised) input counts
+chip.bedg$llr <- chip.bedg$bg * (chip.bedg$log2.ratio)
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$llr,
+     main="Information",
+     xlab="Bin start position (Kb)",
+     ylab="LLR",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1)
+abline(h=0)
+
+par(mfrow=c(1,1))
+```
+
+We compute the p-value following the Poisson distribution. This requires a single parameter: the expected number of occurrences per bin. The simplest way to estimate this parameter is to use, for each bin, the corresponding normalised counts. 
+
+$$\hat{\lambda_i} = x'_{i,\text{input}}$$
+However, the significance is very sensitive to fluctuations of the genomic input. 
+MACS strategy to circumvent this problem is to smooth the background probabilities by estimating them on windows wider than the bins. This can be easily done by computin, for each bin, the average of the normalized input counts for the bin of interest and its $n$ neighbour windows on each side. 
+
+$$\hat{\lambda_i} = \sum_{j=i-n}^{i+n}{x'_{j,\text{input}}}$$
+
+
+```{r compute_pval}
+
+
+```
 
 
 ## Compute a **p-value** per bin, as well as an **adjusted p-value**
