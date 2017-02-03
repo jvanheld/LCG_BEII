@@ -1,5 +1,5 @@
 ---
-title: "Practicals - basic peak-calling statistics"
+title: "Solutions - basic peak-calling statistics (2017)"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
@@ -17,6 +17,11 @@ output:
     toc_depth: 3
   word_document: default
 ---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, comment = "", fig.width = 7, fig.height = 5)
+```
 
 
 # Introduction
@@ -111,5 +116,238 @@ names(input.bedg) <- c("chrom", "start", "end","counts")
 # Results
 
 
-... TO DO ...
+```{r log2_counts}
+# Convert the data to log2-counts. 
+# We first add an epsilon to avoid converting zero counts into -Inf values
+epsilon <- 0.5 # We choose 0.5 because after log2 it gives -1
+chip.bedg$log2counts <- log2(chip.bedg$counts + epsilon)
+input.bedg$log2counts <- log2(input.bedg$counts + epsilon)
+log2counts.min <- min(c(chip.bedg$log2counts, input.bedg$log2counts))
+log2counts.max <- ceiling(max(c(chip.bedg$log2counts, input.bedg$log2counts)))
+```
+
+
+## Plot the **coverage profiles**
+
+## Distribution of read  counts per bin
+
+```{r coverage_profiles, fig.width=10, fig.height=8, fig.cap="**Coverage profiles**."}
+
+par(mfrow=c(4,1))
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$counts,
+     main="ChIP-seq coverage",
+     xlab="Bin start position (Kb)",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1,
+     ylab="Read counts per bin")
+
+plot(x = input.bedg$start/1000,
+     y = input.bedg$counts,
+     main="Genomic input coverage",
+     xlab="Bin start position (Kb)",
+     #     cex=0.5,
+     col="grey",
+     type="h",
+     las=1,
+     ylab="Read counts per bin")
+
+
+plot(x = chip.bedg$start/1000,
+     y = chip.bedg$log2counts,
+     ylim=c(log2counts.min, log2counts.max),
+     main="ChIP-seq coverage",
+     xlab="Bin start position (Kb)",
+     #     cex=0.5,
+     col="blue",
+     type="h",
+     las=1,
+     ylab=paste("log2(counts per bin +", epsilon, ")"))
+
+plot(x = input.bedg$start/1000,
+     y = input.bedg$log2counts,
+     ylim=c(log2counts.min, log2counts.max),
+     main="Genomic input coverage",
+     xlab="Bin start position (Kb)",
+     #     cex=0.5,
+     col="grey",
+     type="h",
+     las=1,
+     ylab=paste("log2(counts per bin +", epsilon, ")"))
+
+par(mfrow=c(1,1))
+
+```
+
+### Interpretation of the coverage profiles
+
+- The coverage profile of the ChIP-ped sample shows striking peaks at different genomic positions. 
+
+- The genomic input shows fluctuations, but no such peaks.
+
+- Note that the scales are different: genomic input varies from `r min(input.bedg$counts)` to `r  max(input.bedg$counts)`, whereas the ChIP-seq peaks reach `r max(chip.bedg$counts)`.
+
+- A strinking observation is that the coverage profile of the input is far from homogeneous: beyond the local fluctuations, at the scale of the whole chromosome, we observe a sinusoidal shape. This shape might be related to some biological property such as the directions of replication. In any case, whatever might be its case, we have to take it into account for the estimation of peak significance, since it means that the background model varies depending ont the chromosomal location. 
+
+
+
+## Compute and represent graphically the **distributions of counts per bin**.
+
+
+```{r count distribution, fig.width=10, fig.height=12, fig.cap="**Coverage profiles**."}
+
+par(mfrow=c(4,1))
+
+## A frist attempt, no very convincing
+hist(chip.bedg$counts, breaks=1000, 
+     xlab="Counts per bin", 
+     ylab="Number of bins",
+     main="ChIP-seq data")
+
+# Reduce the X axis range
+hist(chip.bedg$counts, breaks=2000, xlim=c(0, 800),
+     xlab="Counts per bin (truncated axis)", 
+     ylab="Number of bins",
+     main="ChIP-seq data")
+
+# Draw histogram of log2_converted counts
+hist(chip.bedg$log2counts, breaks=200,
+     xlim=c(log2counts.min, log2counts.max),
+     xlab=paste("log2(counts +", epsilon, ")"),
+     ylab="Number of bins",
+     main="ChIP-seq log2-counts per bin",
+     col="blue", border="darkblue")
+
+hist(input.bedg$log2counts, breaks=200,
+     xlim=c(log2counts.min, log2counts.max),
+     xlab=paste("log2(counts +", epsilon, ")"),
+     ylab="Number of bins",
+     main="Genomic input log2-counts per bin",
+     col="gray", border="darkgray")
+
+par(mfrow=c(1,1))
+
+```
+
+
+## Compute and draw the **Lorenz curves** for the ChIP-seq data and for the genomic input^[Tip: you can use the R `cumsum()` function. ]. 
+
+```{r lorenz_curves}
+nbins <- nrow(chip.bedg)
+lorenz <- data.frame(
+  rank=1:nbins,
+  chip=cumsum(sort(chip.bedg$counts))/ sum(chip.bedg$counts),
+  input=cumsum(sort(input.bedg$counts))/ sum(input.bedg$counts)
+  )
+lorenz$diff <- lorenz$input - lorenz$chip
+
+## Identify the range where input and chip-seq differ most
+lorenz.max.diff.rank <- lorenz$rank[which.max(lorenz$diff)]
+
+plot(lorenz$rank, lorenz$input, type="l", col="darkgrey")
+grid()
+abline(v=c(0,nbins), col="black")
+abline(h=c(0,1), col="black")
+abline(a=0, b=1/nbins, lty="dashed")
+lines(lorenz$rank, lorenz$chip, type="l", col="darkblue")
+
+arrows(x0=lorenz.max.diff.rank,  y0=lorenz$input[lorenz.max.diff.rank], x1=lorenz.max.diff.rank, y1=lorenz$chip[lorenz.max.diff.rank], angle = 20, length = 0.1, code=3, col="red", lwd=2)
+
+```
+
+## **Normalize** the counts per library
+
+.... (ChIP-seq, input) in order to compensate for the different sequencing depths. For this, you need to define a normalizing factor, which will multiply the counts in each sample. As normalizing factor, you can use the *libsum* (sum of read counts per sequencing library), but you might also think about more robust normalization factor, for example the median count, or the  $90^{th}$ percentile of the counts per bins.
+
+```{r normalisation}
+# Median-based normalization
+chip.summary = summary(chip.bedg$counts)
+input.summary = summary(input.bedg$counts)
+
+chip.summary["sum"] <- sum(chip.bedg$counts)
+input.summary["sum"] <- sum(input.bedg$counts)
+
+## Apply median-based normalisation on the input reads
+input.bedg$counts.norm <- input.bedg$counts * chip.summary["Median"] / input.summary["Median"]
+median(input.bedg$counts.norm)
+
+input.bedg$log2counts.norm <- log2(input.bedg$counts.norm + epsilon)
+
+## Draw boxplots before / after normalization
+par(mfrow=c(2,2))
+boxplot(data.frame(
+  chip=chip.bedg$counts, 
+  input=input.bedg$counts),
+  col=c("blue", "grey"))
+
+boxplot(data.frame(
+  chip=chip.bedg$log2counts, 
+  input=input.bedg$log2counts),
+  col=c("blue", "grey"))
+
+boxplot(data.frame(
+  chip=chip.bedg$counts, 
+  input=input.bedg$counts.norm),
+  col=c("blue", "grey"))
+
+boxplot(data.frame(
+  chip=chip.bedg$log2counts, 
+  input=input.bedg$log2counts.norm),
+  col=c("blue", "grey"))
+
+
+par(mfrow=c(1,1))
+
+```
+
+
+## Compute various scores that might be used to **compare the counts** per bin
+
+... between ChIP-ped and input datasets. For each of the metrics, draw a plot to show the values of the comparison metrics. We might for example think about the following metrics:
+
+- $d = f_{i,C} - f_{i,G}$, the **difference** between normalized frequencies of the chip ($C$) and genomic input ($G$);
+- $r = \frac{f_{i,C}}{f_{i,G}}$, ChIP_seq / input ratio between normalized counts;
+- $log2FC = log_2(\frac{f_{i,C}}{f_{i,G}})$, the log-fold-change, i.e. the log2(ratio) between normalized frequencies;
+- $LLR = f_{i,G} \cdot ln(\frac{f_{i,C}}{f_{i,G}})$, i.e. background frequency multiplied by the log2(ratio);
+- ...
+
+
+
+## Compute a **p-value** per bin, as well as an **adjusted p-value**
+
+$$P(X = x) = \frac{\lambda e^{-\lambda}}{k!}$$
+
+```{r poisson_density, fig.width=10, fig.height=5, fig.cap="**Poisson density**, with $\\lambda = 3$. "}
+x <- 0:20
+#print(x)
+
+p <- dpois(x, lambda=3)
+
+plot(x, p, type="h", lwd=3,
+     main="Poisson density",
+     col="blue",
+     xlab="X", ylab="P(X = x)")
+
+x.obs <- 8
+
+lines(x[x>= x.obs], p[x>=x.obs], type="h", lwd=3, col="red")
+
+
+```
+
+
+
+
+## Draw a **volcano plot** 
+
+... with the log2-fold-change as measure of the effect size (abscissa) and the $-log_{10}(p_{adj})$ on the ordinate.
+
+## Select the **significant bins**.
+
+## View the results in IGV
+
+
+... and compare the peaks identified with this rudimentary strategy with those returned by a real peak-caller. 
 
