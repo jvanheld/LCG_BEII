@@ -240,7 +240,7 @@ par(mfrow=c(1,1))
 
 ## Compute and draw the **Lorenz curves** for the ChIP-seq data and for the genomic input^[Tip: you can use the R `cumsum()` function. ]. 
 
-```{r lorenz_curves}
+```{r lorenz_curves, fig.width=5, fig.height=5, fig.cap="Lorenz curves."}
 nbins <- nrow(chip.bedg)
 lorenz <- data.frame(
   rank=1:nbins,
@@ -252,12 +252,16 @@ lorenz$diff <- lorenz$input - lorenz$chip
 ## Identify the range where input and chip-seq differ most
 lorenz.max.diff.rank <- lorenz$rank[which.max(lorenz$diff)]
 
-plot(lorenz$rank, lorenz$input, type="l", col="darkgrey")
-grid()
+plot(lorenz$rank, lorenz$input, type="l", col="darkgrey",
+     main="Loren curves", 
+     xlab="Rank", ylab="Cumulated frequency",
+     panel.first=grid())
 abline(v=c(0,nbins), col="black")
 abline(h=c(0,1), col="black")
 abline(a=0, b=1/nbins, lty="dashed")
 lines(lorenz$rank, lorenz$chip, type="l", col="darkblue")
+legend("topleft", legend=c("ChIP-seq", "input", "max difference"), 
+       col=c("darkblue", "darkgrey", "red"), lwd=2)
 
 arrows(x0=lorenz.max.diff.rank,  y0=lorenz$input[lorenz.max.diff.rank], x1=lorenz.max.diff.rank, y1=lorenz$chip[lorenz.max.diff.rank], angle = 20, length = 0.1, code=3, col="red", lwd=2)
 
