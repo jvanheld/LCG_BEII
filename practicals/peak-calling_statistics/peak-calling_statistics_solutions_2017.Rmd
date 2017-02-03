@@ -241,35 +241,83 @@ par(mfrow=c(1,1))
 ## Compute and draw the **Lorenz curves** for the ChIP-seq data and for the genomic input^[Tip: you can use the R `cumsum()` function. ]. 
 
 ```{r lorenz_curves, fig.width=5, fig.height=5, fig.cap="Lorenz curves."}
-nbins <- nrow(chip.bedg)
-lorenz <- data.frame(
-  rank=1:nbins,
-  chip=cumsum(sort(chip.bedg$counts))/ sum(chip.bedg$counts),
-  input=cumsum(sort(input.bedg$counts))/ sum(input.bedg$counts)
+## We defined hereby a function that plots a Lorennz curve. 
+## We document it with roxygen2, which willl enable us to incorporate it in an R package. 
+
+
+#' @title Plot Lorenz curve
+#' @author Jacques.van-Helden@univ-amu.fr
+#' @description Plot a Lorenz curve to compare the cumulative distribution of counts between two coverage proviles (e.g. bedGraph or bigWig files). 
+#' @param chip.counts a vector of counts per bin for the immunoprecipitated sample
+#' @param input.counts a vector of counts per bin for the control sample (e.g. genomic input). Must have the same length as chip.counts. 
+#' @return a table with Lorenz statistics
+#' @export
+plot.lorenz <- function(chip.counts, 
+                        input.counts) {
+
+  ## Compute number of bins
+  nbins <- length(chip.counts)
+
+  lorenz <- data.frame(
+    rank=1:nbins,
+    quantile=(1:nbins)/nbins,
+    chip=cumsum(sort(chip.counts))/ sum(chip.counts),
+    input=cumsum(sort(input.counts))/ sum(input.counts)
   )
-lorenz$diff <- lorenz$input - lorenz$chip
+  lorenz$diff <- lorenz$input - lorenz$chip
+  
+  ## Identify the range where input and chip-seq differ most
+  max.diff.rank <- lorenz$rank[which.max(lorenz$diff)]
+  max.diff.quantile <- lorenz$quantile[which.max(lorenz$diff)]
+  
+  plot(lorenz$quantile, lorenz$input, type="l", col="darkgrey",
+       main="Loren curves", 
+       xlab="Quantile", 
+       ylab="Cumulated frequency",
+       las=1,
+       panel.first=grid())
+  abline(v=c(0,1), col="black")
+  abline(h=c(0,1), col="black")
+  abline(a=0, b=1, lty="dashed")
+  lines(lorenz$quantile, lorenz$chip, type="l", col="darkblue")
 
-## Identify the range where input and chip-seq differ most
-lorenz.max.diff.rank <- lorenz$rank[which.max(lorenz$diff)]
+  
+  abline(v=max.diff.quantile, col="pink")  
+  arrows(x0=max.diff.quantile,  
+         y0=lorenz$input[max.diff.rank], 
+         x1=max.diff.quantile, 
+         y1=lorenz$chip[max.diff.rank], angle = 20, length = 0.1, code=3, col="red", lwd=2)  
 
-plot(lorenz$rank, lorenz$input, type="l", col="darkgrey",
-     main="Loren curves", 
-     xlab="Rank", ylab="Cumulated frequency",
-     panel.first=grid())
-abline(v=c(0,nbins), col="black")
-abline(h=c(0,1), col="black")
-abline(a=0, b=1/nbins, lty="dashed")
-lines(lorenz$rank, lorenz$chip, type="l", col="darkblue")
-legend("topleft", legend=c("ChIP-seq", "input", "max difference"), 
-       col=c("darkblue", "darkgrey", "red"), lwd=2)
+  legend("topleft", 
+         legend=c(
+           "ChIP-seq", 
+           "input", 
+           paste("max difference =", round(digits=3, max(lorenz$diff))),
+           paste("best quantile q =", round(digits=2, max.diff.quantile))
+           ), 
+         col=c("darkblue", "darkgrey", "red", "pink"), lwd=2)
+#  return(lorenz)  
+}
 
-arrows(x0=lorenz.max.diff.rank,  y0=lorenz$input[lorenz.max.diff.rank], x1=lorenz.max.diff.rank, y1=lorenz$chip[lorenz.max.diff.rank], angle = 20, length = 0.1, code=3, col="red", lwd=2)
+lorenz.table <- plot.lorenz(
+  chip.counts = chip.bedg$counts, 
+  input.counts = input.bedg$counts)
 
 ```
 
 ## **Normalize** the counts per library
 
-.... (ChIP-seq, input) in order to compensate for the different sequencing depths. For this, you need to define a normalizing factor, which will multiply the counts in each sample. As normalizing factor, you can use the *libsum* (sum of read counts per sequencing library), but you might also think about more robust normalization factor, for example the median count, or the  $90^{th}$ percentile of the counts per bins.
+.... (ChIP-seq, input) in order to compensate for the different sequencing depths. For this, you need to define a normalizing factor, which will multiply the counts in each sample. 
+
+
+Several possibilities can be considered as normalizing factor.
+
+1. The *libsum* ($\sum_{i=1}^{n}{x_i}$, sum of read counts per sequencing library) is conceptually simple but it is sensitive to the presence of outliers. In the case of ChIP-seq, outliers might result from the high ocncentrations of reads in the peaks, or from the presence of highly accessible regions that are over-sampled during the sequencing. 
+
+2. The **median count** $\tilde{x}$ is a robust normalization factor. Other quantiles have sometimes been used in order to capture a larger fraction of the total reads, for example the third quartile, or the  $90^{th}$ percentile of the counts per bins.
+
+3. 
+
 
 ```{r normalisation}
 # Median-based normalization
