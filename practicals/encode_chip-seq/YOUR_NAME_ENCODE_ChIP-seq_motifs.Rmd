@@ -1,0 +1,78 @@
+---
+title: "Motif discovery in ENCODE ChIP-seq peaks"
+author: "DON'T FORGET YOUR NAME"
+date: '`r Sys.Date()`'
+output:
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  html_document:
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  word_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, comment = "", fig.width = 7, fig.height = 5)
+```
+
+# Introduction
+
+- 1 sentence about ENCODE context
+- motivations of this work
+- chosen cell type + factor
+- 2 or 3 sentences about the factor: function, pathways regulated by this factor, ....
+
+# Material and methods
+
+- sources of all the data (with URLS as footnotes)
+- list of allthe tools used with bibliographic references + URL of the tool
+
+# Results
+
+## Reference motifs
+
+Paste here the PSSM + logos of the annotated motifs for your TF in the following databases.
+
+- HOCOMOCO (+ URL)
+- JASPAR (+ URL)
+
+## Genomic distribution of the peaks
+
+(CEAS para los que quieren)
+
+! don't forget negative control ith random genome fragments
+
+## Functional enrichment of the genes associated to the peaks
+
+GREAT
+
+! don't forget negative control ith random genome fragments
+
+## Motifs discovered in the peaks
+
+- ver la foto de la pantalla
+
+
+- which motifs were discovered in the peaks by the different algorithms ?
+- clustering: do different algorithms find the same motifs
+- matrix comparison (+clutering) : do the discovered motifs correspond to the reference motifs? 
+- which other motifs did we find than the reference one? Do these additional motifs correspond to known factors? Are these factors relevant for our peaks (involved in the same pathways, interacting with the ChIP-ped factor, ...)?
+- negative control: interpret all the motif discovery results with respect to the negative controls
+
+# References
+
+
+# Supplementary material
+
+Exhaustive list of all the commands used + parameters in order to enable tracing back your work. 
+
+
+
