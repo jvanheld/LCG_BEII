@@ -18,6 +18,7 @@ output:
     toc: yes
     toc_depth: 3
   word_document: default
+bibliography: peak-calling_statistics.bib
 ---
 
 
@@ -96,8 +97,9 @@ names(chip.bedg) <- c("chrom", "start", "end","counts")
 
 
 ## Check the dimensions of the bedgraph for the ChIP-seq
-dim(chip.bedg)
-summary(chip.bedg)
+# dim(chip.bedg)
+# summary(chip.bedg)
+
 ```
 
 We loaded a tab-delimited file with the counts of reads per window in the FNR ChIP-seq sample. The table contains `r nrow(chip.bedg)` rows, each row corresponding to a genomic window. 
@@ -118,6 +120,8 @@ names(input.bedg) <- c("chrom", "start", "end","counts")
 
 # Results
 
+## Computation of the log2-counts
+
 
 ```{r log2_counts}
 # Convert the data to log2-counts. 
@@ -128,6 +132,13 @@ input.bedg$log2counts <- log2(input.bedg$counts + epsilon)
 log2counts.min <- min(c(chip.bedg$log2counts, input.bedg$log2counts))
 log2counts.max <- ceiling(max(c(chip.bedg$log2counts, input.bedg$log2counts)))
 ```
+
+
+We apply a base-2 logarithmic transformation to the raw counts in order to perceive  count values over their full range without putting too much emphasis on the very high range, influenced by a handful of outlier values.
+
+Before this, we add an arbitrary epsilon ($\epsilon=`r epsilon`$) to circumvent problems resulting from the transformation of zero counts to $-\infty$.
+
+$$y = log_2(x_i + \epsilon)$$
 
 
 ## Plot the **coverage profiles**
@@ -240,66 +251,93 @@ par(mfrow=c(1,1))
 
 ## Compute and draw the **Lorenz curves** for the ChIP-seq data and for the genomic input^[Tip: you can use the R `cumsum()` function. ]. 
 
+[@Diaz:2012ei]
+
 ```{r lorenz_curves, fig.width=5, fig.height=5, fig.cap="Lorenz curves."}
 ## We defined hereby a function that plots a Lorennz curve. 
 ## We document it with roxygen2, which willl enable us to incorporate it in an R package. 
 
 
-#' @title Plot Lorenz curve
+#' @title Plot Lorenz curve and return normalised counts.
 #' @author Jacques.van-Helden@univ-amu.fr
-#' @description Plot a Lorenz curve to compare the cumulative distribution of counts between two coverage proviles (e.g. bedGraph or bigWig files). 
+#' @description Plot a Lorenz curve to compare the cumulative distribution of counts between two coverage proviles (e.g. bedGraph or bigWig files), and compute the normalising factor corresponding to the most discriminating percentile of the cumulative distributiosn. 
 #' @param chip.counts a vector of counts per bin for the immunoprecipitated sample
 #' @param input.counts a vector of counts per bin for the control sample (e.g. genomic input). Must have the same length as chip.counts. 
-#' @return a table with Lorenz statistics
+#' @param plot.curves=TRUE Boolean value indicating whether the curves should be displayed or not.
+#' @param return.stats=TRUE Boolean value indicating whether the normalisation statistics should be returned or not.
+#' @return a list of statistics derived from Lorenz' curves.
 #' @export
 plot.lorenz <- function(chip.counts, 
-                        input.counts) {
+                        input.counts,
+                        plot.curves=TRUE,
+                        return.stats=TRUE) {
 
   ## Compute number of bins
   nbins <- length(chip.counts)
 
-  lorenz <- data.frame(
+  ## Instantiate a table of rank-based statistisc
+  ## (one rwo per rank of the sorted counts)
+  lorenz.table <- data.frame(
     rank=1:nbins,
-    quantile=(1:nbins)/nbins,
-    chip=cumsum(sort(chip.counts))/ sum(chip.counts),
-    input=cumsum(sort(input.counts))/ sum(input.counts)
+    percentile=100*(1:nbins)/nbins,
+    chip.cumsum = cumsum(sort(chip.counts)),
+    input.cumsum = cumsum(sort(input.counts))
   )
-  lorenz$diff <- lorenz$input - lorenz$chip
+  lorenz.table$chip.cdf <- lorenz.table$chip.cumsum / sum(chip.counts)
+  lorenz.table$input.cdf <- lorenz.table$input.cumsum / sum(input.counts)
+  lorenz.table$diff <- lorenz.table$input.cdf - lorenz.table$chip.cdf
   
   ## Identify the range where input and chip-seq differ most
-  max.diff.rank <- lorenz$rank[which.max(lorenz$diff)]
-  max.diff.quantile <- lorenz$quantile[which.max(lorenz$diff)]
+  max.diff.rank <- lorenz.table$rank[which.max(lorenz.table$diff)]
+  max.diff.percentile <- lorenz.table$percentile[which.max(lorenz.table$diff)]
   
-  plot(lorenz$quantile, lorenz$input, type="l", col="darkgrey",
-       main="Loren curves", 
-       xlab="Quantile", 
-       ylab="Cumulated frequency",
-       las=1,
-       panel.first=grid())
-  abline(v=c(0,1), col="black")
-  abline(h=c(0,1), col="black")
-  abline(a=0, b=1, lty="dashed")
-  lines(lorenz$quantile, lorenz$chip, type="l", col="darkblue")
+  if (plot.curves) {
+    plot(lorenz.table$percentile, lorenz.table$input.cdf*100, type="l", col="darkgrey",
+         main="Lorenz curves", 
+         xlab="Percentage of bins", 
+         ylab="Percentage of reads",
+         las=1,
+         panel.first=grid())
+    abline(v=c(0,100), col="black")
+    abline(h=c(0,100), col="black")
+    abline(a=0, b=1, lty="dashed")
+    lines(lorenz.table$percentile, lorenz.table$chip.cdf*100, type="l", col="darkblue")
 
-  
-  abline(v=max.diff.quantile, col="pink")  
-  arrows(x0=max.diff.quantile,  
-         y0=lorenz$input[max.diff.rank], 
-         x1=max.diff.quantile, 
-         y1=lorenz$chip[max.diff.rank], angle = 20, length = 0.1, code=3, col="red", lwd=2)  
-
-  legend("topleft", 
-         legend=c(
-           "ChIP-seq", 
-           "input", 
-           paste("max difference =", round(digits=3, max(lorenz$diff))),
-           paste("best quantile q =", round(digits=2, max.diff.quantile))
+    abline(v=max.diff.percentile, col="pink")  
+    arrows(x0=max.diff.percentile,  
+           y0=lorenz.table$input.cdf[max.diff.rank]*100, 
+           x1=max.diff.percentile, 
+           y1=lorenz.table$chip.cdf[max.diff.rank]*100, angle = 20, length = 0.1, code=3, col="red", lwd=2)  
+    
+    legend("topleft", 
+           legend=c(
+             "ChIP-seq", 
+             "input", 
+             paste(sep="", "max difference = ", round(digits=3, max(lorenz.table$diff))*100, "%"),
+             paste(sep="", "best percentile = ", round(digits=2, max.diff.percentile), "%")
            ), 
-         col=c("darkblue", "darkgrey", "red", "pink"), lwd=2)
-#  return(lorenz)  
+           col=c("darkblue", "darkgrey", "red", "pink"), lwd=2)
+  }
+
+  if (return.stats) {
+    ## Normalize input counts according to the most discriminative percentile
+    norm.factor <- lorenz.table[max.diff.rank, "chip.cumsum"] / lorenz.table[max.diff.rank, "input.cumsum"]
+    
+    result <- list(
+      norm.factor = norm.factor,
+      max.diff.percentile=max.diff.percentile,
+      max.diff.rank=max.diff.rank,
+      counts = data.frame(
+        chip = chip.counts,
+        input = input.counts,
+        input.norm = input.counts*norm.factor),
+      lorenz.table = lorenz.table
+    )
+    return(result)
+  }
 }
 
-lorenz.table <- plot.lorenz(
+lorenz.result <- plot.lorenz(
   chip.counts = chip.bedg$counts, 
   input.counts = input.bedg$counts)
 
@@ -316,7 +354,7 @@ Several possibilities can be considered as normalizing factor.
 
 2. The **median count** $\tilde{x}$ is a robust normalization factor. Other quantiles have sometimes been used in order to capture a larger fraction of the total reads, for example the third quartile, or the  $90^{th}$ percentile of the counts per bins.
 
-3. 
+3. A more specific treatment is to use as normalization factors the cumulative counts correspondig to the most discriminating percentile on Lorenz' curves [@Diaz:2012ei]. 
 
 
 ```{r normalisation}
@@ -329,7 +367,7 @@ input.summary["sum"] <- sum(input.bedg$counts)
 
 ## Apply median-based normalisation on the input reads
 input.bedg$counts.norm <- input.bedg$counts * chip.summary["Median"] / input.summary["Median"]
-median(input.bedg$counts.norm)
+#median(input.bedg$counts.norm)
 
 input.bedg$log2counts.norm <- log2(input.bedg$counts.norm + epsilon)
 
@@ -379,7 +417,7 @@ ggplot(chip.bedg,aes(x=log2counts)) +
   theme(plot.title = element_text(hjust = 0.5, face="bold"))
 ```
 
-```{r hist_with_ggplot_norm, fig.width=8, fig.height=4}
+```{r hist_with_ggplot_norm, fig.width=8, fig.height=3}
 ## Superposed histograms of the log2-counts
 chip.bedg$log2counts.norm <- chip.bedg$log2counts
 ggplot(chip.bedg,aes(x=log2counts.norm)) +
@@ -516,4 +554,7 @@ lines(x[x>= x.obs], p[x>=x.obs], type="h", lwd=3, col="red")
 
 
 ... and compare the peaks identified with this rudimentary strategy with those returned by a real peak-caller. 
+
+
+# References
 
