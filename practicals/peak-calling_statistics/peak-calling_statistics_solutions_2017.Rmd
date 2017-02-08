@@ -1,5 +1,5 @@
 ---
-title: "Solutions - basic peak-calling statistics (2017)"
+title: "Solutions - basic peak-calling statistics (2017-01)"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
