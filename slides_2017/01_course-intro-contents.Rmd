@@ -1,0 +1,146 @@
+---
+title: "LCG - BEII 2016 - Introduction and contents"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  ioslides_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
+    highlight: tango
+    incremental: no
+    keep_md: no
+    smaller: no
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
+  slidy_presentation:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
+    highlight: tango
+    incremental: no
+    keep_md: no
+    smaller: no
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+font-family: Garamond
+font-import: http://fonts.googleapis.com/css?family=Risque
+bibliography: ../bibliography_LCG_BEII.bib
+address: Lab.Technological Advances for Genomics and Clinics, Inserm Unit U1090
+transition: linear
+---
+
+
+## Scope of the course
+
+
+1. Detection of cis-regulatory elements and other types of nucleic sequence motifs.
+
+2. Applications to Next Generation Sequencing data about regulation
+
+    - ChIP-seq for transcription factors
+    - ChIP-seq for chromating marks (histone acetylation, methylation)
+    - RNA-seq (differentially expressed genes)
+        
+3. Underlying statistics
+
+## Schedule
+
+| Day    | Topics |
+|--------|--------|
+| Day 1  | Regulatory sequences: cis-regulatory elements intro + motif discovery  |
+| Day 2  | Regulatory sequences: predicting binding sites |
+| Day 3  | NGS statistics: read mapping and peak calling |
+| Day 4  | NGS statistics: differential gene expression + functional enrichment |
+| Day 5  | Integrative exercises and evaluations |
+
+
+## Statistics
+
+1. Topics
+
+    - Statistics of motif detection
+    - NGS statistics (read mapping, peak calling, differential expression)
+      
+2. Approach
+
+    - Minimalist theoretical elements
+    - Intuitive approach to the statisics: lots of graphs, simulations, controls
+
+3. Environment
+
+    - R statistical language (<https://www.r-project.org/>)
+    - Bioconductor: (<https://www.bioconductor.org/>)
+    - Environment: RStudio (<https://www.rstudio.com/>)
+
+## Technical skills
+
+- Writing reports in R markdown (<http://rmarkdown.rstudio.com/>)
+
+- Version management with git (<https://git-scm.com/>)
+      - see @Blischak:2016kr
+
+
+## Resources for this course
+
+| Name    | Description + URL |
+|---------|-------------------|
+| LCG_BEII | The course material for this course on github <http://jvanheld.github.io/LCG_BEII> |
+| RSAT | Regulatory Sequence Analysis Tools <http://rsat.eu/> |
+| RSAT course | Teaching material for the analysis of regulatory sequences <http://rsa-tools.github.io/course/> |
+
+## Downloading a local copy of the course material
+
+This is optional. 
+
+If you wish to download a local copy of all the course material, open a Unix terminal and type.
+
+```
+git clone https://github.com/jvanheld/LCG_BEII.git
+```
+
+Then open the file *LCG_BEII/index.html* with a Web browser.
+
+
+Since the course will be periodically improved, you can get the updates with the following command. 
+
+```
+cd LCG_BEII; 
+git pull
+```
+
+## Command-line use of RSAT for LCG students
+
+LCG students can access RSAT on the command line with the following commands
+
+```
+  ## Open an ssh connection to the local server
+  ssh tepeu
+
+  ## Load the RSAT configuration file
+  source /export/apps/rsat/RSAT_config.bashrc
+
+  ## Check that the paths are correct
+  supported-organisms
+```
+
+
+## References
