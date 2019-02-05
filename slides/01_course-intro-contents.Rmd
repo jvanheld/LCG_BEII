@@ -1,0 +1,177 @@
+---
+title: "LCG - BEII - Introduction and contents"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  slidy_presentation:
+    smart: no
+    slide_level: 2
+    self_contained: yes
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    incremental: no
+    keep_md: yes
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+  ioslides_presentation:
+    slide_level: 2
+    self_contained: no
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    smaller: yes
+    toc: yes
+    widescreen: yes
+  revealjs::revealjs_presentation:
+    theme: night
+    transition: none
+    self_contained: true
+    css: slides.css
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  html_document:
+    self_contained: no
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+font-import: http://fonts.googleapis.com/css?family=Risque
+subtitle: DUBii 2019
+font-family: Garamond
+transition: linear
+bibliography: ../bibliography_LCG_BEII.bib
+address: Institut Français de Bioinformatique (IFB) + Lab.Theory and Approaches of Genome Complexity (TAGC), Inserm Unit U1090
+---
+
+
+## Scope of the course
+
+This courses provides an overview of bioinformatics methods used to analyse cis-regulation. 
+
+1. Detection of cis-regulatory elements and other types of nucleic sequence motifs.
+
+2. Next Generation Sequencing approaches to genomi regulation
+
+    - ChIP-seq for transcription factors
+    - ChIP-seq for chromatine marks (histone acetylation, methylation)
+    - RNA-seq (differentially expressed genes)
+        
+3. Underlying statistics
+
+## Schedule
+
+| Day    | Topics |
+|--------|-----------------------------------------------------------|
+| Day 1  | Regulatory sequences: cis-regulatory elements intro + predicting binding sites  |
+| Day 2  | Regulatory sequences: motif discovery |
+| Day 3  | Analysing regulation with NGS data |
+| Day 4  | Integrative exercises and evaluations |
+
+
+
+****************************************************************
+
+## General goals of the course
+
+- Learn the **concepts and methods** related to bioinformatics analysis of cis-regulation
+- Understand the  underlying **algorithms** and **statistics**.
+- Get a **practical experience** of bioinformatics resources (**databases** and **tools**) used in the domain
+
+## Specific goal: skills in statistics
+
+1. Topics
+
+    - Sequence models
+    - Statistics of motif detection (scanning, discovery)
+    - NGS statistics (read mapping, peak calling, differential expression)
+    - Designing control sets to validate the statistical models
+
+2. Approach
+
+    - Minimalist theoretical elements
+    - Intuitive approach to the statisics: lots of graphs, simulations, controls
+
+3. Environment
+
+    - R statistical language (<https://www.r-project.org/>)
+    - Bioconductor: (<https://www.bioconductor.org/>)
+    - Developing environment: RStudio (<https://www.rstudio.com/>)
+
+## Specific goal: technical skills
+
+- Writing reports in R markdown (<http://rmarkdown.rstudio.com/>)
+
+- Version management with git (<https://git-scm.com/>)
+      - see @Blischak:2016kr
+
+****************************************************************
+
+## Resources for this course
+
+| Name    | Description + URL |
+|---------|-------------------------------------------------------------|
+| LCG_BEII | The course material for this course on github <http://jvanheld.github.io/LCG_BEII> |
+| RSAT | Regulatory Sequence Analysis Tools <http://rsat.eu/> |
+| RSAT course | Teaching material for the analysis of regulatory sequences <http://rsa-tools.github.io/course/> |
+
+## Downloading a local copy of the course material
+
+This is optional. 
+
+If you wish to download a local copy of all the course material, open a Unix terminal and type.
+
+```
+git clone https://github.com/jvanheld/LCG_BEII.git
+```
+
+Then open the file *LCG_BEII/index.html* with a Web browser.
+
+
+Since the course will be periodically improved, you can get the updates with the following command. 
+
+```
+cd LCG_BEII; 
+git pull
+```
+
+## Command-line use of RSAT for LCG students
+
+LCG students can access RSAT on the command line with the following commands
+
+```
+  ## Open an ssh connection to the local server
+  ssh tepeu
+
+  ## Load the RSAT configuration file
+  source /export/apps/rsat/RSAT_config.bashrc
+
+  ## Check that the paths are correct
+  supported-organisms
+```
+
+
+## References
