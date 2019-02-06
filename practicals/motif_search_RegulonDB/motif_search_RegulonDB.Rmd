@@ -90,14 +90,24 @@ options(scipen = 12) ## Max number of digits for non-scientific notation
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Preparation of the exercise
+
+## Collective table for the 2019 practical
+
+Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
+
+- Folder: <https://tinyurl.com/lcg-beii-19>
+- Motif scanning exercise: 
+
+In your computer, create a folder to store the results of this practical, for example : `$HOME/LCG_BEII_practicals/` (you can change the path and name according to your own organisation of folders). 
 
 ## Choosing a TF on RegulonDB
 
-- Open a connection to RegulonDB <http://regulondb.ccg.unam.mx/>
+- Open a connection to RegulonDB  <http://regulondb.ccg.unam.mx/>
 
-- Choose a TF of interest
+- Click on the link [regulon list](http://regulondb.ccg.unam.mx/search?term=Regulon&organism=ECK12&type=All#). This opens a table with all the regulons. 
 
-- Open the regulon record for this TF in RegulonDB
+- Choose a TF of interest and open its record
 
 - Fill up the details of the collective exploration table (<https://tinyurl.com/lcg-beii-19>).
 
