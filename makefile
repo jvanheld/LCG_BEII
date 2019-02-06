@@ -18,5 +18,5 @@ local:
 
 WEB_SITE=http://jvanheld.github.io/LCG_BEII
 web:
-	@echo "WEB_SITE	@${WEB_SITE}
+	@echo "WEB_SITE	@${WEB_SITE}"
 	@open ${WEB_SITE}
