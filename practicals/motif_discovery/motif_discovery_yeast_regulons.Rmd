@@ -1,5 +1,5 @@
 ---
-title: "Practical: discovering a motif discovery algorithm"
+title: "Practical: motif discovery in yeast regulons"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
@@ -86,9 +86,6 @@ options(scipen = 12) ## Max number of digits for non-scientific notation
 
 ```
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## Introduction
 
@@ -256,8 +253,10 @@ YLR017W
 - Run the same analyses as above with the random selection of genes, and take note of the scores of the most significant hexanucleotide
 
 
+****************************************************************
 
 
+data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv
 
 
 
