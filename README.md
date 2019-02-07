@@ -1,8 +1,8 @@
 # Analyzing transcriptional regulation with NGS (UNAM LCG BE-II)
 
-Course taught by Jacques van Helden to 2nd year students of the
+This site contains the support for the courses  taught by Jacques van Helden to 2nd year students of the
 Licenciatura en Ciencias Genomicas de la Universidad Nacional Autonoma
-de Mexico
+de Mexico, in the module  **"Bioinformatica & Estadistica II"**.
 
 [View the Project on GitHub
 [jvanheld/LCG\_Bioinfo-II]{.small}](https://github.com/jvanheld/LCG_Bioinfo-II)
