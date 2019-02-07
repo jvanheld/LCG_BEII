@@ -455,20 +455,90 @@ tttaaa|tttaaa 0.0005600986 0.0009379354   5    8.37</code></pre>
 </p>
 </div>
 <ol start="6" style="list-style-type: decimal">
+<li>Compute the ratio of observed / expected occurrences, and draw a scatter plot with this ratio (Y) as a function of the expected occurrences (X).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ratio &lt;-<span class="st"> </span>(x<span class="op">/</span>exp.occ)
+  
+<span class="kw">plot</span>(exp.occ, ratio, 
+     <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Expected occurrences&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;(obs/exp) ratio&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;(obs/exp) ratio&quot;</span>)
+<span class="kw">grid</span>()
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;brown&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="figures/R_intro_ratio-1.png" alt="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2. " width="80%" />
+<p class="caption">
+<strong>Scatter plot of observed versus expected occurrences.</strong> The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2.
+</p>
+</div>
+<ol start="6" style="list-style-type: decimal">
 <li>Compute the log-ratio of observed / expected occurrences, and draw a scatter plot with this log-ratio (Y) as a function of the expected occurrences (X).</li>
 </ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lr &lt;-<span class="st"> </span><span class="kw">log</span>(x<span class="op">/</span>exp.occ)
+  
+<span class="kw">plot</span>(exp.occ, lr, 
+     <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Expected occurrences&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;log(obs/exp)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Log-ratio&quot;</span>)
+<span class="kw">grid</span>()
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span>  <span class="kw">log</span>(<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&quot;brown&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="figures/R_intro_lr-1.png" alt="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2. " width="80%" />
+<p class="caption">
+<strong>Scatter plot of observed versus expected occurrences.</strong> The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2.
+</p>
+</div>
 <p><span class="math display">\[lr = log(x/&lt;X&gt;)\]</span></p>
 <ol start="7" style="list-style-type: decimal">
 <li>Compute the log-likelihood ratio (<span class="math inline">\(llr\)</span>), defined below, and draw a scatter plot with this <span class="math inline">\(llr\)</span> as a function of the expected occurrences.</li>
 </ol>
 <p><span class="math display">\[llr = f \cdot log(x/&lt;X&gt;)\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>exp_freq
+llr &lt;-<span class="st"> </span>p <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(x<span class="op">/</span>exp.occ)
+  
+<span class="kw">plot</span>(exp.occ, llr, 
+     <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Expected occurrences&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;llr&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Log-likelihood ratio&quot;</span>)
+<span class="kw">grid</span>()
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="figures/R_intro_llr-1.png" alt="**Scatter plot of log-likelihood ratio (llr) versus expected occurrences.** The black line corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2. " width="80%" />
+<p class="caption">
+<strong>Scatter plot of log-likelihood ratio (llr) versus expected occurrences.</strong> The black line corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># abline(h =  log(2), col = &quot;brown&quot;)</span></code></pre></div>
 </div>
 <div id="computing-over-representation-significance" class="section level2">
 <h2>Computing over-representation significance</h2>
 <ol start="8" style="list-style-type: decimal">
+<li>Draw a binomial distribution with parameters <span class="math inline">\(n = 8000\)</span>, <span class="math inline">\(p = 0.0001\)</span>.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">8000</span>
+p &lt;-<span class="st"> </span><span class="fl">0.001</span>
+x &lt;-<span class="st"> </span><span class="dv">15</span><span class="co"># Number of successes</span>
+X &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">40</span> ## values to display
+
+<span class="kw">plot</span>(X, <span class="kw">dbinom</span>(<span class="dt">x =</span> X, <span class="dt">size =</span> n, <span class="dt">prob =</span> p), <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>)
+<span class="kw">arrows</span>(x, <span class="fl">0.04</span>, x, <span class="fl">0.02</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">angle =</span> <span class="dv">30</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+
+
+pval &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">size =</span> n, <span class="dt">prob =</span> p, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">paste</span>(<span class="st">&quot;pval =&quot;</span>, <span class="kw">signif</span>(<span class="dt">digits =</span> <span class="dv">3</span>, pval)))</code></pre></div>
+<p><img src="figures/R_intro_unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="8" style="list-style-type: decimal">
 <li>Use the binomial distribution to compute the P-value of the observed occurrences.</li>
 </ol>
 <p><span class="math display">\[P = T(X \ge x)\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>obs_freq ## Nuumber of successes
+n &lt;-<span class="st"> </span><span class="kw">sum</span>(x)   ## Number of trials
+p &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>exp_freq ## Success probability</code></pre></div>
 <ol start="9" style="list-style-type: decimal">
 <li><p>Draw an histogram with the P-values of all hexanucleotides, with 20 bins.</p></li>
 <li><p>Draw a scatter plot with the P-value (Y) as a function of the log-ratio (X).</p></li>
