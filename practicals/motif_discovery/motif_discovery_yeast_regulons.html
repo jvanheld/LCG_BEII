@@ -381,11 +381,50 @@ div.tocify {
 </ul>
 <p>At this stage, we dispose of a table with the description of all the genes associated to the biological process of our choice.</p>
 </div>
-<div id="discovering-motifs-in-promoters-of-functionally-related-genes" class="section level2">
-<h2>Discovering motifs in promoters of functionally related genes</h2>
+<div id="discovering-motifs-in-promoters-of-go-associated-related-genes" class="section level2">
+<h2>Discovering motifs in promoters of GO-associated related genes</h2>
 <p>We will try to discover over-represented motifs in the promoters of the genes involved in our pathway of interest.</p>
 <ul>
+<li>Open the TSV file with the genes involved in your biological process.</li>
+<li>Select the colum with stable gene identifiers. In my case I have the 13 following IDs.</li>
+</ul>
+<pre><code>YAL012W
+YPL273W
+YJR148W
+YHR137W
+YJR024C
+YJR024C
+YEL038W
+YEL038W
+YMR009W
+YMR009W
+YHR112C
+YGL202W
+YGL184C
+YGL184C
+YHR208W
+YPR118W
+YLR017W</code></pre>
+<ul>
 <li>Open a connection to the fungal RSATv server (<a href="http://fungi.rsat.eu/" class="uri">http://fungi.rsat.eu/</a>)</li>
+<li><p>With the tool <strong>retrieve sequence</strong>, get the non-coding sequences located upstream of your genes.</p></li>
+<li><p>In the <strong>Next Step</strong> box of the rsult page, click the button <strong>oligo-analysis</strong>.</p></li>
+<li><p>For <strong>oligomer lengths</strong> select <em>6</em> (uncheck the values 7 and 8 that are selected by default).</p></li>
+<li><p>Leave all other options unchanged and click <strong>GO</strong></p></li>
+</ul>
+<div id="questions" class="section level3">
+<h3>Questions</h3>
+<ul>
+<li>Did you obtain significant motifs ?</li>
+<li>If so, report the P-value, E-value and signiicance index of the most significant hexanucleotide in the colllective result table.</li>
+</ul>
+</div>
+</div>
+<div id="discovering-motifs-in-promoters-of-go-associated-related-genes-1" class="section level2">
+<h2>Discovering motifs in promoters of GO-associated related genes</h2>
+<ul>
+<li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool <strong>Gene information</strong> select genes based on the names found in your GO selection. For examplen for methionine biosynthesis, I enter <code>MET\d+</code> to get all genes whose name contains “MET”" followed by one or more digits.</p></li>
+<li><p>Send the results to <strong>retrieve-seq</strong>, then <strong>oligo-analysis</strong>, select hexanucleotides only, and run the same analysis. Do you obtain similar, better or worse results?</p></li>
 </ul>
 </div>
 

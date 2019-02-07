@@ -196,7 +196,7 @@ At this stage, we dispose of a table with the description of all the genes assoc
 
 
 
-## Discovering motifs in promoters of functionally related genes
+## Discovering motifs in promoters of GO-associated related genes
 
 We will try to discover over-represented motifs in the promoters of the genes involved in our pathway of interest. 
 
@@ -232,6 +232,20 @@ YLR017W
 - For **oligomer lengths** select *6* (uncheck the values 7 and 8 that are selected by default). 
 
 - Leave all other options unchanged and click **GO**
+
+### Questions
+
+- Did you obtain significant motifs ? 
+- If so, report the P-value, E-value and signiicance index of the most significant hexanucleotide in the colllective result table.
+
+
+## Discovering motifs in promoters of GO-associated related genes
+
+- In [RSAT Fungi](http://fungi.rsat.eu/), open the tool **Gene information** select genes based on the names found in your GO selection. For examplen for methionine biosynthesis, I enter `MET\d+` to get all genes whose name contains "MET"" followed by one or more digits. 
+
+- Send the results to **retrieve-seq**, then **oligo-analysis**, select hexanucleotides only, and run the same analysis. Do you obtain similar, better or worse results?
+
+
 
 
 
