@@ -1,7 +1,7 @@
 ---
 title: "Scanning non-coding sequences with a TFBM"
 author: "Jacques van Helden"
-date: '2019-02-06'
+date: '2019-02-07'
 output:
   slidy_presentation:
     smart: no
@@ -37,6 +37,16 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
+  revealjs::revealjs_presentation:
+    theme: night
+    transition: none
+    self_contained: true
+    css: ../slides.css
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
   beamer_presentation:
     colortheme: dolphin
     fig_caption: yes
@@ -49,18 +59,8 @@ output:
     slide_level: 2
     theme: Montpellier
     toc: yes
-  pdf_document:
-    fig_caption: yes
-    highlight: zenburn
-    toc: yes
-    toc_depth: 3
-  revealjs::revealjs_presentation:
-    theme: night
-    transition: none
-    self_contained: true
-    css: ../slides.css
 font-import: http://fonts.googleapis.com/css?family=Risque
-subtitle: LCG BEII 2019
+subtitle: LCG_BEII 2019
 font-family: Garamond
 transition: linear
 ---
