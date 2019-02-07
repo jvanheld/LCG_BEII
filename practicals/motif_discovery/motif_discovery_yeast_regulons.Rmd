@@ -1,0 +1,205 @@
+---
+title: "Practical: discovering a motif discovery algorithm"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    self_contained: no
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  ioslides_presentation:
+    slide_level: 2
+    self_contained: no
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    smaller: yes
+    toc: yes
+    widescreen: yes
+  revealjs::revealjs_presentation:
+    theme: night
+    transition: none
+    self_contained: true
+    css: ../../slides.css
+  slidy_presentation:
+    smart: no
+    slide_level: 2
+    self_contained: yes
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    incremental: no
+    keep_md: yes
+    smaller: yes
+    theme: cerulean
+    toc: yes
+    widescreen: yes
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
+font-import: http://fonts.googleapis.com/css?family=Risque
+subtitle: LCG_BEII 2019
+font-family: Garamond
+transition: linear
+---
+
+```{r include=FALSE, echo=FALSE, eval=TRUE}
+library(knitr)
+library(kableExtra)
+# library(formattable)
+
+options(width = 300)
+# options(encoding = 'UTF-8')
+knitr::opts_chunk$set(
+  fig.width = 7, fig.height = 5, 
+  fig.path = 'figures/R_intro_',
+  fig.align = "center", 
+  size = "tiny", 
+  echo = TRUE, eval = TRUE, 
+  warning = FALSE, message = FALSE, 
+  results = FALSE, comment = "")
+
+options(scipen = 12) ## Max number of digits for non-scientific notation
+# knitr::asis_output("\\footnotesize")
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+In this tutorial, we will use **R** to detect over-represented motifs in the regulatory sequences of a set of genes involved in a biological process of interest. 
+
+**Our study case:** We examplify the approach with the **methionine biosynthetic process** in the yeast *Saccharomyces cerevisiae*. 
+
+Each student will be invited to run the same analyses with a different biological process, and we will compare the results gathered by all of us in order to draw some general insight into the relevance of the approach.
+
+## Suggested biological processes
+
+I provide here some examples of biological processes of the yeast Saccharomyces cerevisiae. Note that these processes may have different names depending on the databases, so you will have to adapt them in different steps of the tutorial. 
+
+- Methionine biosynthesis
+- Ergosterol biosynthesis
+- Arginine biosyntesis
+- lysine biosynthesis
+- Galactose utilization
+- Phosphae utilization
+- Nitrogen utilization
+- ... (don't hesitate to be adventurous)
+
+## Resources
+
+| Resource | URL |
+|-----------------------------|--------------------------------------------|
+| Gene Ontology Consortium | <http://www.geneontology.org/> |
+| Ensembl BioMart | <https://www.ensembl.org/> |
+| RSAT | Regulatory Sequence Analysis Tools (<http://rsat.eu/>) |
+
+
+## Viewing metabolic pathways on BioCyc
+
+- Open a connection to **BioCyc** (<https://biocyc.org/>)
+- In the right-left corner, click **change organism database** and select *Saccharomyces cerevisiae S288c*.
+- Select the function **Metabolism** > **Generate a metabolic map poster** to get an overview of the whole metabolism.
+- Select the tool *Browse pathway ontology* and select a pathway of your choice (not too big, not too small, let us say between 5 and 50 genes). 
+
+- As an example I select two pathways: 
+    - "superpathway of sulfur amino acid biosynthesis"
+    - "L-methionine de novo biosynthesis" 
+    
+- Click on the pathway instances to display the pathway maps. PLay with the options to increase/decrease the level of detail. 
+
+- In your custom result folder, save a figure that provides a nice view of the pathway, and could be used for example in the introduction of a report. 
+
+
+## Finding a process in the Gene Ontology
+
+- Open a connection to the Gene Ontology Consortium (<http://www.geneontology.org/>)
+
+- In the menu at the top of the page, select **Tools** > **AmiGO 2**. 
+
+- In the quick search box, type the name of your biological process of interest (e.g. 'methionine biosynthetic process'). As you type, a pop-up menu appears to display the subset of GO terms corresponding to your query. Select the one you need (e.g. "L-methionine biosynthetic process").
+
+This opens the record describing the biological process you chose. 
+
+- Before anything else, take note of the GO dientifier (e.g.: GO:0071265)
+
+- Read the **Term description** box and check that the description corresponds to your choice. 
+
+- At the bottom of the **Term description** page, click on the **Link to all genes and gene products annotated to [your] process**.
+
+- In the filter box, type "Saccharomyces cerevisiae" and count the number of genes associated to your process in the budding yeast. 
+
+## Getting genes from BioMart
+
+- Open a connection to **Ensembl** (<https://www.ensembl.org/>) and select  the **BioMart** tool. 
+
+- **Choose the database:** *Ensembl Genes [version]* (note: the current version is 95 in Feb 2019)
+
+- **Choose dataset:** *Saccharomyces cerevisiae genes (R-46-1-1)*
+
+- In the left menu, click **Filters** and open the section **Gene Ontology**.
+
+- Type the GO term accession ID of your choice (e.g. GO:0071265).
+
+- In the top corner of the windfow, click **Count** and check that you have a reasonable number of genes (with GO:0071265, there are 13 genes). 
+
+We will now customize the attributes to be extracted from BioMart.
+
+- In the left menu, click **Attributes**, then **Genes**
+
+- Activate the following attributes: 
+
+    - Gene stable ID
+    - Protein stable ID
+    - Gene description
+    - Gene name
+
+Note: BioMart is a flexible way to quickly get a lot of information about genes. For other tasks you might be led to select additional attributes. 
+
+- In the top left corner, click **Results** to get the selected genes.
+
+- Select **Export all results to File** and **TSV** (tab-separted values) and click **Go**.  This will download a tab-delimited text file in tge Download folder of your Web browser. Save this file on your computer. 
+
+
+- Rename the downloaded file (e.g. `Scerevisiae_methionine-biosynthetic-process_GO-0071265_genes.tsv`).
+
+- Open the TSV file to check its content. The most convenient is to open it with a spreadsheet tool (e.g. LibreOffice Calc, Excel), but you can also view it with a simple text editor. 
+
+
+At this stage, we dispose of a table with the description of all the genes associated to the biological process of our choice.
+
+
+
+
+
+
+
+
+
+
+

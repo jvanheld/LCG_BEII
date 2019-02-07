@@ -3,18 +3,6 @@ title: "LCG - BEII - Introduction and contents"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
-  beamer_presentation:
-    colortheme: dolphin
-    fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    fonttheme: structurebold
-    highlight: tango
-    incremental: no
-    keep_tex: no
-    slide_level: 2
-    theme: Montpellier
-    toc: yes
   ioslides_presentation:
     slide_level: 2
     self_contained: no
@@ -27,6 +15,18 @@ output:
     smaller: yes
     toc: yes
     widescreen: yes
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
   revealjs::revealjs_presentation:
     theme: night
     transition: none
@@ -70,7 +70,7 @@ address: Institut Français de Bioinformatique (IFB) + Lab.Theory and Approaches
 
 ## Scope of the course
 
-This courses provides an overview of bioinformatics methods used to analyse cis-regulation. 
+This courses provides an overview of bioinformatics methods used to analyse cis-regulator elements in non-coding DNA sequences. 
 
 1. Detection of cis-regulatory elements and other types of nucleic sequence motifs.
 
