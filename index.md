@@ -68,7 +68,7 @@ Email: <Jacques.van-Helden@univ-amu.fr>
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| **Practical:** scaning sequences with a reference motif |  [[exercise](practicals/motif_search_RegulonDB/motif_search_RegulonDB.html)] | |
+| **Exercise:** scaning sequences with a reference motif |  [[exercise](practicals/motif_search_RegulonDB/motif_search_RegulonDB.html)] | |
 
   
 ### Day 3: motif discovery
@@ -77,8 +77,8 @@ Email: <Jacques.van-Helden@univ-amu.fr>
 |-------------------------------------------------------|----------|
 | Introduction to motif discovery |  [[slides](http://rsa-tools.github.io/course/pdf_files/03.1.pattern_discovery_intro.pdf)] |
 | String-based pattern discovery | [[slides](http://rsa-tools.github.io/course/pdf_files/03.2.1.pattern_discovery_strings.pdf)] |
-| **Practical:** mlotif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
-| **Practical:** discovering a motif discovery algorithm | [[exercise](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)]
+| **Tutorial:** mlotif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
+| **Exercise:** discovering a motif discovery algorithm | [[exercise](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)]
 
 
 ## Resources
