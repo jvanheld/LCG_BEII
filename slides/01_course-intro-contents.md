@@ -1,7 +1,7 @@
 ---
 title: "LCG - BEII - Introduction and contents"
 author: "Jacques van Helden"
-date: '2019-02-05'
+date: '2019-02-07'
 output:
   slidy_presentation:
     smart: no
@@ -17,23 +17,6 @@ output:
     theme: cerulean
     toc: yes
     widescreen: yes
-  ioslides_presentation:
-    slide_level: 2
-    self_contained: no
-    colortheme: dolphin
-    fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    fonttheme: structurebold
-    highlight: tango
-    smaller: yes
-    toc: yes
-    widescreen: yes
-  revealjs::revealjs_presentation:
-    theme: night
-    transition: none
-    self_contained: true
-    css: slides.css
   beamer_presentation:
     colortheme: dolphin
     fig_caption: yes
@@ -46,11 +29,11 @@ output:
     slide_level: 2
     theme: Montpellier
     toc: yes
-  pdf_document:
-    fig_caption: yes
-    highlight: zenburn
-    toc: yes
-    toc_depth: 3
+  revealjs::revealjs_presentation:
+    theme: night
+    transition: none
+    self_contained: true
+    css: slides.css
   html_document:
     self_contained: no
     fig_caption: yes
@@ -59,6 +42,23 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  ioslides_presentation:
+    slide_level: 2
+    self_contained: no
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    smaller: yes
+    toc: yes
+    widescreen: yes
 font-import: http://fonts.googleapis.com/css?family=Risque
 subtitle: DUBii 2019
 font-family: Garamond
@@ -70,7 +70,7 @@ address: Institut Français de Bioinformatique (IFB) + Lab.Theory and Approaches
 
 ## Scope of the course
 
-This courses provides an overview of bioinformatics methods used to analyse cis-regulation. 
+This courses provides an overview of bioinformatics methods used to analyse cis-regulator elements in non-coding DNA sequences. 
 
 1. Detection of cis-regulatory elements and other types of nucleic sequence motifs.
 
