@@ -233,6 +233,8 @@ YLR017W
 
 - Leave all other options unchanged and click **GO**
 
+- Do the same analysis with **dyad-analysis** instead of oligo-analysis.
+
 ### Questions
 
 - Did you obtain significant motifs ? 
@@ -243,8 +245,15 @@ YLR017W
 
 - In [RSAT Fungi](http://fungi.rsat.eu/), open the tool **Gene information** select genes based on the names found in your GO selection. For examplen for methionine biosynthesis, I enter `MET\d+` to get all genes whose name contains "MET"" followed by one or more digits. 
 
+- How many genes do you obtain? Is this more than the number of GO-associated genes?
+
 - Send the results to **retrieve-seq**, then **oligo-analysis**, select hexanucleotides only, and run the same analysis. Do you obtain similar, better or worse results?
 
+## Negative control
+
+- In [RSAT Fungi](http://fungi.rsat.eu/), open the tool **Random gene selection**, select *Saccharomyces cerevisiae* and set the number of genes to the size of the gene set analysed above (choose the one that gave the best result). 
+
+- Run the same analyses as above with the random selection of genes, and take note of the scores of the most significant hexanucleotide
 
 
 

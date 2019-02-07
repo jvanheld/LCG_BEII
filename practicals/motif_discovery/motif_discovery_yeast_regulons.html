@@ -411,6 +411,7 @@ YLR017W</code></pre>
 <li><p>In the <strong>Next Step</strong> box of the rsult page, click the button <strong>oligo-analysis</strong>.</p></li>
 <li><p>For <strong>oligomer lengths</strong> select <em>6</em> (uncheck the values 7 and 8 that are selected by default).</p></li>
 <li><p>Leave all other options unchanged and click <strong>GO</strong></p></li>
+<li><p>Do the same analysis with <strong>dyad-analysis</strong> instead of oligo-analysis.</p></li>
 </ul>
 <div id="questions" class="section level3">
 <h3>Questions</h3>
@@ -424,7 +425,15 @@ YLR017W</code></pre>
 <h2>Discovering motifs in promoters of GO-associated related genes</h2>
 <ul>
 <li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool <strong>Gene information</strong> select genes based on the names found in your GO selection. For examplen for methionine biosynthesis, I enter <code>MET\d+</code> to get all genes whose name contains “MET”" followed by one or more digits.</p></li>
+<li><p>How many genes do you obtain? Is this more than the number of GO-associated genes?</p></li>
 <li><p>Send the results to <strong>retrieve-seq</strong>, then <strong>oligo-analysis</strong>, select hexanucleotides only, and run the same analysis. Do you obtain similar, better or worse results?</p></li>
+</ul>
+</div>
+<div id="negative-control" class="section level2">
+<h2>Negative control</h2>
+<ul>
+<li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool <strong>Random gene selection</strong>, select <em>Saccharomyces cerevisiae</em> and set the number of genes to the size of the gene set analysed above (choose the one that gave the best result).</p></li>
+<li><p>Run the same analyses as above with the random selection of genes, and take note of the scores of the most significant hexanucleotide</p></li>
 </ul>
 </div>
 
