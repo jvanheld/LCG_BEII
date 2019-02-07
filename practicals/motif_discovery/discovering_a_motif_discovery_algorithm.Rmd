@@ -3,18 +3,15 @@ title: "Discovering a motif discovering appproach"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
-  ioslides_presentation:
-    slide_level: 2
+  html_document:
+    code_folding: hide
     self_contained: no
-    colortheme: dolphin
     fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    fonttheme: structurebold
-    highlight: tango
-    smaller: yes
+    highlight: zenburn
+    theme: cerulean
     toc: yes
-    widescreen: yes
+    toc_depth: 3
+    toc_float: yes
   revealjs::revealjs_presentation:
     theme: night
     transition: none
@@ -39,14 +36,18 @@ output:
     highlight: zenburn
     toc: yes
     toc_depth: 3
-  html_document:
+  ioslides_presentation:
+    slide_level: 2
     self_contained: no
+    colortheme: dolphin
     fig_caption: yes
-    highlight: zenburn
-    theme: cerulean
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    smaller: yes
     toc: yes
-    toc_depth: 3
-    toc_float: yes
+    widescreen: yes
   beamer_presentation:
     colortheme: dolphin
     fig_caption: yes
@@ -77,9 +78,9 @@ knitr::opts_chunk$set(
   fig.path = 'figures/R_intro_',
   fig.align = "center", 
   size = "tiny", 
-  echo = FALSE, eval = FALSE, 
+  echo = TRUE, eval = TRUE, 
   warning = FALSE, message = FALSE, 
-  results = FALSE, comment = "")
+  results = TRUE, comment = "")
 
 options(scipen = 12) ## Max number of digits for non-scientific notation
 # knitr::asis_output("\\footnotesize")
@@ -127,21 +128,46 @@ download.file(oligo.url, destfile = oligo.file)
 
 2. In **R**, open a new script or R markdown file. 
 
-3. Load the data table.
+3. Load the data table, print the 5 top rows and the 5 bottom rows.
 
 ```{r load_oligos}
 
 oligo.table <- read.delim(oligo.file, header = 1, row.names = 1)
-#View(oligo.table)
+# View(oligo.table)
 
+head(oligo.table, n = 5)
+tail(oligo.table, n = 5)
 ```
 
 4. Draw an histogram of the observed occurrences and evaluate the spread of counts. 
 
-
-
 5. Draw a scatter plot comparing the observed and expected occurrences for each hexanucleotide. 
 
-5. Compute the log-ratio of observed / expected occurrences.
+6. Compute the log-ratio of observed / expected occurrences, and draw a scatter plot with this log-ratio (Y) as a function of the expected occurrences (X). 
+
+$$lr = log(x/<X>)$$
+
+7. Compute the log-likelihood ratio ($llr$), defined below, and draw a scatter plot with this $llr$ as a function of the expected occurrences. 
+
+$$llr = f \cdot log(x/<X>)$$
+
+
+8. Use the binomial distribution to compute the P-value of the observed occurrences. 
+
+$$P = T(X \ge x)$$
+
+9. Draw an histogram with the P-values of all hexanucleotides, with 20 bins.
+
+10. Draw a scatter plot with the P-value (Y) as a function of the log-ratio (X). 
+
+11. Compute the E-value, and the significance. 
+
+$$E = P \cdot N$$
+$$sig = -log_{10}(E)$$
+
+12. Draw a **Volcano plot**, with the significance as a function of the log-ratio. 
+
+
+
 
 

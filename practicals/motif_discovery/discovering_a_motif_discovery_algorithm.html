@@ -1,142 +1,465 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-  <title>Discovering a motif discovering appproach</title>
 
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="generator" content="pandoc" />
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Jacques van Helden" />
 
-  <meta name="date" content="2019-02-07" />
+<meta name="date" content="2019-02-07" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+<title>Discovering a motif discovering appproach</title>
 
-  <base target="_blank">
+<script src="discovering_a_motif_discovery_algorithm_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="discovering_a_motif_discovery_algorithm_files/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="discovering_a_motif_discovery_algorithm_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="discovering_a_motif_discovery_algorithm_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="discovering_a_motif_discovery_algorithm_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="discovering_a_motif_discovery_algorithm_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="discovering_a_motif_discovery_algorithm_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="discovering_a_motif_discovery_algorithm_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="discovering_a_motif_discovery_algorithm_files/navigation-1.1/tabsets.js"></script>
+<script src="discovering_a_motif_discovery_algorithm_files/navigation-1.1/codefolding.js"></script>
 
-  <script type="text/javascript">
-    var SLIDE_CONFIG = {
-      // Slide settings
-      settings: {
-                title: 'Discovering a motif discovering appproach',
-                        subtitle: 'LCG_BEII 2019',
-                useBuilds: true,
-        usePrettify: true,
-        enableSlideAreas: true,
-        enableTouch: true,
-                      },
 
-      // Author information
-      presenters: [
-            {
-        name:  'Jacques van Helden' ,
-        company: '',
-        gplus: '',
-        twitter: '',
-        www: '',
-        github: ''
-      },
-            ]
-    };
-  </script>
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 
-  <link href="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
-  <link href="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
-  <link href="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/hammer.js"></script>
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/slide-controller.js"></script>
-  <script src="discovering_a_motif_discovery_algorithm_files/ioslides-13.5.1/js/slide-deck.js"></script>
-
-  <style type="text/css">
-
-    b, strong {
-      font-weight: bold;
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
     }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
-    em {
-      font-style: italic;
-    }
 
-    summary {
-      display: list-item;
-    }
-
-    slides > slide {
-      -webkit-transition: all 0.4s ease-in-out;
-      -moz-transition: all 0.4s ease-in-out;
-      -o-transition: all 0.4s ease-in-out;
-      transition: all 0.4s ease-in-out;
-    }
-
-    .auto-fadein {
-      -webkit-transition: opacity 0.6s ease-in;
-      -webkit-transition-delay: 0.4s;
-      -moz-transition: opacity 0.6s ease-in 0.4s;
-      -o-transition: opacity 0.6s ease-in 0.4s;
-      transition: opacity 0.6s ease-in 0.4s;
-      opacity: 0;
-    }
-
-  </style>
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
 
 
 </head>
 
-<body style="opacity: 0">
+<body>
 
-<slides class="layout-widescreen">
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
 
-  <slide class="title-slide segue nobackground">
-        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
-    <hgroup class="auto-fadein">
-      <h1 data-config-title><!-- populated from slide_config.json --></h1>
-      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
-      <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">2019-02-07</p>
-          </hgroup>
-  </slide>
 
-<slide class=""><hgroup><h2>Goal of the exercise</h2></hgroup><article  id="goal-of-the-exercise" class="smaller ">
 
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Discovering a motif discovering appproach</h1>
+<h3 class="subtitle"><em>LCG_BEII 2019</em></h3>
+<h4 class="author"><em>Jacques van Helden</em></h4>
+<h4 class="date"><em>2019-02-07</em></h4>
+
+</div>
+
+
+<div id="goal-of-the-exercise" class="section level2">
+<h2>Goal of the exercise</h2>
 <p>The goal of this exercise is to get an intuition of a motif discovery approach relying on the detection of over-represented oligonucleotides.</p>
-
 <p>Our approach will be pragmatic.</p>
-
 <p>We retrieved the upstream non-coding sequences of the genes involved in methionine biosynthesis and sulfur assimilation, and counted the occurrences of each hexanucleotide.</p>
-
 <p>We also computed</p>
-
 <ul>
 <li>the relative frequencies (occurrences of each oligo / sum of all oligo occurrences) in the sequence of interest (the promoters of methionine-associated genes)</li>
 <li>the relative frequencies of ach hexanucleotide in the whole set of yeast promoters.</li>
 </ul>
-
 <p>We would like to know if some 6nt are over-reprsented in promoters of methionine-associated genes relative to the occurrences that would be expected from a random selection of yeast promoters.</p>
-
-</article></slide><slide class=""><hgroup><h2>Create a workspace for this practical</h2></hgroup><article  id="create-a-workspace-for-this-practical" class="smaller ">
-
-</article></slide><slide class=""><hgroup><h2>Loading the data table</h2></hgroup><article  id="loading-the-data-table" class="smaller ">
-
-<ol>
-<li><p>Download the oligonucleotide count table. <a href='http://jvanheld.github.io/LCG_BEII/practicals/motif_discovery/data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv' title=''>Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv</a></p></li>
+</div>
+<div id="create-a-workspace-for-this-practical" class="section level2">
+<h2>Create a workspace for this practical</h2>
+<ul>
+<li>In your home directory, create a work directory for this practical (for example <code>~/LCG_BEII/practical_motif_discovery/</code>).</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">workdir &lt;-<span class="st"> &quot;~/LCG_BEII/practical_motif_discovery&quot;</span>
+<span class="kw">dir.create</span>(workdir, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)
+<span class="kw">setwd</span>(workdir)</code></pre></div>
+</div>
+<div id="loading-the-data-table" class="section level2">
+<h2>Loading the data table</h2>
+<ol style="list-style-type: decimal">
+<li>Download the oligonucleotide count table. <a href="http://jvanheld.github.io/LCG_BEII/practicals/motif_discovery/data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv">Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv</a></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">oligo.url &lt;-<span class="st"> &quot;http://jvanheld.github.io/LCG_BEII/practicals/motif_discovery/data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv&quot;</span>
+oligo.file &lt;-<span class="st"> </span><span class="kw">basename</span>(oligo.url) ## Suppress the URL path and keep only the file name for local storage
+<span class="kw">download.file</span>(oligo.url, <span class="dt">destfile =</span> oligo.file)</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
 <li><p>In <strong>R</strong>, open a new script or R markdown file.</p></li>
-<li><p>Load the data table.</p></li>
+<li><p>Load the data table, print the 5 top rows and the 5 bottom rows.</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">oligo.table &lt;-<span class="st"> </span><span class="kw">read.delim</span>(oligo.file, <span class="dt">header =</span> <span class="dv">1</span>, <span class="dt">row.names =</span> <span class="dv">1</span>)
+<span class="co"># View(oligo.table)</span>
+
+<span class="kw">head</span>(oligo.table, <span class="dt">n =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>                 obs_freq    exp_freq occ exp_occ
+aaaaaa|tttttt 0.004592808 0.004896299  41   43.71
+aaaaac|gttttt 0.001120197 0.001998518  10   17.84
+aaaaag|cttttt 0.003696651 0.003604251  33   32.18
+aaaaat|attttt 0.004032710 0.004160627  36   37.14
+aaaaca|tgtttt 0.001344237 0.001932479  12   17.25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(oligo.table, <span class="dt">n =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>                  obs_freq     exp_freq occ exp_occ
+ttccaa|ttggaa 0.0008961577 0.0008428396   8    7.52
+ttcgaa|ttcgaa 0.0001120197 0.0003224542   1    2.88
+ttgaaa|tttcaa 0.0019043352 0.0019087053  17   17.04
+ttgcaa|ttgcaa 0.0001120197 0.0004030214   1    3.60
+tttaaa|tttaaa 0.0005600986 0.0009379354   5    8.37</code></pre>
+<ol start="4" style="list-style-type: decimal">
 <li><p>Draw an histogram of the observed occurrences and evaluate the spread of counts.</p></li>
 <li><p>Draw a scatter plot comparing the observed and expected occurrences for each hexanucleotide.</p></li>
-<li><p>Compute the log-ratio of observed / expected occurrences.</p></li>
-</ol></article></slide>
+<li><p>Compute the log-ratio of observed / expected occurrences, and draw a scatter plot with this log-ratio (Y) as a function of the expected occurrences (X).</p></li>
+</ol>
+<p><span class="math display">\[lr = log(x/&lt;X&gt;)\]</span></p>
+<ol start="7" style="list-style-type: decimal">
+<li>Compute the log-likelihood ratio (<span class="math inline">\(llr\)</span>), defined below, and draw a scatter plot with this <span class="math inline">\(llr\)</span> as a function of the expected occurrences.</li>
+</ol>
+<p><span class="math display">\[llr = f \cdot log(x/&lt;X&gt;)\]</span></p>
+<ol start="8" style="list-style-type: decimal">
+<li>Use the binomial distribution to compute the P-value of the observed occurrences.</li>
+</ol>
+<p><span class="math display">\[P = T(X \ge x)\]</span></p>
+<ol start="9" style="list-style-type: decimal">
+<li><p>Draw an histogram with the P-values of all hexanucleotides, with 20 bins.</p></li>
+<li><p>Draw a scatter plot with the P-value (Y) as a function of the log-ratio (X).</p></li>
+<li><p>Compute the E-value, and the significance.</p></li>
+</ol>
+<p><span class="math display">\[E = P \cdot N\]</span> <span class="math display">\[sig = -log_{10}(E)\]</span></p>
+<ol start="12" style="list-style-type: decimal">
+<li>Draw a <strong>Volcano plot</strong>, with the significance as a function of the log-ratio.</li>
+</ol>
+</div>
 
 
-  <slide class="backdrop"></slide>
 
-</slides>
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
@@ -145,20 +468,6 @@
     script.type = "text/javascript";
     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-<!-- map slide visiblity events into shiny -->
-<script>
-  (function() {
-    if (window.jQuery) {
-       window.jQuery(document).on('slideleave', function(e) {
-         window.jQuery(e.target).trigger('hidden');
-      });
-       window.jQuery(document).on('slideenter', function(e) {
-         window.jQuery(e.target).trigger('shown');
-      });
-    }
   })();
 </script>
 
