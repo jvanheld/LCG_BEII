@@ -4,14 +4,12 @@ This site contains the support for the courses  taught by Jacques van Helden to 
 Licenciatura en Ciencias Genomicas de la Universidad Nacional Autonoma
 de Mexico, in the module  **"Bioinformatica & Estadistica II"**.
 
-[View the Project on GitHub
-[jvanheld/LCG\_Bioinfo-II]{.small}](https://github.com/jvanheld/LCG_Bioinfo-II)
+## Access
 
--   [Download **ZIP
-    File**](https://github.com/jvanheld/LCG_Bioinfo-II/zipball/master)
--   [Download **TAR
-    Ball**](https://github.com/jvanheld/LCG_Bioinfo-II/tarball/master)
--   [View On **GitHub**](https://github.com/jvanheld/LCG_Bioinfo-II)
+- [Web site](http://jvanheld.github.io/LCG_BEII/)
+- [Download **ZIP File**](https://github.com/jvanheld/LCG_Bioinfo-II/zipball/master)
+- [Download **TARBall**](https://github.com/jvanheld/LCG_Bioinfo-II/tarball/master)
+- [View On **GitHub**](https://github.com/jvanheld/LCG_Bioinfo-II)
 
 ## Scope of the course
 
