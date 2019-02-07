@@ -1,0 +1,8 @@
+title: Analyzing transcriptional regulation with NGS (course by Jacques van Helden for UNAM LCG BE-II)
+description: Course taught by Jacques van Helden to 2nd year students of the Licenciatura en Ciencias Genomicas de la Universidad Nacional Autonoma de Mexico
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-minimal
+
+gems:
+  - jekyll-mentions
