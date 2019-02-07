@@ -4,6 +4,16 @@ This site contains the support for the courses  taught by Jacques van Helden to 
 Licenciatura en Ciencias Genomicas de la Universidad Nacional Autonoma
 de Mexico, in the module  **"Bioinformatica & Estadistica II"**.
 
+## Contents
+
+- [Access](#access)
+- [Scope of the course](#scope-of-the-course)
+- [Keywords](#keywords)
+- [Authors and contributors](#authors-and-contributors)
+- [Teaching material](#teaching-material)
+- [Resources](#resources)
+- [Support or Contact](#support-or-contact)
+
 ## Access
 
 - [Web site](http://jvanheld.github.io/LCG_BEII/)
@@ -41,13 +51,14 @@ Web: <http://jacques.van-helden.perso.luminy.univ-amu.fr/>\
 Email: <Jacques.van-Helden@univ-amu.fr>
 
 ****************************************************************
-## Teaching material (2018-02)
+## Teaching material
 
 ### Day 1: from TF binding sites to motifs and back
 
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
+| Introduction to the course | [[slides](slides/01_course-intro-contents.html)]
 | Transcriptional regulation | [[slides](http://rsa-tools.github.io/course/pdf_files/01.2_regulatory_sequences_intro.pdf)] |
 | Position-specific scoring matrices (PSSM) | [[slides](http://rsa-tools.github.io/course/pdf_files/01.4.PSSM_theory.pdf)] |
 | Sequence models (Bernoulli, Markov chains) | [[slides](http://rsa-tools.github.io/course/pdf_files/01.3.sequence_models.pdf)] |
