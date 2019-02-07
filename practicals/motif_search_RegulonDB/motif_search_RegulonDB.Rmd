@@ -152,9 +152,15 @@ In your computer, create a folder to store the results of this practical, for ex
 
 - With the respective p-values used for the scanning, how many matches would you expect by chance ?
 
-## Negative control
+## Negative control 1: scan artificial sequences with your motif
 
-- Use the tool **convert-matrix** with the option *permute columns* in order to generate a randomized motif
+- RSAT random sequences
+
+## Negative control 2: permute the columns of the matrix
+
+- Use the tool **permute-matrix** in order to generate 10 randomized copies of the motif
+
+- Send these randomiazed matrices to **convert-matrix** and check their logo. 
 
 - Run the same analyses as above with the randomized matrix
 
