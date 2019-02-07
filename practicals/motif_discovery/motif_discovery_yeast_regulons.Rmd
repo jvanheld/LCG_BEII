@@ -102,10 +102,11 @@ Each student will be invited to run the same analyses with a different biologica
 
 I provide here some examples of biological processes of the yeast Saccharomyces cerevisiae. Note that these processes may have different names depending on the databases, so you will have to adapt them in different steps of the tutorial. 
 
-- Methionine biosynthesis
+- L-methionine biosynthesis
+- L-arginine biosyntesis
+- L-lysine biosynthesis
+- any other aminoacid metabolic pathway
 - Ergosterol biosynthesis
-- Arginine biosyntesis
-- lysine biosynthesis
 - Galactose utilization
 - Phosphae utilization
 - Nitrogen utilization
@@ -195,6 +196,42 @@ At this stage, we dispose of a table with the description of all the genes assoc
 
 
 
+## Discovering motifs in promoters of functionally related genes
+
+We will try to discover over-represented motifs in the promoters of the genes involved in our pathway of interest. 
+
+- Open the TSV file with the genes involved in your biological process. 
+- Select the colum with stable gene identifiers. In my case I have the 13 following IDs. 
+
+
+```
+YAL012W
+YPL273W
+YJR148W
+YHR137W
+YJR024C
+YJR024C
+YEL038W
+YEL038W
+YMR009W
+YMR009W
+YHR112C
+YGL202W
+YGL184C
+YGL184C
+YHR208W
+YPR118W
+YLR017W
+```
+
+- Open a connection to the fungal RSATv server (<http://fungi.rsat.eu/>)
+- With the tool **retrieve sequence**, get the non-coding sequences located upstream of your genes. 
+
+- In the **Next Step** box of the rsult page, click the button **oligo-analysis**. 
+
+- For **oligomer lengths** select *6* (uncheck the values 7 and 8 that are selected by default). 
+
+- Leave all other options unchanged and click **GO**
 
 
 
