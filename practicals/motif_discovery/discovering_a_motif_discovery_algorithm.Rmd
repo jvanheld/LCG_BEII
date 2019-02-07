@@ -139,11 +139,75 @@ head(oligo.table, n = 5)
 tail(oligo.table, n = 5)
 ```
 
+## Exploring observed and expected counts
+
 4. Draw an histogram of the observed occurrences and evaluate the spread of counts. 
 
-5. Draw a scatter plot comparing the observed and expected occurrences for each hexanucleotide. 
+```{r obs_hist, out.width="80%", fig.width=7, fig.height=4}
+x <- oligo.table$occ
+range(x)
+max.x <- max(x)
+
+hist(x, breaks = 0:max.x, col = "palegreen",
+     xlab = "Observed occurrences",
+     ylab = "Nb of oligos",
+     las = 1,
+     main = "Distribution of oligonucelotide occurrences")
+```
+
+
+5. Draw a scatter plot comparing the observed and expected occurrences for each hexanucleotide.
+
+```{r obs_vs_exp, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
+exp.occ <- oligo.table$exp_occ
+  
+plot(exp.occ, x, col = "grey", las = 1, 
+     xlab = "Expected occurrences", 
+     ylab = "Observed occurrences",
+     main = "Observed vs expected occurrences")
+grid()
+abline(a = 0, b = 1, col = "black")
+abline(h = 0, col = "black")
+abline(v = 0, col = "black")
+
+abline(a = 0, b = 2, col = "brown")
+
+```
+
+
+6. Compute the ratio of observed / expected occurrences, and draw a scatter plot with this ratio (Y) as a function of the expected occurrences (X). 
+
+```{r ratio, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
+ratio <- (x/exp.occ)
+  
+plot(exp.occ, ratio, 
+     col = "grey", las = 1, 
+     xlab = "Expected occurrences", 
+     ylab = "(obs/exp) ratio",
+     main = "(obs/exp) ratio")
+grid()
+abline(h = 1, col = "black")
+abline(h = 2, col = "brown")
+
+```
+
 
 6. Compute the log-ratio of observed / expected occurrences, and draw a scatter plot with this log-ratio (Y) as a function of the expected occurrences (X). 
+
+```{r lr, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
+lr <- log(x/exp.occ)
+  
+plot(exp.occ, lr, 
+     col = "grey", las = 1, 
+     xlab = "Expected occurrences", 
+     ylab = "log(obs/exp)",
+     main = "Log-ratio")
+grid()
+abline(h = 0, col = "black")
+abline(h =  log(2), col = "brown")
+
+```
+
 
 $$lr = log(x/<X>)$$
 
@@ -152,9 +216,55 @@ $$lr = log(x/<X>)$$
 $$llr = f \cdot log(x/<X>)$$
 
 
+```{r llr, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of log-likelihood ratio (llr) versus expected occurrences.** The black line corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
+p <- oligo.table$exp_freq
+llr <- p * log(x/exp.occ)
+  
+plot(exp.occ, llr, 
+     col = "grey", las = 1, 
+     xlab = "Expected occurrences", 
+     ylab = "llr",
+     main = "Log-likelihood ratio")
+grid()
+abline(h = 0, col = "black")
+# abline(h =  log(2), col = "brown")
+
+```
+
+
+
+## Computing over-representation significance
+
+8. Draw a binomial distribution with parameters $n = 8000$, $p = 0.0001$.
+
+```{r}
+n <- 8000
+p <- 0.001
+x <- 15# Number of successes
+X <- 0:40 ## values to display
+
+plot(X, dbinom(x = X, size = n, prob = p), type = "h")
+arrows(x, 0.04, x, 0.02, lwd = 2, length = 0.1, angle = 30, col = "red")
+
+
+pval <- pbinom(q = x - 1, size = n, prob = p, lower.tail = FALSE)
+legend("topright", legend = paste("pval =", signif(digits = 3, pval)))
+
+```
+
+
 8. Use the binomial distribution to compute the P-value of the observed occurrences. 
 
 $$P = T(X \ge x)$$
+
+```{r}
+x <- oligo.table$obs_freq ## Nuumber of successes
+n <- sum(x)   ## Number of trials
+p <- oligo.table$exp_freq ## Success probability
+
+
+```
+
 
 9. Draw an histogram with the P-values of all hexanucleotides, with 20 bins.
 
@@ -166,6 +276,14 @@ $$E = P \cdot N$$
 $$sig = -log_{10}(E)$$
 
 12. Draw a **Volcano plot**, with the significance as a function of the log-ratio. 
+
+13. Compute the P-value using the Poisson distribution as approximation of the binomial. Are we in suitable conditions for this approximation ? Draw a plot comparing the P-values obtained by the binomial and Poisson distributions. 
+
+14. Compute the P-value using a normal approximation of the binomial distribution. 
+
+    a. Are we in suitable conditions to approximate a binomial with a normal ?
+    b. Compare the P-values obtained with the binomial and norma distrinbutions, resp. 
+    
 
 
 
