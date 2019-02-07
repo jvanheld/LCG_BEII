@@ -3,14 +3,6 @@ title: "Discovering a motif discovering appproach"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
-  html_document:
-    self_contained: no
-    fig_caption: yes
-    highlight: zenburn
-    theme: cerulean
-    toc: yes
-    toc_depth: 3
-    toc_float: yes
   ioslides_presentation:
     slide_level: 2
     self_contained: no
@@ -47,6 +39,14 @@ output:
     highlight: zenburn
     toc: yes
     toc_depth: 3
+  html_document:
+    self_contained: no
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
   beamer_presentation:
     colortheme: dolphin
     fig_caption: yes
@@ -101,19 +101,35 @@ We also computed
 
 We would like to know if some  6nt are over-reprsented in promoters of methionine-associated genes relative to the occurrences that would be expected from a random selection of yeast promoters.
 
+## Create a workspace for this practical
+
+- In your home directory, create a work directory for this practical (for example `~/LCG_BEII/practical_motif_discovery/`).
+
+```{r}
+workdir <- "~/LCG_BEII/practical_motif_discovery"
+dir.create(workdir, showWarnings = FALSE, recursive = TRUE)
+setwd(workdir)
+```
+
+
 ## Loading the data table
 
 
 1. Download the oligonucleotide count table. 
 [Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv](http://jvanheld.github.io/LCG_BEII/practicals/motif_discovery/data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv)
 
+```{r download_oligo_counts}
+oligo.url <- "http://jvanheld.github.io/LCG_BEII/practicals/motif_discovery/data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv"
+oligo.file <- basename(oligo.url) ## Suppress the URL path and keep only the file name for local storage
+download.file(oligo.url, destfile = oligo.file)
+```
+
+
 2. In **R**, open a new script or R markdown file. 
 
 3. Load the data table.
 
 ```{r load_oligos}
-getwd()
-oligo.file <- "practicals/motif_discovery/data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv"
 
 oligo.table <- read.delim(oligo.file, header = 1, row.names = 1)
 #View(oligo.table)
@@ -122,5 +138,10 @@ oligo.table <- read.delim(oligo.file, header = 1, row.names = 1)
 
 4. Draw an histogram of the observed occurrences and evaluate the spread of counts. 
 
+
+
 5. Draw a scatter plot comparing the observed and expected occurrences for each hexanucleotide. 
+
+5. Compute the log-ratio of observed / expected occurrences.
+
 
