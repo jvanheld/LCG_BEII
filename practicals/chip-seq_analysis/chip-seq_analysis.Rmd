@@ -97,8 +97,8 @@ In this practrical, we will combine various bioinformatics resources to extract 
 | Resource Name | URL |
 |-------------------------|--------------------------------------|
 | ReMap | A database of ChIP-seq peaks (<http://remap.cisreg.eu/>) |
-| Jaspar | A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (<>) |
-| Hocomoco | A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<>) |
+| Jaspar | A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (<http://jaspar.genereg.net/>) |
+| Hocomoco | A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<http://hocomoco11.autosome.ru/>) |
 | RSAT| Regulatory Sequence Analysis Tools <http://rsat.eu/> |
 | RSAT Metazoa | <http://metazoa.rsat.eu/> |
 
@@ -118,10 +118,63 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
 ## Getting motifs from reference databases
 
-- OPen a connection to Jaspar, and find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.
+- Open a connection to Jaspar
 
-- Do the same with Hocomoco
+    - Explore the database functionalities
+
+    - Find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.
+
+- Do the same with the [Hocomoco](http://hocomoco11.autosome.ru/) database. 
+
+    - Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains. 
+    - Find the transcripiton factor of interest and save its binding motif in your work directory. 
+    
+
+## Discovering motifs with RSAT peak-motifs
 
 
+- Open a connection to [RSAT Metazoa](http://metazoa.rsat.eu/)
+
+- Use the tool **fetch-sequences** to get the sequences of your peaks
+
+- Send the results to **peak-motifs** 
+
+    - as reference databases, select both Jaspar non-redundant vertebrates and Hocomoco
+    - leave all other parameters unchanged an run the analyses
+
+- Interpret the results: 
+
+    - Did you obtain significant results? How significant ?
+    - If so, were they characterized by over-representation (*oligo-analysis*), positional bias (*position-analysis*) or both?
+    - Did some of the discovered motifs match the reference motifs for your TF in Jaspar and/or Hocomoco ?
+    - Did you discover other motifs
+    - 
+
+
+
+## Negative control
+
+- Use **random genome fragments** to pick up random regions having the same sizes as your peaks
+
+- Run the same analyses as above with peak-motifs
+
+- Compare the results of this negative control with those obtained above with your peaks, and interpret them. 
+
+
+
+## Motif encrihment analysis
+
+- On the RSAT server, open the tool**matrix-quality**
+
+- Submit your peak sequences
+
+- Enter the JASPAR and Hocomoco reference motifs
+
+- Run the analyses
+
+- Interpret the results
+
+    - Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?
+    
 
 

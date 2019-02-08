@@ -298,11 +298,11 @@ div.tocify {
 </tr>
 <tr class="even">
 <td>Jaspar</td>
-<td>A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (&lt;&gt;)</td>
+<td>A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (<a href="http://jaspar.genereg.net/" class="uri">http://jaspar.genereg.net/</a>)</td>
 </tr>
 <tr class="odd">
 <td>Hocomoco</td>
-<td>A database of Human TF binding motifs, mainly built from CHIP-seq peaks (&lt;&gt;)</td>
+<td>A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<a href="http://hocomoco11.autosome.ru/" class="uri">http://hocomoco11.autosome.ru/</a>)</td>
 </tr>
 <tr class="even">
 <td>RSAT</td>
@@ -330,6 +330,62 @@ div.tocify {
 <li>Explore the interface</li>
 <li>Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC)</li>
 <li>Get the peak coordinates for your TF in the selected tissue / cell type</li>
+</ul>
+</div>
+<div id="getting-motifs-from-reference-databases" class="section level2">
+<h2>Getting motifs from reference databases</h2>
+<ul>
+<li><p>Open a connection to Jaspar</p>
+<ul>
+<li><p>Explore the database functionalities</p></li>
+<li><p>Find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.</p></li>
+</ul></li>
+<li><p>Do the same with the <a href="http://hocomoco11.autosome.ru/">Hocomoco</a> database.</p>
+<ul>
+<li>Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains.</li>
+<li>Find the transcripiton factor of interest and save its binding motif in your work directory.</li>
+</ul></li>
+</ul>
+</div>
+<div id="discovering-motifs-with-rsat-peak-motifs" class="section level2">
+<h2>Discovering motifs with RSAT peak-motifs</h2>
+<ul>
+<li><p>Open a connection to <a href="http://metazoa.rsat.eu/">RSAT Metazoa</a></p></li>
+<li><p>Use the tool <strong>fetch-sequences</strong> to get the sequences of your peaks</p></li>
+<li><p>Send the results to <strong>peak-motifs</strong></p>
+<ul>
+<li>as reference databases, select both Jaspar non-redundant vertebrates and Hocomoco</li>
+<li>leave all other parameters unchanged an run the analyses</li>
+</ul></li>
+<li><p>Interpret the results:</p>
+<ul>
+<li>Did you obtain significant results? How significant ?</li>
+<li>If so, were they characterized by over-representation (<em>oligo-analysis</em>), positional bias (<em>position-analysis</em>) or both?</li>
+<li>Did some of the discovered motifs match the reference motifs for your TF in Jaspar and/or Hocomoco ?</li>
+<li>Did you discover other motifs</li>
+<li></li>
+</ul></li>
+</ul>
+</div>
+<div id="negative-control" class="section level2">
+<h2>Negative control</h2>
+<ul>
+<li><p>Use <strong>random genome fragments</strong> to pick up random regions having the same sizes as your peaks</p></li>
+<li><p>Run the same analyses as above with peak-motifs</p></li>
+<li><p>Compare the results of this negative control with those obtained above with your peaks, and interpret them.</p></li>
+</ul>
+</div>
+<div id="motif-encrihment-analysis" class="section level2">
+<h2>Motif encrihment analysis</h2>
+<ul>
+<li><p>On the RSAT server, open the tool<strong>matrix-quality</strong></p></li>
+<li><p>Submit your peak sequences</p></li>
+<li><p>Enter the JASPAR and Hocomoco reference motifs</p></li>
+<li><p>Run the analyses</p></li>
+<li><p>Interpret the results</p>
+<ul>
+<li>Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?</li>
+</ul></li>
 </ul>
 </div>
 
