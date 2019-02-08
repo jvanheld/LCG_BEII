@@ -3,11 +3,15 @@ title: "Discovering a motif discovering appproach"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
-  pdf_document:
+  html_document:
+    code_folding: hide
+    self_contained: no
     fig_caption: yes
     highlight: zenburn
+    theme: cerulean
     toc: yes
     toc_depth: 3
+    toc_float: yes
   revealjs::revealjs_presentation:
     theme: night
     transition: none
@@ -27,15 +31,11 @@ output:
     theme: cerulean
     toc: yes
     widescreen: yes
-  html_document:
-    code_folding: hide
-    self_contained: no
+  pdf_document:
     fig_caption: yes
     highlight: zenburn
-    theme: cerulean
     toc: yes
     toc_depth: 3
-    toc_float: yes
   ioslides_presentation:
     slide_level: 2
     self_contained: no
@@ -64,6 +64,8 @@ font-import: http://fonts.googleapis.com/css?family=Risque
 subtitle: LCG_BEII 2019
 font-family: Garamond
 transition: linear
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r include=FALSE, echo=FALSE, eval=TRUE}
@@ -196,6 +198,7 @@ abline(h = 2, col = "brown")
 
 ```{r lr, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
 lr <- log(x/exp.occ)
+oligo.table$lr <- lr
   
 plot(exp.occ, lr, 
      col = "grey", las = 1, 
@@ -219,7 +222,8 @@ $$llr = f \cdot log(x/<X>)$$
 ```{r llr, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of log-likelihood ratio (llr) versus expected occurrences.** The black line corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
 p <- oligo.table$exp_freq
 llr <- p * log(x/exp.occ)
-  
+oligo.table$llr <- llr
+
 plot(exp.occ, llr, 
      col = "grey", las = 1, 
      xlab = "Expected occurrences", 
@@ -243,9 +247,14 @@ p <- 0.001
 x <- 15# Number of successes
 X <- 0:40 ## values to display
 
-plot(X, dbinom(x = X, size = n, prob = p), type = "h")
+plot(X, dbinom(x = X, size = n, prob = p), type = "h",  col = "grey",
+     ylab = "P(X = x)", las = 1,
+     xlab = "X (nb of successes)")
 arrows(x, 0.04, x, 0.02, lwd = 2, length = 0.1, angle = 30, col = "red")
 
+tail <- x:40
+lines(tail, dbinom(x = tail, size = n, prob = p), type = "h", col = "red")
+arrows(x, 0.04, x, 0.02, lwd = 2, length = 0.1, angle = 30, col = "red")
 
 pval <- pbinom(q = x - 1, size = n, prob = p, lower.tail = FALSE)
 legend("topright", legend = paste("pval =", signif(digits = 3, pval)))
@@ -257,10 +266,19 @@ legend("topright", legend = paste("pval =", signif(digits = 3, pval)))
 
 $$P = T(X \ge x)$$
 
-```{r}
-x <- oligo.table$obs_freq ## Nuumber of successes
+```{r pval_computation}
+x <- oligo.table$occ ## Nuumber of successes
 n <- sum(x)   ## Number of trials
 p <- oligo.table$exp_freq ## Success probability
+
+p <- p / sum(p) # A correction for the fact that we discarded self-overlapping occurrences
+# sum(p)
+
+nbTests <- length(x) # Number of tests
+
+## Compute a P-value for each individual oligonucleotide
+oligo.table$pval <- pbinom(q = x - 1, size = n, prob = p, lower.tail = FALSE)
+
 
 
 ```
@@ -268,22 +286,81 @@ p <- oligo.table$exp_freq ## Success probability
 
 9. Draw an histogram with the P-values of all hexanucleotides, with 20 bins.
 
+```{r pval_histogram, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Histogram of nominal p-values** for all the hexanucleotides grouped by pairs of reverse complements.  "}
+
+hist(oligo.table$pval, breaks = seq(0, 1, 0.05),
+     col = "beige", main = "P-value histogram")
+
+```
+
+
 10. Draw a scatter plot with the P-value (Y) as a function of the log-ratio (X). 
+
+```{r plot_pval_vs_lr}
+plot(oligo.table$lr)
+
+# hist(lr, breaks = 50)
+plot(lr, oligo.table$pval, col = "grey", panel.first = grid())
+abline(v = 0)
+
+# hist(lr, breaks = 50)
+plot(lr, oligo.table$pval, col = "grey", 
+     log = "y", las = 1, ylim = c(1e-20, 1),
+     panel.first = grid())
+abline(v = 0)
+
+```
+
 
 11. Compute the E-value, and the significance. 
 
 $$E = P \cdot N$$
 $$sig = -log_{10}(E)$$
 
+```{r evalue_sig_computation}
+
+oligo.table$eval <- oligo.table$pval * nbTests
+oligo.table$sig <- -log10(oligo.table$eval)
+
+```
+
+
 12. Draw a **Volcano plot**, with the significance as a function of the log-ratio. 
+
+```{r volcano_plot}
+
+plot(oligo.table$lr, oligo.table$sig, 
+     col = "grey",
+     xlab = "Log-ratio", 
+     ylab = "sig = -log10(E)",
+     panel.first = grid())
+abline(h = 0)
+
+alpha <- 0.05
+abline(h = -log10(alpha), col = "red")
+
+```
+
 
 13. Compute the P-value using the Poisson distribution as approximation of the binomial. Are we in suitable conditions for this approximation ? Draw a plot comparing the P-values obtained by the binomial and Poisson distributions. 
 
-14. Compute the P-value using a normal approximation of the binomial distribution. 
+```{r poisson_pval}
 
-    a. Are we in suitable conditions to approximate a binomial with a normal ?
-    b. Compare the P-values obtained with the binomial and norma distrinbutions, resp. 
-    
+lambda <- oligo.table$exp_occ * sum(oligo.table$occ) / sum(oligo.table$exp_occ)
+  
+oligo.table$pval_Poisson <- ppois(
+  q = oligo.table$occ - 1, lambda = lambda, lower.tail = FALSE)
+
+plot(oligo.table$pval, oligo.table$pval_Poisson, 
+     log = "xy")
+abline(a  = 0, b = 1)
+
+range(oligo.table$pval / oligo.table$pval_Poisson)
+
+```
+
+
+
 
 
 
