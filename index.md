@@ -84,7 +84,7 @@ Email: <Jacques.van-Helden@univ-amu.fr>
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| Slides: ChIP-seq technology + motif discovery | [[slides](slides/ChIP-seq_compilation.pdf)]|
+| Slides: ChIP-seq technology + motif discovery | [[pdf](slides/ChIP-seq_compilation.pdf)]|
 | Practical: analyzing ChIP-seq peaks | [[html](practicals/chip-seq_analysis/chip-seq_analysis.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/chip-seq_analysis.Rmd)] |
 
 ## Resources
