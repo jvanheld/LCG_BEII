@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2019-02-07" />
+<meta name="date" content="2019-02-08" />
 
 <title>Discovering a motif discovering appproach</title>
 
@@ -361,7 +361,7 @@ div.tocify {
 <h1 class="title toc-ignore">Discovering a motif discovering appproach</h1>
 <h3 class="subtitle"><em>LCG_BEII 2019</em></h3>
 <h4 class="author"><em>Jacques van Helden</em></h4>
-<h4 class="date"><em>2019-02-07</em></h4>
+<h4 class="date"><em>2019-02-08</em></h4>
 
 </div>
 
@@ -477,6 +477,7 @@ tttaaa|tttaaa 0.0005600986 0.0009379354   5    8.37</code></pre>
 <li>Compute the log-ratio of observed / expected occurrences, and draw a scatter plot with this log-ratio (Y) as a function of the expected occurrences (X).</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lr &lt;-<span class="st"> </span><span class="kw">log</span>(x<span class="op">/</span>exp.occ)
+oligo.table<span class="op">$</span>lr &lt;-<span class="st"> </span>lr
   
 <span class="kw">plot</span>(exp.occ, lr, 
      <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, 
@@ -499,7 +500,8 @@ tttaaa|tttaaa 0.0005600986 0.0009379354   5    8.37</code></pre>
 <p><span class="math display">\[llr = f \cdot log(x/&lt;X&gt;)\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>exp_freq
 llr &lt;-<span class="st"> </span>p <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(x<span class="op">/</span>exp.occ)
-  
+oligo.table<span class="op">$</span>llr &lt;-<span class="st"> </span>llr
+
 <span class="kw">plot</span>(exp.occ, llr, 
      <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, 
      <span class="dt">xlab =</span> <span class="st">&quot;Expected occurrences&quot;</span>, 
@@ -525,9 +527,14 @@ p &lt;-<span class="st"> </span><span class="fl">0.001</span>
 x &lt;-<span class="st"> </span><span class="dv">15</span><span class="co"># Number of successes</span>
 X &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">40</span> ## values to display
 
-<span class="kw">plot</span>(X, <span class="kw">dbinom</span>(<span class="dt">x =</span> X, <span class="dt">size =</span> n, <span class="dt">prob =</span> p), <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>)
+<span class="kw">plot</span>(X, <span class="kw">dbinom</span>(<span class="dt">x =</span> X, <span class="dt">size =</span> n, <span class="dt">prob =</span> p), <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>,  <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;P(X = x)&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;X (nb of successes)&quot;</span>)
 <span class="kw">arrows</span>(x, <span class="fl">0.04</span>, x, <span class="fl">0.02</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">angle =</span> <span class="dv">30</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 
+tail &lt;-<span class="st"> </span>x<span class="op">:</span><span class="dv">40</span>
+<span class="kw">lines</span>(tail, <span class="kw">dbinom</span>(<span class="dt">x =</span> tail, <span class="dt">size =</span> n, <span class="dt">prob =</span> p), <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">arrows</span>(x, <span class="fl">0.04</span>, x, <span class="fl">0.02</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">angle =</span> <span class="dv">30</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 
 pval &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">size =</span> n, <span class="dt">prob =</span> p, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend =</span> <span class="kw">paste</span>(<span class="st">&quot;pval =&quot;</span>, <span class="kw">signif</span>(<span class="dt">digits =</span> <span class="dv">3</span>, pval)))</code></pre></div>
@@ -536,24 +543,76 @@ pval &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="d
 <li>Use the binomial distribution to compute the P-value of the observed occurrences.</li>
 </ol>
 <p><span class="math display">\[P = T(X \ge x)\]</span></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>obs_freq ## Nuumber of successes
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>occ ## Nuumber of successes
 n &lt;-<span class="st"> </span><span class="kw">sum</span>(x)   ## Number of trials
-p &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>exp_freq ## Success probability</code></pre></div>
+p &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>exp_freq ## Success probability
+
+p &lt;-<span class="st"> </span>p <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(p) <span class="co"># A correction for the fact that we discarded self-overlapping occurrences</span>
+<span class="co"># sum(p)</span>
+
+nbTests &lt;-<span class="st"> </span><span class="kw">length</span>(x) <span class="co"># Number of tests</span>
+
+## Compute a P-value for each individual oligonucleotide
+oligo.table<span class="op">$</span>pval &lt;-<span class="st"> </span><span class="kw">pbinom</span>(<span class="dt">q =</span> x <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">size =</span> n, <span class="dt">prob =</span> p, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <ol start="9" style="list-style-type: decimal">
-<li><p>Draw an histogram with the P-values of all hexanucleotides, with 20 bins.</p></li>
-<li><p>Draw a scatter plot with the P-value (Y) as a function of the log-ratio (X).</p></li>
-<li><p>Compute the E-value, and the significance.</p></li>
+<li>Draw an histogram with the P-values of all hexanucleotides, with 20 bins.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(oligo.table<span class="op">$</span>pval, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.05</span>),
+     <span class="dt">col =</span> <span class="st">&quot;beige&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;P-value histogram&quot;</span>)</code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="figures/R_intro_pval_histogram-1.png" alt="**Histogram of nominal p-values** for all the hexanucleotides grouped by pairs of reverse complements.  " width="80%" />
+<p class="caption">
+<strong>Histogram of nominal p-values</strong> for all the hexanucleotides grouped by pairs of reverse complements.
+</p>
+</div>
+<ol start="10" style="list-style-type: decimal">
+<li>Draw a scatter plot with the P-value (Y) as a function of the log-ratio (X).</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(oligo.table<span class="op">$</span>lr)</code></pre></div>
+<p><img src="figures/R_intro_plot_pval_vs_lr-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hist(lr, breaks = 50)</span>
+<span class="kw">plot</span>(lr, oligo.table<span class="op">$</span>pval, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">panel.first =</span> <span class="kw">grid</span>())
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">0</span>)</code></pre></div>
+<p><img src="figures/R_intro_plot_pval_vs_lr-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hist(lr, breaks = 50)</span>
+<span class="kw">plot</span>(lr, oligo.table<span class="op">$</span>pval, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, 
+     <span class="dt">log =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">1e-20</span>, <span class="dv">1</span>),
+     <span class="dt">panel.first =</span> <span class="kw">grid</span>())
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">0</span>)</code></pre></div>
+<p><img src="figures/R_intro_plot_pval_vs_lr-3.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="11" style="list-style-type: decimal">
+<li>Compute the E-value, and the significance.</li>
 </ol>
 <p><span class="math display">\[E = P \cdot N\]</span> <span class="math display">\[sig = -log_{10}(E)\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">oligo.table<span class="op">$</span>eval &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>pval <span class="op">*</span><span class="st"> </span>nbTests
+oligo.table<span class="op">$</span>sig &lt;-<span class="st"> </span><span class="op">-</span><span class="kw">log10</span>(oligo.table<span class="op">$</span>eval)</code></pre></div>
 <ol start="12" style="list-style-type: decimal">
-<li><p>Draw a <strong>Volcano plot</strong>, with the significance as a function of the log-ratio.</p></li>
-<li><p>Compute the P-value using the Poisson distribution as approximation of the binomial. Are we in suitable conditions for this approximation ? Draw a plot comparing the P-values obtained by the binomial and Poisson distributions.</p></li>
-<li><p>Compute the P-value using a normal approximation of the binomial distribution.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Are we in suitable conditions to approximate a binomial with a normal ?</li>
-<li>Compare the P-values obtained with the binomial and norma distrinbutions, resp.</li>
-</ol></li>
+<li>Draw a <strong>Volcano plot</strong>, with the significance as a function of the log-ratio.</li>
 </ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(oligo.table<span class="op">$</span>lr, oligo.table<span class="op">$</span>sig, 
+     <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Log-ratio&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;sig = -log10(E)&quot;</span>,
+     <span class="dt">panel.first =</span> <span class="kw">grid</span>())
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>)
+
+alpha &lt;-<span class="st"> </span><span class="fl">0.05</span>
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="op">-</span><span class="kw">log10</span>(alpha), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="figures/R_intro_volcano_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ol start="13" style="list-style-type: decimal">
+<li>Compute the P-value using the Poisson distribution as approximation of the binomial. Are we in suitable conditions for this approximation ? Draw a plot comparing the P-values obtained by the binomial and Poisson distributions.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lambda &lt;-<span class="st"> </span>oligo.table<span class="op">$</span>exp_occ <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(oligo.table<span class="op">$</span>occ) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(oligo.table<span class="op">$</span>exp_occ)
+  
+oligo.table<span class="op">$</span>pval_Poisson &lt;-<span class="st"> </span><span class="kw">ppois</span>(
+  <span class="dt">q =</span> oligo.table<span class="op">$</span>occ <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">lambda =</span> lambda, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">plot</span>(oligo.table<span class="op">$</span>pval, oligo.table<span class="op">$</span>pval_Poisson, 
+     <span class="dt">log =</span> <span class="st">&quot;xy&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">a  =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="figures/R_intro_poisson_pval-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(oligo.table<span class="op">$</span>pval <span class="op">/</span><span class="st"> </span>oligo.table<span class="op">$</span>pval_Poisson)</code></pre></div>
+<pre><code>[1] 0.9739469 1.0185630</code></pre>
 </div>
 
 
