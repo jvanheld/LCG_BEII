@@ -3,12 +3,10 @@ title: "LCG - BEII 2016 - Introduction and contents"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
-  ioslides_presentation:
-    colortheme: dolphin
+  slidy_presentation:
     fig_caption: yes
     fig_height: 6
     fig_width: 7
-    fonttheme: structurebold
     footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
     highlight: tango
     incremental: no
@@ -29,10 +27,12 @@ output:
     slide_level: 2
     theme: Montpellier
     toc: yes
-  slidy_presentation:
+  ioslides_presentation:
+    colortheme: dolphin
     fig_caption: yes
     fig_height: 6
     fig_width: 7
+    fonttheme: structurebold
     footer: UNAM LCG BEII - Jacques van Helden - Introduction and contents
     highlight: tango
     incremental: no
