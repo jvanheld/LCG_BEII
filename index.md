@@ -80,6 +80,12 @@ Email: <Jacques.van-Helden@univ-amu.fr>
 | **Tutorial:** mlotif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
 | **Exercise:** discovering a motif discovery algorithm | [[html](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)] [[pdf](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.pdf)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_discovery/discovering_a_motif_discovery_algorithm.Rmd)] |
 
+### Day 4: ChIP-seq analysis
+
+| Topics                                                | Supports |
+|-------------------------------------------------------|----------|
+| Slides: ChIP-seq technology + motif discovery | [[slides](slides/ChIP-seq_compilation.pdf)]|
+| Practical: analyzing ChIP-seq peaks | [[html](practicals/chip-seq_analysis/chip-seq_analysis.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/chip-seq_analysis.Rmd)] |
 
 ## Resources
 
