@@ -89,6 +89,38 @@ options(scipen = 12) ## Max number of digits for non-scientific notation
 
 ## Introduction
 
+In this practrical, we will combine various bioinformatics resources to extract information from ChIP-seq experiments, and evaluate the quality of the peaks.
+
+## Resources
+
+
+| Resource Name | URL |
+|-------------------------|--------------------------------------|
+| ReMap | A database of ChIP-seq peaks (<http://remap.cisreg.eu/>) |
+| Jaspar | A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (<>) |
+| Hocomoco | A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<>) |
+| RSAT| Regulatory Sequence Analysis Tools <http://rsat.eu/> |
+| RSAT Metazoa | <http://metazoa.rsat.eu/> |
+
+## Creating a workspace for this practical
+
+- Create a new folder to store the results of this practical (e.g.  `~/LCG_BEII/chip-seq_practical/`)
+- Set this folder as your workiing direct
+
+## Getting peaks from ReMap
+
+ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on an extensive re-analysis of published ChIP-seq data for human transcription factors. ory (`setwd()`)
+
+- Open a connection to ReMap
+- Explore the interface
+- Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC) 
+- Get the peak coordinates for your TF in the selected tissue / cell type
+
+## Getting motifs from reference databases
+
+- OPen a connection to Jaspar, and find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.
+
+- Do the same with Hocomoco
 
 
 

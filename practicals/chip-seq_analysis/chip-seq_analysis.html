@@ -276,6 +276,61 @@ div.tocify {
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
+<p>In this practrical, we will combine various bioinformatics resources to extract information from ChIP-seq experiments, and evaluate the quality of the peaks.</p>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<table style="width:90%;">
+<colgroup>
+<col width="36%" />
+<col width="54%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource Name</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ReMap</td>
+<td>A database of ChIP-seq peaks (<a href="http://remap.cisreg.eu/" class="uri">http://remap.cisreg.eu/</a>)</td>
+</tr>
+<tr class="even">
+<td>Jaspar</td>
+<td>A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (&lt;&gt;)</td>
+</tr>
+<tr class="odd">
+<td>Hocomoco</td>
+<td>A database of Human TF binding motifs, mainly built from CHIP-seq peaks (&lt;&gt;)</td>
+</tr>
+<tr class="even">
+<td>RSAT</td>
+<td>Regulatory Sequence Analysis Tools <a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></td>
+</tr>
+<tr class="odd">
+<td>RSAT Metazoa</td>
+<td><a href="http://metazoa.rsat.eu/" class="uri">http://metazoa.rsat.eu/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="creating-a-workspace-for-this-practical" class="section level2">
+<h2>Creating a workspace for this practical</h2>
+<ul>
+<li>Create a new folder to store the results of this practical (e.g. <code>~/LCG_BEII/chip-seq_practical/</code>)</li>
+<li>Set this folder as your workiing direct</li>
+</ul>
+</div>
+<div id="getting-peaks-from-remap" class="section level2">
+<h2>Getting peaks from ReMap</h2>
+<p>ReMap (<a href="http://remap.cisreg.eu/" class="uri">http://remap.cisreg.eu/</a>) is a database of TF binding regions based on an extensive re-analysis of published ChIP-seq data for human transcription factors. ory (<code>setwd()</code>)</p>
+<ul>
+<li>Open a connection to ReMap</li>
+<li>Explore the interface</li>
+<li>Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC)</li>
+<li>Get the peak coordinates for your TF in the selected tissue / cell type</li>
+</ul>
 </div>
 
 
