@@ -101,6 +101,7 @@ In this practrical, we will combine various bioinformatics resources to extract 
 | Hocomoco | A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<http://hocomoco11.autosome.ru/>) |
 | RSAT| Regulatory Sequence Analysis Tools <http://rsat.eu/> |
 | RSAT Metazoa | <http://metazoa.rsat.eu/> |
+| UCSC NGS file formats | <https://genome.ucsc.edu/FAQ/FAQformat.html> | 
 
 ## Creating a workspace for this practical
 
@@ -135,7 +136,9 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
 - Open a connection to [RSAT Metazoa](http://metazoa.rsat.eu/)
 
-- Use the tool **fetch-sequences** to get the sequences of your peaks
+- Use the tool **fetch-sequences** to get the sequences of your peaks. 
+
+    **BEWARE:** the peaks of all ChIP-seq datasets were computed by Ballester's team based on the version hg38 of Human genome
 
 - Send the results to **peak-motifs** 
 
@@ -177,4 +180,26 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
     - Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?
     
 
+
+
+```bash
+awk '{len=$3 - $2; sum += len;  print len"\t"sum}' practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed
+
+```
+
+
+## Instruction for the report
+
+1. Volume: < 5 pages of text (without counting the figures and the supp. material)
+
+2. Structure: 
+
+    - Intro (1 paragraph) explicando el contexto biologico (que hace su factor,) ....
+    - Synthetic Mat & Met
+    - Results
+    - Conclusions and discussion
+    - Suppl. Material
+    
+          - A sufficient description of all the parameters of each step of your analysis to enable someone else to reproduce it. Can be the full command line with all the attributes (no need to disdcuss details)
+          
 
