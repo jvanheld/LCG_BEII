@@ -11,6 +11,7 @@ de Mexico, in the module  **"Bioinformatica & Estadistica II"**.
 - [Keywords](#keywords)
 - [Authors and contributors](#authors-and-contributors)
 - [Teaching material](#teaching-material)
+- [Final report](#final-report)
 - [Resources](#resources)
 - [Support or Contact](#support-or-contact)
 
