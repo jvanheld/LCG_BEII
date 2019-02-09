@@ -241,7 +241,10 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 
 2. Structure: we ask you to return a report structured as a small research article (introduction, material and methods, results and discussion, conclusions an perspective). 
 
-3. Template. Please used the template provided here. Read carefully the instructions.
+3. Report template. Please used the template provided here. Read carefully the instructions. 
 
-- Report template in Word format: [docx](LASTNAME_Firstname_chip-seq_analysis_report.docx)
+    - Word format: [docx](LASTNAME_Firstname_chip-seq_analysis_report.docx)
+    
+    - Rmd format: [docx](LASTNAME_Firstname_chip-seq_analysis_report.Rmd). 
 
+***Note that your report should be submitted in Word format, so I can annotate it in the margins. ** If you use Rstudio to write the report, knitr enables you to export in docx format.*
