@@ -90,9 +90,11 @@ Email: <Jacques.van-Helden@univ-amu.fr>
 
 ## Final report
 
-The final report will consist in finishing the [practical on ChIP-seq analysis](practicals/chip-seq_analysis/chip-seq_analysis.html). 
+- The final report will consist in finishing the [practical on ChIP-seq analysis](practicals/chip-seq_analysis/chip-seq_analysis.html). 
 
-A template is provided in [.docx](practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.docx) and [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd) formats. Read carefully the instructions before starting the work. 
+- Reports must be submitted on the LCG BEII Web site before March 7. 
+
+- A template is provided in [.docx](practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.docx) and [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd) formats. Read carefully the instructions before starting the work. 
 
 ## Resources
 
