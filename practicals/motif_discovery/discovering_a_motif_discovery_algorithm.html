@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2019-02-08" />
+<meta name="date" content="2019-02-09" />
 
 <title>Discovering a motif discovering appproach</title>
 
@@ -361,7 +361,7 @@ div.tocify {
 <h1 class="title toc-ignore">Discovering a motif discovering appproach</h1>
 <h3 class="subtitle"><em>LCG_BEII 2019</em></h3>
 <h4 class="author"><em>Jacques van Helden</em></h4>
-<h4 class="date"><em>2019-02-08</em></h4>
+<h4 class="date"><em>2019-02-09</em></h4>
 
 </div>
 
@@ -383,7 +383,9 @@ div.tocify {
 <ul>
 <li>In your home directory, create a work directory for this practical (for example <code>~/LCG_BEII/practical_motif_discovery/</code>).</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">workdir &lt;-<span class="st"> &quot;~/LCG_BEII/practical_motif_discovery&quot;</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmdDir &lt;-<span class="st"> </span><span class="kw">getwd</span>() <span class="co"># Path of this Rmd fiile</span>
+
+workdir &lt;-<span class="st"> &quot;~/LCG_BEII/practical_motif_discovery&quot;</span>
 <span class="kw">dir.create</span>(workdir, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)
 <span class="kw">setwd</span>(workdir)</code></pre></div>
 </div>
@@ -455,7 +457,7 @@ tttaaa|tttaaa 0.0005600986 0.0009379354   5    8.37</code></pre>
 </p>
 </div>
 <ol start="6" style="list-style-type: decimal">
-<li>Compute the ratio of observed / expected occurrences, and draw a scatter plot with this ratio (Y) as a function of the expected occurrences (X).</li>
+<li>Compute the ratio between observed and expected occurrences, and draw the histogram of the ratio values, as well as a scatter plot with this ratio (Y) as a function of the expected occurrences (X).</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ratio &lt;-<span class="st"> </span>(x<span class="op">/</span>exp.occ)
   
@@ -468,9 +470,9 @@ tttaaa|tttaaa 0.0005600986 0.0009379354   5    8.37</code></pre>
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;brown&quot;</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="figures/R_intro_ratio-1.png" alt="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2. " width="80%" />
+<img src="figures/R_intro_ratio-1.png" alt="**Observed/expected ratio. ** Top: histogram of ratio values. Bottom: ratio versus expected occurrences. The black line to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2. " width="80%" />
 <p class="caption">
-<strong>Scatter plot of observed versus expected occurrences.</strong> The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2.
+<strong>Observed/expected ratio. </strong> Top: histogram of ratio values. Bottom: ratio versus expected occurrences. The black line to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change &gt; 2.
 </p>
 </div>
 <ol start="6" style="list-style-type: decimal">
