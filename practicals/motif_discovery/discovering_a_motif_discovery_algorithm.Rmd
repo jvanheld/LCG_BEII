@@ -109,6 +109,8 @@ We would like to know if some  6nt are over-reprsented in promoters of methionin
 - In your home directory, create a work directory for this practical (for example `~/LCG_BEII/practical_motif_discovery/`).
 
 ```{r}
+rmdDir <- getwd() # Path of this Rmd fiile
+
 workdir <- "~/LCG_BEII/practical_motif_discovery"
 dir.create(workdir, showWarnings = FALSE, recursive = TRUE)
 setwd(workdir)
@@ -177,9 +179,9 @@ abline(a = 0, b = 2, col = "brown")
 ```
 
 
-6. Compute the ratio of observed / expected occurrences, and draw a scatter plot with this ratio (Y) as a function of the expected occurrences (X). 
+6. Compute the ratio between observed and expected occurrences, and draw the histogram of the ratio values, as well as a scatter plot with this ratio (Y) as a function of the expected occurrences (X). 
 
-```{r ratio, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Scatter plot of observed versus expected occurrences.** The black diagonal corresponds to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
+```{r ratio, out.width="80%", fig.width=7, fig.height=4.5, fig.cap="**Observed/expected ratio. ** Top: histogram of ratio values. Bottom: ratio versus expected occurrences. The black line to the null hypothesis, the brown line denotes an arbitrary threshold on fold-change > 2. "}
 ratio <- (x/exp.occ)
   
 plot(exp.occ, ratio, 
