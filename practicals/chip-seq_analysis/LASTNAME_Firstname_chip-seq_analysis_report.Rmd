@@ -1,0 +1,89 @@
+---
+title: "Adapt this title to indicate what you did"
+subtitle: "LCG BEII - 2019"
+author: "Firstname LASTNAME"
+date: "`r Sys.Date()`"
+html_document:
+  code_folding: hide
+  fig_caption: yes
+  highlight: zenburn
+  self_contained: no
+  theme: cerulean
+  toc: yes
+  toc_depth: 3
+  toc_float: yes
+output:
+  word_document: default
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '3'
+---
+
+## Instructions
+
+- *Rename this file to indicate your LASTNAME and Firstname*
+- *Adapt the title to your specific study*
+- *Indicate your name and mail in the header above*
+- *Update the date*
+- *Before submitting the report, suppress all the instructions in italics below, as well as this section*
+
+
+## Introduction
+
+- *size: ~1/2 page*
+- *context*
+- *general motivation of the analysis*
+- *particular questions/approaches addressed in this document*
+
+
+
+## Methods
+
+
+- ~ *1/2 page + all details in supplementary material*
+- *indicate the main resources and tools usd in your analysis, and what they were used to do *
+- *explanation of the main methodological choices*
+
+
+## Results and discussion
+
+- *~ 2 pages, figures and tables non-included*
+
+* * * * * * 
+
+## Conclusions and perspectives
+
+- *~ 1/2 page, with summary of the results, some consideration about their relevance, and a perspective (what coul be done next ?)*
+
+
+* * * * * * 
+
+## Supplementary material
+
+*An essential issue of scientific activity is  tractability (how were the results produced?) and reroducibility (can someone else reproduce the experiment, and get the same results?): the supmat must contain the precise list of all the commands / parameters used to achieve the results. *
+
+
+### Bioinformatics resources used for this work
+
+*The Table below indicates the bioinformatics resources (tools, databases) used for this analysis.*
+
+| Acronym | Description | URL | 
+|---------|-------------|-----|
+| RSAT | Regulatory Sequence Analysis Tools | <http://rsat.eu/> |
+| ... | .... | ... Please complete the table ... |
+
+### Data sources
+
+*A complete list of the data sources: provide the original IDs of the datasets (e.g. ReMap URL of your Factor, name of the Factor, cell typoe, ID of your peaks, Jaspar ID, Hocomoco ID, ...).*
+
+### Complete list of commands and parameters
+
+*Please indicate here the complete list of tools, commands and parameters used to produce the results. In principle this should enable anyone to reproduce your analysis.*
+
+* * * * * * *

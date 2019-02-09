@@ -4,6 +4,7 @@ author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
   html_document:
+    code_folding: hide
     self_contained: no
     fig_caption: yes
     highlight: zenburn
@@ -115,7 +116,56 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 - Open a connection to ReMap
 - Explore the interface
 - Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC) 
-- Get the peak coordinates for your TF in the selected tissue / cell type
+- Click on the **Download by by dataset** tab, and download the peak set corresponding to the tissue / cell type of your choice. 
+- Check that the number of peaks in the downloaded file corresponds to the indication on the ReMap page for your factor in the tissue / cell type and in the study identifier (GSE or other) you selected. 
+- Check the *name* column in the bed file to make sure that the peaks all belong to the same tissue / cell tupe and study identifier. 
+
+- Compute 
+
+    - the number of peaks
+    - the sum of peak lengths
+    - the mean peak length
+    - the median peak length
+
+**Beware:** the bed format as a somewhat confusiong convention to specify coordinate:
+
+- Coordinates are 0-based (the first position of a sequence is referred to as 0).
+- The feature start is (as expected) the first position within the feature, but the "end" is the first position **after the feature**.
+- Consequently, the feature length can be computed as $l = end - start$, whereas with other formats it should be $l = end - start = 1$. 
+
+**Tips:**  
+
+- The peak statistics can be computed with a spreadsheet (Excel, LibreOffice Calc), R, or the Unix command line. 
+
+
+- Click the "code" button to display a bash line to compute peak statistics.
+
+```{bash peak_stats_bash, eval=FALSE, echo=TRUE}
+awk '{len=$3 - $2; sum += len; n++; mean = sum / n ; print "n="n"\tsum="sum"\tmean="mean}' practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed | tail -n 1
+```
+
+- Click the "code" button to display a chunk of R code to compute peak statistics.
+
+```{r pak_stats_r, eval=TRUE, echo=TRUE}
+peakFile <- "data/ReMap_GSE69479.SOX2.ESC_peaks.bed"
+peaks <- read.delim(peakFile, header = FALSE)
+peaks <- peaks[, 1:4] # Keep the fields used for this analysis
+names(peaks) <- c("chr", "start", "end", "name")
+
+peaks$len <- peaks$end - peaks$start
+head(peaks) # print the first peaks
+
+sum <- sum(peaks$len)
+mean <- mean(peaks$len)
+n <- nrow(peaks)
+
+```
+
+In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479) we obtain: 
+
+- Number of peaks: $n = `r prettyNum(n, big.mark = ",")`$ 
+- Sum of peak lengths: $sum = `r prettyNum(sum, big.mark = ",")`$ 
+- Mean peak lengths: $mean = `r round(digits=1, mean)`$ 
 
 ## Getting motifs from reference databases
 
@@ -129,7 +179,8 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
     - Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains. 
     - Find the transcripiton factor of interest and save its binding motif in your work directory. 
-    
+
+- RSAT convert-matrix tools, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the `//` line at the end, which indicates the separation between two motifs in the same file). Save this text file as `[YOUR_FACTOR_NAME]_reference-motifs.tf`.
 
 ## Discovering motifs with RSAT peak-motifs
 
@@ -142,8 +193,9 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
 - Send the results to **peak-motifs** 
 
-    - as reference databases, select both Jaspar non-redundant vertebrates and Hocomoco
-    - leave all other parameters unchanged an run the analyses
+    - As motif databases, select both Jaspar non-redundant vertebrates and Hocomoco.
+    - Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file `[YOUR_FACTOR_NAME]_reference-motifs.tf` you built in the previous section). 
+    - Leave all other parameters unchanged an run the analysis. 
 
 - Interpret the results: 
 
@@ -157,7 +209,7 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
 ## Negative control
 
-- Use **random genome fragments** to pick up random regions having the same sizes as your peaks
+- Use *RSAT random genome fragments** to pick up random regions having the same sizes as your peaks
 
 - Run the same analyses as above with peak-motifs
 
@@ -182,24 +234,14 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
 
 
-```bash
-awk '{len=$3 - $2; sum += len;  print len"\t"sum}' practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed
-
-```
-
 
 ## Instruction for the report
 
-1. Volume: < 5 pages of text (without counting the figures and the supp. material)
+1. Volume: 4 - 5 pages of text (without counting the figures and the supp. material)
 
-2. Structure: 
+2. Structure: we ask you to return a report structured as a small research article (introduction, material and methods, results and discussion, conclusions an perspective). 
 
-    - Intro (1 paragraph) explicando el contexto biologico (que hace su factor,) ....
-    - Synthetic Mat & Met
-    - Results
-    - Conclusions and discussion
-    - Suppl. Material
-    
-          - A sufficient description of all the parameters of each step of your analysis to enable someone else to reproduce it. Can be the full command line with all the attributes (no need to disdcuss details)
-          
+3. Template. Please used the template provided here. Read carefully the instructions.
+
+- Report template in Word format: [docx](LASTNAME_Firstname_chip-seq_analysis_report.docx)
 

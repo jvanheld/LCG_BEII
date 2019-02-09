@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2019-02-08" />
+<meta name="date" content="2019-02-09" />
 
 <title>Practical: analysis of ChIP-seq peaks</title>
 
@@ -25,8 +25,84 @@
 <link href="chip-seq_analysis_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="chip-seq_analysis_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="chip-seq_analysis_files/navigation-1.1/tabsets.js"></script>
+<script src="chip-seq_analysis_files/navigation-1.1/codefolding.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -162,6 +238,14 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 
@@ -264,12 +348,20 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Practical: analysis of ChIP-seq peaks</h1>
 <h3 class="subtitle"><em>LCG_BEII 2019</em></h3>
 <h4 class="author"><em>Jacques van Helden</em></h4>
-<h4 class="date"><em>2019-02-08</em></h4>
+<h4 class="date"><em>2019-02-09</em></h4>
 
 </div>
 
@@ -312,6 +404,10 @@ div.tocify {
 <td>RSAT Metazoa</td>
 <td><a href="http://metazoa.rsat.eu/" class="uri">http://metazoa.rsat.eu/</a></td>
 </tr>
+<tr class="even">
+<td>UCSC NGS file formats</td>
+<td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html" class="uri">https://genome.ucsc.edu/FAQ/FAQformat.html</a></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -329,7 +425,48 @@ div.tocify {
 <li>Open a connection to ReMap</li>
 <li>Explore the interface</li>
 <li>Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC)</li>
-<li>Get the peak coordinates for your TF in the selected tissue / cell type</li>
+<li>Click on the <strong>Download by by dataset</strong> tab, and download the peak set corresponding to the tissue / cell type of your choice.</li>
+<li>Check that the number of peaks in the downloaded file corresponds to the indication on the ReMap page for your factor in the tissue / cell type and in the study identifier (GSE or other) you selected.</li>
+<li><p>Check the <em>name</em> column in the bed file to make sure that the peaks all belong to the same tissue / cell tupe and study identifier.</p></li>
+<li><p>Compute</p>
+<ul>
+<li>the number of peaks</li>
+<li>the sum of peak lengths</li>
+<li>the mean peak length</li>
+<li>the median peak length</li>
+</ul></li>
+</ul>
+<p><strong>Beware:</strong> the bed format as a somewhat confusiong convention to specify coordinate:</p>
+<ul>
+<li>Coordinates are 0-based (the first position of a sequence is referred to as 0).</li>
+<li>The feature start is (as expected) the first position within the feature, but the “end” is the first position <strong>after the feature</strong>.</li>
+<li>Consequently, the feature length can be computed as <span class="math inline">\(l = end - start\)</span>, whereas with other formats it should be <span class="math inline">\(l = end - start = 1\)</span>.</li>
+</ul>
+<p><strong>Tips:</strong></p>
+<ul>
+<li><p>The peak statistics can be computed with a spreadsheet (Excel, LibreOffice Calc), R, or the Unix command line.</p></li>
+<li><p>Click the “code” button to display a bash line to compute peak statistics.</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">awk</span> <span class="st">&#39;{len=$3 - $2; sum += len; n++; mean = sum / n ; print &quot;n=&quot;n&quot;\tsum=&quot;sum&quot;\tmean=&quot;mean}&#39;</span> practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed <span class="kw">|</span> <span class="fu">tail</span> -n 1</code></pre></div>
+<ul>
+<li>Click the “code” button to display a chunk of R code to compute peak statistics.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">peakFile &lt;-<span class="st"> &quot;data/ReMap_GSE69479.SOX2.ESC_peaks.bed&quot;</span>
+peaks &lt;-<span class="st"> </span><span class="kw">read.delim</span>(peakFile, <span class="dt">header =</span> <span class="ot">FALSE</span>)
+peaks &lt;-<span class="st"> </span>peaks[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] <span class="co"># Keep the fields used for this analysis</span>
+<span class="kw">names</span>(peaks) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chr&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name&quot;</span>)
+
+peaks<span class="op">$</span>len &lt;-<span class="st"> </span>peaks<span class="op">$</span>end <span class="op">-</span><span class="st"> </span>peaks<span class="op">$</span>start
+<span class="kw">head</span>(peaks) <span class="co"># print the first peaks</span>
+
+sum &lt;-<span class="st"> </span><span class="kw">sum</span>(peaks<span class="op">$</span>len)
+mean &lt;-<span class="st"> </span><span class="kw">mean</span>(peaks<span class="op">$</span>len)
+n &lt;-<span class="st"> </span><span class="kw">nrow</span>(peaks)</code></pre></div>
+<p>In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479) we obtain:</p>
+<ul>
+<li>Number of peaks: <span class="math inline">\(n = 2,352\)</span></li>
+<li>Sum of peak lengths: <span class="math inline">\(sum = 589,344\)</span></li>
+<li>Mean peak lengths: <span class="math inline">\(mean = 250.6\)</span></li>
 </ul>
 </div>
 <div id="getting-motifs-from-reference-databases" class="section level2">
@@ -345,17 +482,20 @@ div.tocify {
 <li>Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains.</li>
 <li>Find the transcripiton factor of interest and save its binding motif in your work directory.</li>
 </ul></li>
+<li><p>RSAT convert-matrix tools, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the <code>//</code> line at the end, which indicates the separation between two motifs in the same file). Save this text file as <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p></li>
 </ul>
 </div>
 <div id="discovering-motifs-with-rsat-peak-motifs" class="section level2">
 <h2>Discovering motifs with RSAT peak-motifs</h2>
 <ul>
 <li><p>Open a connection to <a href="http://metazoa.rsat.eu/">RSAT Metazoa</a></p></li>
-<li><p>Use the tool <strong>fetch-sequences</strong> to get the sequences of your peaks</p></li>
+<li><p>Use the tool <strong>fetch-sequences</strong> to get the sequences of your peaks.</p>
+<p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were computed by Ballester’s team based on the version hg38 of Human genome</p></li>
 <li><p>Send the results to <strong>peak-motifs</strong></p>
 <ul>
-<li>as reference databases, select both Jaspar non-redundant vertebrates and Hocomoco</li>
-<li>leave all other parameters unchanged an run the analyses</li>
+<li>As motif databases, select both Jaspar non-redundant vertebrates and Hocomoco.</li>
+<li>Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code> you built in the previous section).</li>
+<li>Leave all other parameters unchanged an run the analysis.</li>
 </ul></li>
 <li><p>Interpret the results:</p>
 <ul>
@@ -370,7 +510,7 @@ div.tocify {
 <div id="negative-control" class="section level2">
 <h2>Negative control</h2>
 <ul>
-<li><p>Use <strong>random genome fragments</strong> to pick up random regions having the same sizes as your peaks</p></li>
+<li><p>Use *RSAT random genome fragments** to pick up random regions having the same sizes as your peaks</p></li>
 <li><p>Run the same analyses as above with peak-motifs</p></li>
 <li><p>Compare the results of this negative control with those obtained above with your peaks, and interpret them.</p></li>
 </ul>
@@ -386,6 +526,17 @@ div.tocify {
 <ul>
 <li>Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?</li>
 </ul></li>
+</ul>
+</div>
+<div id="instruction-for-the-report" class="section level2">
+<h2>Instruction for the report</h2>
+<ol style="list-style-type: decimal">
+<li><p>Volume: 4 - 5 pages of text (without counting the figures and the supp. material)</p></li>
+<li><p>Structure: we ask you to return a report structured as a small research article (introduction, material and methods, results and discussion, conclusions an perspective).</p></li>
+<li><p>Template. Please used the template provided here. Read carefully the instructions.</p></li>
+</ol>
+<ul>
+<li>Report template in Word format: <a href="LASTNAME_Firstname_chip-seq_analysis_report.docx">docx</a></li>
 </ul>
 </div>
 
