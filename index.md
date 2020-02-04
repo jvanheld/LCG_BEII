@@ -61,7 +61,7 @@ data.
 | Sequence models (Bernoulli, Markov chains) | [[slides](http://rsat-doc.github.io/course/pdf_files/01.3.sequence_models.pdf)] |
 | Matrix-based pattern matching | [[slides](http://rsat-doc.github.io/course/pdf_files/02.3.pattern_matching_matrices.pdf)] |
 
-### Day 2: practical: scanning sequences with motifs
+### Day 1: practical: scanning sequences with motifs
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
@@ -97,6 +97,7 @@ data.
 | Name   | Description + URL |
 |------------------|-----------------------------------------------|
 | RSAT | Regulatory sequence analysis tools: <http://rsat.eu/> |
+| RegulonDB | Transcription factor database: <http://regulondb.ccg.unam.mx/> |
 | RSAT course | Teaching material about the analysis of regulatory sequences <http://rsat-doc.github.io/course/> |
 | ChIP-seq tutorial | Tutorial on chip-seq analysis written by Morgane Thomas-Chollier, from which I used the FNR dataset used in this course <http://www.biologie.ens.fr/~mthomas/other/chip-seq-training/> |
 | Stats4bioinfo | Supporting site for an introductory course about statistics for bioingormatics  <http://pedagogix-tagc.univ-mrs.fr/courses/statistics_bioinformatics/> |
