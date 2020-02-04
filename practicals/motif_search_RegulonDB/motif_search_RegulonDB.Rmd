@@ -3,20 +3,14 @@ title: "Scanning non-coding sequences with a TFBM"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
-  slidy_presentation:
-    smart: no
-    slide_level: 2
-    self_contained: yes
+  html_document:
+    self_contained: no
     fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    highlight: tango
-    incremental: no
-    keep_md: yes
-    smaller: yes
+    highlight: zenburn
     theme: cerulean
     toc: yes
-    widescreen: yes
+    toc_depth: 3
+    toc_float: yes
   ioslides_presentation:
     slide_level: 2
     self_contained: no
@@ -34,14 +28,20 @@ output:
     transition: none
     self_contained: true
     css: ../slides.css
-  html_document:
-    self_contained: no
+  slidy_presentation:
+    smart: no
+    slide_level: 2
+    self_contained: yes
     fig_caption: yes
-    highlight: zenburn
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    incremental: no
+    keep_md: yes
+    smaller: yes
     theme: cerulean
     toc: yes
-    toc_depth: 3
-    toc_float: yes
+    widescreen: yes
   pdf_document:
     fig_caption: yes
     highlight: zenburn
@@ -90,7 +90,14 @@ options(scipen = 12) ## Max number of digits for non-scientific notation
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Preparation of the exercise
+## Introduction
+
+The goal of this practical is to evaluate the respective performances of two modes of representations for transcription factor binding motifs (**TFBMs**) to predict transcription factor binding sites (**TFBS**).
+
+As reference genome we will use the strain *Escherichia_coli_GCF_000005845.2_ASM584v2*. 
+
+**Tip:** in the RSAT Web site, you can type `ASM584` to quickly select this strain. This is much easier than typing the whole name. 
+
 
 ## Collective table for the 2020 practical
 
@@ -110,6 +117,10 @@ In your computer, create a folder to store the results of this practical, for ex
 - Choose a TF of interest and open its record
 
 - Fill up the details of the collective exploration table (<https://tinyurl.com/lcg-beii-19>).
+
+- Save a text file with the target gene names (one per row)
+
+- Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp. ).
 
 - Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug "+" button in the header of the binding site section)
 
@@ -132,16 +143,26 @@ In your computer, create a folder to store the results of this practical, for ex
 - Select organism *Escherichia coli K12* (top : type simply K12 in the organism query box)
 
 - Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start
+
 - Copy the URL of the result file and save it in a text file (we will use it several times below)
 
 
 ## Coverage of the annotated binding sites by the reference motif
 
+The question addressed here is to evaulate the relative performances of the consensus and PSSM to predict TFBSs and identify the target genes of our transcription factor of interest. 
+
+Note that the TFBS are expected to be found in the promoters of operon leader genes, and not in the upstream sequences of the other target genes (the genes following the leader in an operon). Thus, the reference gene set for this analysis are the leader genes of the operons regulated by our TF of interest.  
+
 - Use **dna-pattern** to scan the annotated binding sites (extracted from RegulonDB) with the degenerate consensus.
 
 - Use **matrix-scan** to scan the same sites with the RegulonDB matrix
 
-- Compare the coverage rate of the two motifs
+
+Interpretation: 
+
+- Compute the coverage rate of the two respective modes of representation (consensus versus matrix). 
+
+- Compare the values and comment the results. 
 
 
 ## Binding site prediction in all promoters
@@ -150,15 +171,35 @@ In your computer, create a folder to store the results of this practical, for ex
 
 - For **matrix-scan**, run the analysis with a threshold of p-value of either 0.001 or 0.0001. 
 
+Interpretation:
+
 - Compare the number of matches obtained in these respective searches. 
 
 - With the respective p-values used for the scanning, how many matches would you expect by chance ?
 
+- Comment the results. 
+
 ## Negative control 1: scan artificial sequences with your motif
 
-- RSAT random sequences
+As a negative control, we will run exactly the same analysis in sequences where there should be no specific site for our transcription factor. For this, we will generate 
+
+- RSAT *random-sequences*, generate random sequences 
+
+    - use the same background model as you used to scan the promoter sequences in the above steps
+
+    - use the promoter sequences retrieved above as model in order to obtain random sequences of the same sizes.  
+
+- Run the same analysis as above (all promoters) 
+
+Interpretation: 
+
+- How many sites were predicted?
+- How many sites would be expected by chance according to your parameters?
+- Do the two numbers correspond?
 
 ## Negative control 2: permute the columns of the matrix
+
+A second type of negative control consists in scanning the actual biological sequences (all the promoters of *E.coli*, as analysed above), but to permute the columns of the PSSM. Such a permutation between the columns preserves statistical properties of the matrix (number of occurrences, information content of each column, total information content) but looses the biological information (the specific sequences recognized by the transcription factor). 
 
 - Use the tool **permute-matrix** in order to generate 10 randomized copies of the motif
 

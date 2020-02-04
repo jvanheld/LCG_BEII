@@ -60,7 +60,7 @@ output:
     theme: Montpellier
     toc: yes
 font-import: http://fonts.googleapis.com/css?family=Risque
-subtitle: LCG_BEII 2019
+subtitle: LCG_BEII 2020
 font-family: Garamond
 transition: linear
 ---
@@ -69,9 +69,17 @@ transition: linear
 
 
 
-## Preparation of the exercise
+## Introduction
 
-## Collective table for the 2019 practical
+The goal of this practical is to evaluate the respective performances of two modes of representations for transcription factor binding motifs (**TFBMs**) to predict transcription factor binding sites (**TFBS**).
+
+
+| Parameter | Value | 
+| | | 
+| Reference genome | `Escherichia_coli_GCF_001308065.1_ASM130806v1`|
+
+
+## Collective table for the 2020 practical
 
 Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
 
@@ -90,6 +98,10 @@ In your computer, create a folder to store the results of this practical, for ex
 
 - Fill up the details of the collective exploration table (<https://tinyurl.com/lcg-beii-19>).
 
+- Save a text file with the target gene names (one per row)
+
+- Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp. ).
+
 - Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug "+" button in the header of the binding site section)
 
 - Save in a text file the matrix associated to your factor. 
@@ -104,11 +116,14 @@ In your computer, create a folder to store the results of this practical, for ex
 
 - In the result, get the degenerated consensus and save it to a separate text file. 
 
-## Getting all upstream ("promoter") sequences o E.coli
+## Getting all upstream ("promoter") sequences of *E.coli*
 
 - Open the tool **retrieve-seq**
+
 - Select organism *Escherichia coli K12* (top : type simply K12 in the organism query box)
+
 - Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start
+
 - Copy the URL of the result file and save it in a text file (we will use it several times below)
 
 
@@ -133,7 +148,7 @@ In your computer, create a folder to store the results of this practical, for ex
 
 ## Negative control 1: scan artificial sequences with your motif
 
-- RSAT random sequences
+- RSAT random sequences, generated with a Markov model of order 1 whose parameters were estimated from upstream non-coding sequences of the genome of reference. 
 
 ## Negative control 2: permute the columns of the matrix
 
