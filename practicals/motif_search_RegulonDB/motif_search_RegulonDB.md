@@ -1,7 +1,7 @@
 ---
 title: "Scanning non-coding sequences with a TFBM"
 author: "Jacques van Helden"
-date: '2019-02-07'
+date: '2020-02-04'
 output:
   slidy_presentation:
     smart: no
@@ -29,6 +29,11 @@ output:
     smaller: yes
     toc: yes
     widescreen: yes
+  revealjs::revealjs_presentation:
+    theme: night
+    transition: none
+    self_contained: true
+    css: ../slides.css
   html_document:
     self_contained: no
     fig_caption: yes
@@ -37,11 +42,6 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
-  revealjs::revealjs_presentation:
-    theme: night
-    transition: none
-    self_contained: true
-    css: ../slides.css
   pdf_document:
     fig_caption: yes
     highlight: zenburn
@@ -75,7 +75,7 @@ transition: linear
 
 Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
 
-- Folder: <https://tinyurl.com/lcg-beii-19>
+- Folder: <https://tinyurl.com/lcg-beii-2020>
 - Motif scanning exercise: 
 
 In your computer, create a folder to store the results of this practical, for example : `$HOME/LCG_BEII_practicals/` (you can change the path and name according to your own organisation of folders). 
