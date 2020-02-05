@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2020-02-04" />
+<meta name="date" content="2020-02-05" />
 
 <title>Solutions - Scanning non-coding sequences with a TFBM</title>
 
@@ -345,7 +345,7 @@ div.tocify {
 <h1 class="title toc-ignore">Solutions - Scanning non-coding sequences with a TFBM</h1>
 <h3 class="subtitle">LCG_BEII 2020</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2020-02-04</h4>
+<h4 class="date">2020-02-05</h4>
 
 </div>
 
@@ -353,6 +353,9 @@ div.tocify {
 <div id="solutions-to-the-exercises" class="section level2">
 <h2>Solutions to the exercises</h2>
 <p>In this file we provide the solutions of the practical <strong>Scanning non-coding sequences with a TFBM</strong> with command-line use of the <em>RSAT</em> software suite.</p>
+</div>
+<div id="reference-genome" class="section level2">
+<h2>Reference genome</h2>
 </div>
 <div id="collective-table-for-the-2020-practical" class="section level2">
 <h2>Collective table for the 2020 practical</h2>
@@ -365,42 +368,80 @@ div.tocify {
 </div>
 <div id="choosing-a-tf-on-regulondb" class="section level2">
 <h2>Choosing a TF on RegulonDB</h2>
-<p>For this exercise, I chose the transcription facot LexA. I define this in an environment variable</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">export</span> <span class="va">FACTOR=</span>LexA</a></code></pre></div>
-<ul>
-<li><p>Open a connection to RegulonDB <a href="http://regulondb.ccg.unam.mx/" class="uri">http://regulondb.ccg.unam.mx/</a></p></li>
-<li><p>Click on the link <a href="http://regulondb.ccg.unam.mx/search?term=Regulon&amp;organism=ECK12&amp;type=All#">regulon list</a>. This opens a table with all the regulons.</p></li>
-<li><p>Choose a TF of interest and open its record</p></li>
-<li><p>Fill up the details of the collective exploration table (<a href="https://tinyurl.com/lcg-beii-19" class="uri">https://tinyurl.com/lcg-beii-19</a>).</p></li>
-<li><p>Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug “+” button in the header of the binding site section)</p></li>
-<li><p>Save in a text file the matrix associated to your factor.</p></li>
-</ul>
+<p>For this exercise, I chose the transcription factor AraC.</p>
+<p>I define this in an environment variable. I also define and create a specific directory for the results related to this transcription factor.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">## Define the reference organism</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="bu">export</span> <span class="va">ORG=</span>Escherichia_coli_GCF_000005845.2_ASM584v2</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Choose a transcription factor (TF) of interes</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="bu">export</span> <span class="va">TF=</span>AraC</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="bu">export</span> <span class="va">RESULT_DIR=</span>results÷<span class="va">${TF}</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="fu">mkdir</span> -p <span class="va">${RESULT_DIR}</span></a></code></pre></div>
+<p>I use the REST Web services to automatically gather the annotations from RegulonDB. REST Web services enable to invoke remotely a resource (database, software tool) by composing an URL with an <strong>entry point</strong> (which specifies the type of query) and a set of parameters separated by <code>&amp;</code>.</p>
+<p>For example, the list of genes regulated by AraC can be gound at the following URL.</p>
+<p><a href="http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC" class="uri">http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC</a></p>
+<p>They can then be stored in a file with a web aspirator, such as <code>curl</code>or <code>wget</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## Get the annotated binding sites from RegulonDB</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=AraC&amp;extended=0&#39;</span> <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_sites_ext0.tsv</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Get the annotated position-specific scoring matrix from RegulonDB</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/tools/getPSSM?tfObject=AraC&#39;</span> <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_PSSM.tab</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Get the annotated target genes from RegulonDB</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC&#39;</span> <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_genes.tab </a></code></pre></div>
 </div>
 <div id="computing-the-degenerate-consensus-from-the-reference-matrix" class="section level2">
 <h2>Computing the degenerate consensus from the reference matrix</h2>
-<ul>
-<li><p>Connect RSAT server: <a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></p></li>
-<li><p>Choose the bacterial server</p></li>
-<li><p>Use <strong>convert-matrix</strong> to compute frequencies, weights, parameters and display a logo of your matrix.</p></li>
-<li><p>In the result, get the degenerated consensus and save it to a separate text file.</p></li>
-</ul>
+<p>The degenerate consensus can be computed with <code>convert-matrix</code> with the appropriate parameters. Since it is printed as a comment (rows starging with <code>;</code>) we can extract its actual value with grep and cut.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">convert-matrix</span> -v  -i results/AraC/AraC_RegulonDB_PSSM.tab \</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  -from tab -to tab -return consensus \</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;^; consensus\t&#39;</span> \</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="kw">|</span> <span class="fu">cut</span> -f 2 \</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_consensus.tab</a></code></pre></div>
 </div>
 <div id="getting-all-upstream-promoter-sequences-of-e.coli" class="section level2">
 <h2>Getting all upstream (“promoter”) sequences of <em>E.coli</em></h2>
-<ul>
-<li><p>Open the tool <strong>retrieve-seq</strong></p></li>
-<li><p>Select organism <em>Escherichia coli K12</em> (top : type simply K12 in the organism query box)</p></li>
-<li>Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start</li>
-<li><p>Copy the URL of the result file and save it in a text file (we will use it several times below)</p></li>
-</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">## Define an environment variable with the file containing all upstream sequences</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="bu">export</span> <span class="va">ALLUP=</span>results/AraC/Escherichia_coli_GCF_000005845.2_ASM584v2_all_upstream-noorf.fasta</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">## Retrieve all upstream sequences</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="ex">retrieve-seq</span> -org Escherichia_coli_GCF_000005845.2_ASM584v2 \</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  -from -1 -to -400 -noorf -all -label name \</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  -o <span class="va">${ALLUP}</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">  </a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">## Check the result (type &quot;q&quot; to quit the &quot;less&quot; command)</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="fu">less</span> <span class="va">${ALLUP}</span></a></code></pre></div>
 </div>
 <div id="coverage-of-the-annotated-binding-sites-by-the-reference-motif" class="section level2">
 <h2>Coverage of the annotated binding sites by the reference motif</h2>
-<ul>
-<li><p>Use <strong>dna-pattern</strong> to scan the annotated binding sites (extracted from RegulonDB) with the degenerate consensus.</p></li>
-<li><p>Use <strong>matrix-scan</strong> to scan the same sites with the RegulonDB matrix</p></li>
-<li><p>Compare the coverage rate of the two motifs</p></li>
-</ul>
+<div id="use-dna-pattern-to-scan-the-annotated-binding-sites-with-a-consensus" class="section level3">
+<h3>Use <em>dna-pattern</em> to scan the annotated binding sites with a consensus</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">## Scan annotated TFBSs with degenerate consensus</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">dna-pattern</span> -v 1 \</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  -i <span class="va">${ALLUP}</span> \</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  -pl results/AraC/AraC_RegulonDB_consensus.tab \</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  -o results/AraC/TFBS_matches_with_deg-consensus_AraC.ft</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## Check the result</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="fu">less</span> results/AraC/TFBS_matches_with_deg-consensus_AraC.ft</a></code></pre></div>
+</div>
+<div id="choosing-a-background-model-for-matrix-scan" class="section level3">
+<h3>Choosing a background model for matrix-scan</h3>
+<p>To scan sequences with a matrix, we need to specify a background model. We can either compute it from the input sequences themselves (option <code>-bginput</code>) or specify a predefined background model file (option <code>-bg_file</code>).</p>
+<p>Pre-computed background models are available in RSAT for each organism, and with different parameters: - oligonucleotides or dyads, - k-mer length, - frequencies counted on a single or on both strand, - accept or not self-overlaps for periodic patterns.</p>
+</div>
+<div id="use-matrix-scan-to-scan-the-annotated-binding-sites-with-a-pssm" class="section level3">
+<h3>Use <em>matrix-scan</em> to scan the annotated binding sites with a PSSM</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## Get the list of recovered target genes</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">## We sort with option -u (unique) because some genes may have several predicted bingind sites</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="fu">grep</span> -v <span class="st">&#39;^;&#39;</span> results/AraC/allup_matches_with_deg-consensus_AraC.ft \</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="kw">|</span> <span class="fu">cut</span> -f 4 <span class="kw">|</span> <span class="fu">sort</span> -u \</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="op">&gt;</span> results/AraC/TFBS_matches_with_deg-consensus_AraC_genes.txt</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="fu">cat</span> results/AraC/TFBS_matches_with_deg-consensus_AraC_genes.txt</a></code></pre></div>
+</div>
+<div id="compare-the-coverage-rate-of-the-two-motifs" class="section level3">
+<h3>Compare the coverage rate of the two motifs</h3>
+</div>
 </div>
 <div id="binding-site-prediction-in-all-promoters" class="section level2">
 <h2>Binding site prediction in all promoters</h2>

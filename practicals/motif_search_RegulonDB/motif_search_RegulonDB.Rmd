@@ -110,21 +110,27 @@ In your computer, create a folder to store the results of this practical, for ex
 
 ## Choosing a TF on RegulonDB
 
+Each student will choose one transcription factor of interest having a reasonable number of binding sites (between 10 and 25). 
+
+For this tutorial, I will use AraC.
+
 - Open a connection to RegulonDB  <http://regulondb.ccg.unam.mx/>
 
 - Click on the link [regulon list](http://regulondb.ccg.unam.mx/search?term=Regulon&organism=ECK12&type=All#). This opens a table with all the regulons. 
 
-- Choose a TF of interest and open its record
+- Click on the top of the column "Total of Regulated Genes" to sort factors by decreasing number of target genes.
 
-- Fill up the details of the collective exploration table (<https://tinyurl.com/lcg-beii-19>).
+- Choose your TF of interest and open its record. **Check that there is a matrix for this TF**. If not, come back to the table and choose another TF. 
 
-- Save a text file with the target gene names (one per row)
+- Fill up the details of the collective exploration table.
 
-- Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp. ).
+- Save a text file with the target gene names (one per row).
+
+- Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp.).
 
 - Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug "+" button in the header of the binding site section)
 
-- Save in a text file the matrix associated to your factor. 
+- Save in a text file the matrix (PSSM) associated to your factor, in tab format. 
 
 ## Computing the degenerate consensus from the reference matrix
 
@@ -140,9 +146,9 @@ In your computer, create a folder to store the results of this practical, for ex
 
 - Open the tool **retrieve-seq**
 
-- Select organism *Escherichia coli K12* (top : type simply K12 in the organism query box)
+- Select organism *Escherichia_coli_GCF_000005845.2_ASM584v2* (top : type simply K12 in the organism query box)
 
-- Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start
+- Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start (i.e. relative coordinates from -1 to -400). 
 
 - Copy the URL of the result file and save it in a text file (we will use it several times below)
 
@@ -153,9 +159,9 @@ The question addressed here is to evaulate the relative performances of the cons
 
 Note that the TFBS are expected to be found in the promoters of operon leader genes, and not in the upstream sequences of the other target genes (the genes following the leader in an operon). Thus, the reference gene set for this analysis are the leader genes of the operons regulated by our TF of interest.  
 
-- Use **dna-pattern** to scan the annotated binding sites (extracted from RegulonDB) with the degenerate consensus.
+- Use **dna-pattern** to scan the annotated binding sites with the degenerate consensus.
 
-- Use **matrix-scan** to scan the same sites with the RegulonDB matrix
+- Use **matrix-scan** to scan the annotated binding sites with the RegulonDB matrix
 
 
 Interpretation: 

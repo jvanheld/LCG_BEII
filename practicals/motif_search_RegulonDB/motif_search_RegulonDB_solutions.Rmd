@@ -80,8 +80,10 @@ knitr::opts_chunk$set(
   size = "tiny", 
   echo = TRUE, 
   eval = FALSE, 
-  warning = FALSE, message = FALSE, 
-  results = FALSE, comment = "")
+  warning = FALSE, 
+  message = FALSE, 
+  results = FALSE, 
+  comment = "")
 
 options(scipen = 12) ## Max number of digits for non-scientific notation
 # knitr::asis_output("\\footnotesize")
@@ -96,6 +98,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this file we provide the solutions of the practical **Scanning non-coding sequences with a TFBM** with command-line use of the *RSAT* software suite. 
 
+## Reference genome
+
+
 ## Collective table for the 2020 practical
 
 Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
@@ -107,58 +112,114 @@ In your computer, create a folder to store the results of this practical, for ex
 
 ## Choosing a TF on RegulonDB
 
-For this exercise, I chose the transcription facot LexA. I define this in an environment variable
+For this exercise, I chose the transcription factor AraC. 
 
-```{bash eval=FALSE}
-export FACTOR=LexA
+I define this in an environment variable. I also define and create a specific directory for the results related to this transcription factor. 
+
+```{bash}
+## Define the reference organism
+export ORG=Escherichia_coli_GCF_000005845.2_ASM584v2
+
+## Choose a transcription factor (TF) of interes
+export TF=AraC
+export RESULT_DIR=results÷${TF}
+mkdir -p ${RESULT_DIR}
+```
+
+I use the REST Web services to automatically gather the annotations from RegulonDB. REST Web services enable to invoke remotely a resource (database, software tool) by composing an URL with an **entry point** (which specifies the type of query) and a set of parameters separated by `&`.
+
+For example, the list of genes regulated by AraC can be gound at the following URL. 
+
+<http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC>
+
+They can then be stored in a file with a web aspirator, such as `curl`or `wget`.
+
+```{bash}
+## Get the annotated binding sites from RegulonDB
+curl 'http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=AraC&extended=0' > results/AraC/AraC_RegulonDB_sites_ext0.tsv
+
+## Get the annotated position-specific scoring matrix from RegulonDB
+curl 'http://regulondb.ccg.unam.mx/webresources/tools/getPSSM?tfObject=AraC' > results/AraC/AraC_RegulonDB_PSSM.tab
+
+## Get the annotated target genes from RegulonDB
+curl 'http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC' > results/AraC/AraC_RegulonDB_genes.tab 
 ```
 
 
-Currently, I run the following steps manually.
-
-- Open a connection to RegulonDB  <http://regulondb.ccg.unam.mx/>
-
-- Click on the link [regulon list](http://regulondb.ccg.unam.mx/search?term=Regulon&organism=ECK12&type=All#). This opens a table with all the regulons. 
-
-- Choose a TF of interest and open its record
-
-- Fill up the details of the collective exploration table (<https://tinyurl.com/lcg-beii-19>).
-
-- Save a text file with the target gene names (one per row)
-
-- Save another text file with the names of the operon leader genes (one gene per row)
-
-- Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug "+" button in the header of the binding site section)
-
-- Save in a text file the matrix associated to your factor. 
 
 ## Computing the degenerate consensus from the reference matrix
 
-- Connect RSAT server: <http://rsat.eu/>
+The degenerate consensus can be computed with `convert-matrix` with the appropriate parameters. Since it is printed as a comment (rows starging with `;`) we can extract its actual value with grep and cut.
 
-- Choose the bacterial server
+```{bash}
+convert-matrix -v  -i results/AraC/AraC_RegulonDB_PSSM.tab \
+  -from tab -to tab -return consensus \
+  | grep '^; consensus\t' \
+  | cut -f 2 \
+  > results/AraC/AraC_RegulonDB_consensus.tab
+```
 
-- Use **convert-matrix** to compute frequencies, weights, parameters and display a logo of your matrix.
 
-- In the result, get the degenerated consensus and save it to a separate text file. 
 
 ## Getting all upstream ("promoter") sequences of *E.coli*
 
-- Open the tool **retrieve-seq**
+```{bash}
+## Define an environment variable with the file containing all upstream sequences
+export ALLUP=results/AraC/Escherichia_coli_GCF_000005845.2_ASM584v2_all_upstream-noorf.fasta
 
-- Select organism *Escherichia coli K12* (top : type simply K12 in the organism query box)
+## Retrieve all upstream sequences
+retrieve-seq -org Escherichia_coli_GCF_000005845.2_ASM584v2 \
+  -from -1 -to -400 -noorf -all -label name \
+  -o ${ALLUP}
+  
+## Check the result (type "q" to quit the "less" command)
+less ${ALLUP}
+```
 
-- Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start
-- Copy the URL of the result file and save it in a text file (we will use it several times below)
 
 
 ## Coverage of the annotated binding sites by the reference motif
 
-- Use **dna-pattern** to scan the annotated binding sites (extracted from RegulonDB) with the degenerate consensus.
+### Use *dna-pattern* to scan the annotated binding sites with a consensus
 
-- Use **matrix-scan** to scan the same sites with the RegulonDB matrix
+```{bash}
+## Scan annotated TFBSs with degenerate consensus
+dna-pattern -v 1 \
+  -i ${ALLUP} \
+  -pl results/AraC/AraC_RegulonDB_consensus.tab \
+  -o results/AraC/TFBS_matches_with_deg-consensus_AraC.ft
 
-- Compare the coverage rate of the two motifs
+## Check the result
+less results/AraC/TFBS_matches_with_deg-consensus_AraC.ft
+
+```
+
+### Choosing a background model for matrix-scan
+
+To scan sequences with a matrix, we need to specify a background model. We can either compute it from the input sequences themselves (option `-bginput`) or specify a predefined background model file (option `-bg_file`). 
+
+Pre-computed background models are available in RSAT for each organism, and with different parameters: 
+- oligonucleotides or dyads, 
+- k-mer length, 
+- frequencies counted on a single or on both strand, 
+- accept or not self-overlaps for periodic patterns.
+
+
+### Use *matrix-scan* to scan the annotated binding sites with a PSSM
+
+
+```{bash}
+## Get the list of recovered target genes
+## We sort with option -u (unique) because some genes may have several predicted bingind sites
+grep -v '^;' results/AraC/allup_matches_with_deg-consensus_AraC.ft \
+  | cut -f 4 | sort -u \
+  > results/AraC/TFBS_matches_with_deg-consensus_AraC_genes.txt
+cat results/AraC/TFBS_matches_with_deg-consensus_AraC_genes.txt
+
+```
+
+
+### Compare the coverage rate of the two motifs
 
 
 ## Binding site prediction in all promoters

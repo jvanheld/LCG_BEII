@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2020-02-04" />
+<meta name="date" content="2020-02-05" />
 
 <title>Scanning non-coding sequences with a TFBM</title>
 
@@ -234,7 +234,7 @@ div.tocify {
 <h1 class="title toc-ignore">Scanning non-coding sequences with a TFBM</h1>
 <h3 class="subtitle">LCG_BEII 2020</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2020-02-04</h4>
+<h4 class="date">2020-02-05</h4>
 
 </div>
 
@@ -256,15 +256,18 @@ div.tocify {
 </div>
 <div id="choosing-a-tf-on-regulondb" class="section level2">
 <h2>Choosing a TF on RegulonDB</h2>
+<p>Each student will choose one transcription factor of interest having a reasonable number of binding sites (between 10 and 25).</p>
+<p>For this tutorial, I will use</p>
 <ul>
 <li><p>Open a connection to RegulonDB <a href="http://regulondb.ccg.unam.mx/" class="uri">http://regulondb.ccg.unam.mx/</a></p></li>
 <li><p>Click on the link <a href="http://regulondb.ccg.unam.mx/search?term=Regulon&amp;organism=ECK12&amp;type=All#">regulon list</a>. This opens a table with all the regulons.</p></li>
-<li><p>Choose a TF of interest and open its record</p></li>
-<li><p>Fill up the details of the collective exploration table (<a href="https://tinyurl.com/lcg-beii-19" class="uri">https://tinyurl.com/lcg-beii-19</a>).</p></li>
-<li><p>Save a text file with the target gene names (one per row)</p></li>
-<li><p>Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp. ).</p></li>
+<li><p>Click on the top of the column “Total of Regulated Genes” to sort factors by decreasing number of target genes.</p></li>
+<li><p>Choose your TF of interest and open its record. <strong>Check that there is a matrix for this TF</strong>. If not, come back to the table and choose another TF.</p></li>
+<li><p>Fill up the details of the collective exploration table.</p></li>
+<li><p>Save a text file with the target gene names (one per row).</p></li>
+<li><p>Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp.).</p></li>
 <li><p>Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug “+” button in the header of the binding site section)</p></li>
-<li><p>Save in a text file the matrix associated to your factor.</p></li>
+<li><p>Save in a text file the matrix (PSSM) associated to your factor, in tab format.</p></li>
 </ul>
 </div>
 <div id="computing-the-degenerate-consensus-from-the-reference-matrix" class="section level2">
