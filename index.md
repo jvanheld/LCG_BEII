@@ -60,15 +60,10 @@ data.
 | Position-specific scoring matrices (PSSM) | [[slides](http://rsat-doc.github.io/course/pdf_files/01.4.PSSM_theory.pdf)] |
 | Sequence models (Bernoulli, Markov chains) | [[slides](http://rsat-doc.github.io/course/pdf_files/01.3.sequence_models.pdf)] |
 | Matrix-based pattern matching | [[slides](http://rsat-doc.github.io/course/pdf_files/02.3.pattern_matching_matrices.pdf)] |
-
-### Day 1: practical: scanning sequences with motifs
-
-| Topics                                                | Supports |
-|-------------------------------------------------------|----------|
-| **Exercise:** scaning sequences with a reference motif |  [[exercise](practicals/motif_search_RegulonDB/motif_search_RegulonDB.html)] | |
-
+| **Exercises:** scaning sequences with a reference motif |  [[html](practicals/motif_search_RegulonDB/motif_search_RegulonDB.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_search_RegulonDB/motif_search_RegulonDB.Rmd)]  |
+| **Solutions** scaning sequences with a reference motif |  [[html](practicals/motif_search_RegulonDB/motif_search_RegulonDB_solutions.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_search_RegulonDB/motif_search_RegulonDB_solutions.Rmd)] | 
   
-### Day 3: motif discovery
+### Day 2: motif discovery
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
@@ -77,7 +72,7 @@ data.
 | **Tutorial:** mlotif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
 | **Exercise:** discovering a motif discovery algorithm | [[html](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)] [[pdf](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.pdf)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_discovery/discovering_a_motif_discovery_algorithm.Rmd)] |
 
-### Day 4: ChIP-seq analysis
+### Day 3: ChIP-seq analysis
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
@@ -88,7 +83,7 @@ data.
 
 - The final report will consist in finishing the [practical on ChIP-seq analysis](practicals/chip-seq_analysis/chip-seq_analysis.html). 
 
-- Reports must be submitted on the LCG BEII Web site before March 7. 
+- Reports must be submitted on the LCG BEII Web site before Feb 9. 
 
 - A template is provided in [.docx](practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.docx) and [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd) formats. Read carefully the instructions before starting the work. 
 
