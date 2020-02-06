@@ -431,23 +431,28 @@ div.tocify {
 <li><p>The peak statistics can be computed with a spreadsheet (Excel, LibreOffice Calc), R, or the Unix command line.</p></li>
 <li><p>Click the “code” button to display a bash line to compute peak statistics.</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">awk</span> <span class="st">&#39;{len=$3 - $2; sum += len; n++; mean = sum / n ; print &quot;n=&quot;n&quot;\tsum=&quot;sum&quot;\tmean=&quot;mean}&#39;</span> \</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">   practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed \</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">   <span class="kw">|</span> <span class="fu">tail</span> -n 1</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="va">RESULT_DIR=</span>~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="va">PEAKS=${RESULT_DIR}</span>/GSE69479.SOX2.hESC_peaks.narrowPeak.gz</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">gunzip</span> -c <span class="va">${PEAKS}</span> \</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">   <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{len=$3 - $2; sum += len; n++; mean = sum / n ; print &quot;n=&quot;n&quot;\tsum=&quot;sum&quot;\tmean=&quot;mean}&#39;</span> \</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">   <span class="kw">|</span> <span class="fu">tail</span> -n 1</a></code></pre></div>
 <ul>
 <li>Click the “code” button to display a chunk of R code to compute peak statistics.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">peakFile &lt;-<span class="st"> &quot;data/ReMap_GSE69479.SOX2.ESC_peaks.bed&quot;</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">peaks &lt;-<span class="st"> </span><span class="kw">read.delim</span>(peakFile, <span class="dt">header =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">peaks &lt;-<span class="st"> </span>peaks[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] <span class="co"># Keep the fields used for this analysis</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">names</span>(peaks) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chr&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name&quot;</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">peaks<span class="op">$</span>len &lt;-<span class="st"> </span>peaks<span class="op">$</span>end <span class="op">-</span><span class="st"> </span>peaks<span class="op">$</span>start</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">head</span>(peaks) <span class="co"># print the first peaks</span></a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">resultDir &lt;-<span class="st"> &quot;~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479&quot;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">peakBase &lt;-<span class="st"> &quot;GSE69479.SOX2.hESC_peaks.narrowPeak.gz&quot;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">peakFile &lt;-<span class="st"> </span><span class="kw">file.path</span>(resultDir, peakBase)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#peakFile &lt;- &quot;data/ReMap_GSE69479.SOX2.ESC_peaks.bed&quot;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">peaks &lt;-<span class="st"> </span><span class="kw">read.delim</span>(peakFile, <span class="dt">header =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">peaks &lt;-<span class="st"> </span>peaks[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] <span class="co"># Keep the fields used for this analysis</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">names</span>(peaks) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chr&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name&quot;</span>)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">sum &lt;-<span class="st"> </span><span class="kw">sum</span>(peaks<span class="op">$</span>len)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">mean &lt;-<span class="st"> </span><span class="kw">mean</span>(peaks<span class="op">$</span>len)</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(peaks)</a></code></pre></div>
+<a class="sourceLine" id="cb2-9" data-line-number="9">peaks<span class="op">$</span>len &lt;-<span class="st"> </span>peaks<span class="op">$</span>end <span class="op">-</span><span class="st"> </span>peaks<span class="op">$</span>start</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">head</span>(peaks) <span class="co"># print the first peaks</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">sum &lt;-<span class="st"> </span><span class="kw">sum</span>(peaks<span class="op">$</span>len)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">mean &lt;-<span class="st"> </span><span class="kw">mean</span>(peaks<span class="op">$</span>len)</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(peaks)</a></code></pre></div>
 <p>In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479) we obtain:</p>
 <ul>
 <li>Number of peaks: <span class="math inline">\(n = 2,352\)</span></li>
@@ -468,16 +473,19 @@ div.tocify {
 <li><p>Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains.</p></li>
 <li><p>Find the transcripiton factor of interest and save its position-counts matrix (PCM) in your work directory.</p></li>
 </ul></li>
-<li><p>With the RSAT tool <em>convert-matrix</em>, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the <code>//</code> line at the end, which indicates the separation between two motifs in the same file). Save this text file as <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p></li>
+<li><p>With the RSAT tool <em>convert-matrix</em>, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the <code>//</code> line at the end, which indicates the separation between two motifs in the same file). Save this text file as <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p>
+<ul>
+<li><strong>Tip:</strong> the format Hocomoco is not displayed yet in the list of input formats for <em>convert-matrix</em>, but it is actually identical to cluster-buster.</li>
+</ul></li>
 </ul>
 </div>
 <div id="discovering-motifs-with-rsat-peak-motifs" class="section level2">
 <h2>Discovering motifs with RSAT peak-motifs</h2>
 <ul>
 <li><p>Open a connection to <a href="http://metazoa.rsat.eu/">RSAT Metazoa</a></p></li>
-<li><p>Use the tool <strong>fetch-sequences</strong> to get the sequences of your peaks.</p>
+<li><p>Use the tool <strong><a href="http://metazoa.rsat.eu/fetch-sequences_form.cgi">fetch-sequences</a></strong> to get the sequences of your peaks.</p>
 <p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were computed by Ballester’s team based on the version hg38 of Human genome</p></li>
-<li><p>Send the results to <strong>peak-motifs</strong></p>
+<li><p>Send the results to <strong><a href="http://metazoa.rsat.eu/peak-motifs_form.cgi">peak-motifs</a></strong></p>
 <ul>
 <li>As motif databases, select both Jaspar non-redundant vertebrates and Hocomoco.</li>
 <li>Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code> you built in the previous section).</li>

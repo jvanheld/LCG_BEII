@@ -140,15 +140,20 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 - Click the "code" button to display a bash line to compute peak statistics.
 
 ```{bash peak_stats_bash, eval=FALSE, echo=TRUE}
-awk '{len=$3 - $2; sum += len; n++; mean = sum / n ; print "n="n"\tsum="sum"\tmean="mean}' \
-   practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed \
+RESULT_DIR=~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479
+PEAKS=${RESULT_DIR}/GSE69479.SOX2.hESC_peaks.narrowPeak.gz
+gunzip -c ${PEAKS} \
+   | awk '{len=$3 - $2; sum += len; n++; mean = sum / n ; print "n="n"\tsum="sum"\tmean="mean}' \
    | tail -n 1
 ```
 
 - Click the "code" button to display a chunk of R code to compute peak statistics.
 
 ```{r pak_stats_r, eval=TRUE, echo=TRUE}
-peakFile <- "data/ReMap_GSE69479.SOX2.ESC_peaks.bed"
+resultDir <- "~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479"
+peakBase <- "GSE69479.SOX2.hESC_peaks.narrowPeak.gz"
+peakFile <- file.path(resultDir, peakBase)
+#peakFile <- "data/ReMap_GSE69479.SOX2.ESC_peaks.bed"
 peaks <- read.delim(peakFile, header = FALSE)
 peaks <- peaks[, 1:4] # Keep the fields used for this analysis
 names(peaks) <- c("chr", "start", "end", "name")
@@ -184,19 +189,22 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 
 - With the RSAT tool *convert-matrix*, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the `//` line at the end, which indicates the separation between two motifs in the same file). Save this text file as `[YOUR_FACTOR_NAME]_reference-motifs.tf`.
 
+    - **Tip:** the format Hocomoco is not displayed yet in the list of input formats for *convert-matrix*, but it is actually identical to cluster-buster.
+
 ## Discovering motifs with RSAT peak-motifs
 
 
 - Open a connection to [RSAT Metazoa](http://metazoa.rsat.eu/)
 
-- Use the tool **fetch-sequences** to get the sequences of your peaks. 
+- Use the tool **[fetch-sequences](http://metazoa.rsat.eu/fetch-sequences_form.cgi)** to get the sequences of your peaks. 
 
     **BEWARE:** the peaks of all ChIP-seq datasets were computed by Ballester's team based on the version hg38 of Human genome
 
-- Send the results to **peak-motifs** 
+- Send the results to **[peak-motifs](http://metazoa.rsat.eu/peak-motifs_form.cgi)** 
 
-    - As motif databases, select both Jaspar non-redundant vertebrates and Hocomoco.
+    - As motif databases, select both *Jaspar non-redundant vertebrates* and *Hocomoco Human TFs*.
     - Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file `[YOUR_FACTOR_NAME]_reference-motifs.tf` you built in the previous section). 
+    - Enter your email address
     - Leave all other parameters unchanged an run the analysis. 
 
 - Interpret the results: 
