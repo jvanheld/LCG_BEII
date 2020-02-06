@@ -364,7 +364,7 @@ div.tocify {
 <li>Folder: <a href="https://tinyurl.com/lcg-beii-2020" class="uri">https://tinyurl.com/lcg-beii-2020</a></li>
 <li>Motif scanning exercise:</li>
 </ul>
-<p>In your computer, create a folder to store the results of this practical, for example : <code>$HOME/LCG_BEII_practicals/</code> (you can change the path and name according to your own organisation of folders).</p>
+<p>In your computer, create a folder to store the results of this practical, for example: <code>$HOME/LCG_BEII_practicals/</code> (you can change the path and name according to your own organisation of folders).</p>
 </div>
 <div id="choosing-a-tf-on-regulondb" class="section level2">
 <h2>Choosing a TF on RegulonDB</h2>
@@ -375,20 +375,24 @@ div.tocify {
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">## Choose a transcription factor (TF) of interes</span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="bu">export</span> <span class="va">TF=</span>AraC</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="bu">export</span> <span class="va">RESULT_DIR=</span>results÷<span class="va">${TF}</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="fu">mkdir</span> -p <span class="va">${RESULT_DIR}</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="bu">export</span> <span class="va">RESULT_DIR=</span>results/<span class="va">${TF}</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="fu">mkdir</span> -p <span class="va">${RESULT_DIR}</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="bu">cd</span> <span class="va">${RESULT_DIR}</span></a></code></pre></div>
 <p>I use the REST Web services to automatically gather the annotations from RegulonDB. REST Web services enable to invoke remotely a resource (database, software tool) by composing an URL with an <strong>entry point</strong> (which specifies the type of query) and a set of parameters separated by <code>&amp;</code>.</p>
 <p>For example, the list of genes regulated by AraC can be gound at the following URL.</p>
 <p><a href="http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC" class="uri">http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC</a></p>
 <p>They can then be stored in a file with a web aspirator, such as <code>curl</code>or <code>wget</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## Get the annotated binding sites from RegulonDB</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=AraC&amp;extended=0&#39;</span> <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_sites_ext0.tsv</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">## Get the annotated position-specific scoring matrix from RegulonDB</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/tools/getPSSM?tfObject=AraC&#39;</span> <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_PSSM.tab</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">## Get the annotated target genes from RegulonDB</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC&#39;</span> <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_genes.tab </a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=AraC&amp;extended=0&#39;</span> \</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">   <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_sites_ext0.tsv</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">## Get the annotated position-specific scoring matrix from RegulonDB</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/tools/getPSSM?tfObject=AraC&#39;</span> \</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">   <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_PSSM.tab</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">## Get the annotated target genes from RegulonDB</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="ex">curl</span> <span class="st">&#39;http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC&#39;</span> \</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="op">&gt;</span> results/AraC/AraC_RegulonDB_genes.tab </a></code></pre></div>
 </div>
 <div id="computing-the-degenerate-consensus-from-the-reference-matrix" class="section level2">
 <h2>Computing the degenerate consensus from the reference matrix</h2>

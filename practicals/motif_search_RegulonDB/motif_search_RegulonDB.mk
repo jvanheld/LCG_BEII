@@ -22,7 +22,7 @@ ORG=Escherichia_coli_GCF_000005845.2_ASM584v2
 TF=AraC
 MARKOV=1
 RESULT_DIR=results/${TF}
-PVAL=0.001
+PVAL=0.0001
 SITE_EXT=10
 param:
 	@echo "Parameters"
@@ -37,6 +37,8 @@ summary:
 	@echo "Result files and summary"
 	@echo "	RESULT_DIR			${RESULT_DIR}"
 	@echo "	REF_SITES			${REF_SITES}"
+	@echo "	ALLUP				${ALLUP}"
+	@echo "	REF_SITES_NB			${REF_SITES_NB}"
 	@echo "	REF_PSSM			${REF_PSSM}"
 	@echo "	REF_GENES			${REF_GENES}"
 	@echo "	REF_GENE_NB			${REF_GENE_NB}"
@@ -50,6 +52,9 @@ summary:
 	@echo "	CONS_ALLUP_SITES_NB		${CONS_ALLUP_SITES_NB}"
 	@echo "	CONS_ALLUP_GENES_NB		${CONS_ALLUP_GENES_NB}"
 	@echo "	BG_FILE				${BG_FILE}"
+	@echo "	TFBS_VS_PSSM			${TFBS_VS_PSSM}"
+	@echo "	PSSM_RECOVERED_SITES_NB		${PSSM_RECOVERED_SITES_NB}"
+
 
 all: dir ref_sites ref_pssm ref_genes deg_consensus all_seq tfbs_vs_consensus allup_vs_consensus create_bg tfbs_vs_pssm summary
 
@@ -60,6 +65,7 @@ dir:
 ################################################################
 ## Get reference TFBS from RegulonDB
 REF_SITES=${RESULT_DIR}/${TF}_RegulonDB_sites_ext${SITE_EXT}.fasta
+REF_SITES_NB=`grep '^>' ${REF_SITES} | wc -l | awk '{print $$1}'`
 ref_sites:
 	@echo "Downloading reference sites from RegulonDB"
 	curl 'http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=${TF}&extended=${SITE_EXT}' | grep -v '^#' > ${REF_SITES}
@@ -174,7 +180,7 @@ tfbs_vs_pssm:
 ## Use *matrix-scan* to scan the annotated binding sites with a PSSM
 ALLUP_VS_PSSM=${RESULT_DIR}/ALLUP_matches_PSSM_${TF}.ft
 ALLUP_VS_PSSM_GENES=${RESULT_DIR}/ALLUP_matches_with_PSSM_${TF}_genes.txt
-PSSM_RECOVERED_SITES_NB=`grep -v '^;' ${ALLUP_VS_PSSM} | wc -l | awk '{print $$1}'`
+PSSM_ALLUP_SITES_NB=`grep -v '^;' ${ALLUP_VS_PSSM} | wc -l | awk '{print $$1}'`
 PSSM_RECOVERED_GENES_NB=`wc -l ${ALLUP_VS_PSSM_GENES} | awk '{print $$1}'`
 allup_vs_pssm:
 	@echo "Scanning annotated binding sites with PSSM"

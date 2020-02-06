@@ -108,7 +108,7 @@ Students will store their results in a shared spreadsheet, which will be used to
 - Folder: <https://tinyurl.com/lcg-beii-2020>
 - Motif scanning exercise: 
 
-In your computer, create a folder to store the results of this practical, for example : `$HOME/LCG_BEII_practicals/` (you can change the path and name according to your own organisation of folders). 
+In your computer, create a folder to store the results of this practical, for example: `$HOME/LCG_BEII_practicals/` (you can change the path and name according to your own organisation of folders). 
 
 ## Choosing a TF on RegulonDB
 
@@ -122,8 +122,9 @@ export ORG=Escherichia_coli_GCF_000005845.2_ASM584v2
 
 ## Choose a transcription factor (TF) of interes
 export TF=AraC
-export RESULT_DIR=results÷${TF}
+export RESULT_DIR=results/${TF}
 mkdir -p ${RESULT_DIR}
+
 ```
 
 I use the REST Web services to automatically gather the annotations from RegulonDB. REST Web services enable to invoke remotely a resource (database, software tool) by composing an URL with an **entry point** (which specifies the type of query) and a set of parameters separated by `&`.
@@ -136,13 +137,19 @@ They can then be stored in a file with a web aspirator, such as `curl`or `wget`.
 
 ```{bash}
 ## Get the annotated binding sites from RegulonDB
-curl 'http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=AraC&extended=0' > results/AraC/AraC_RegulonDB_sites_ext0.tsv
+curl 'http://regulondb.ccg.unam.mx/webresources/tools/getTFBS?tfObject=AraC&extended=0' \
+   | grep -v '^#' \
+   > results/AraC/AraC_RegulonDB_sites_ext0.tsv
 
 ## Get the annotated position-specific scoring matrix from RegulonDB
-curl 'http://regulondb.ccg.unam.mx/webresources/tools/getPSSM?tfObject=AraC' > results/AraC/AraC_RegulonDB_PSSM.tab
+curl 'http://regulondb.ccg.unam.mx/webresources/tools/getPSSM?tfObject=AraC' \
+   | grep -v '^#' \
+   > results/AraC/AraC_RegulonDB_PSSM.tab
 
 ## Get the annotated target genes from RegulonDB
-curl 'http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC' > results/AraC/AraC_RegulonDB_genes.tab 
+curl 'http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObject=AraC' \
+   | grep -v '^#' \
+    > results/AraC/AraC_RegulonDB_genes.tab 
 ```
 
 
@@ -152,9 +159,9 @@ curl 'http://regulondb.ccg.unam.mx/webresources/regulon/getRegulatedGenes?tfObje
 The degenerate consensus can be computed with `convert-matrix` with the appropriate parameters. Since it is printed as a comment (rows starging with `;`) we can extract its actual value with grep and cut.
 
 ```{bash}
-convert-matrix -v  -i results/AraC/AraC_RegulonDB_PSSM.tab \
+convert-matrix -v -i results/AraC/AraC_RegulonDB_PSSM.tab \
   -from tab -to tab -return consensus \
-  | grep '^; consensus\t' \
+  | grep -Pe '^; consensus\t' \
   | cut -f 2 \
   > results/AraC/AraC_RegulonDB_consensus.tab
 ```
