@@ -7,7 +7,7 @@ output:
     code_folding: hide
     self_contained: no
     fig_caption: yes
-    highlight: zenburn
+    highlight: tango
     theme: cerulean
     toc: yes
     toc_depth: 3
@@ -90,7 +90,7 @@ options(scipen = 12) ## Max number of digits for non-scientific notation
 
 ## Introduction
 
-In this practrical, we will combine various bioinformatics resources to extract information from ChIP-seq experiments, and evaluate the quality of the peaks.
+In this practical, we will combine various bioinformatics resources to extract information from ChIP-seq experiments, and evaluate the quality of the peaks.
 
 ## Resources
 
@@ -107,7 +107,7 @@ In this practrical, we will combine various bioinformatics resources to extract 
 ## Creating a workspace for this practical
 
 - Create a new folder to store the results of this practical (e.g.  `~/LCG_BEII/chip-seq_practical/`)
-- Set this folder as your workiing direct
+- Set this folder as your working direct
 
 ## Getting peaks from ReMap
 
@@ -137,11 +137,12 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 
 - The peak statistics can be computed with a spreadsheet (Excel, LibreOffice Calc), R, or the Unix command line. 
 
-
 - Click the "code" button to display a bash line to compute peak statistics.
 
 ```{bash peak_stats_bash, eval=FALSE, echo=TRUE}
-awk '{len=$3 - $2; sum += len; n++; mean = sum / n ; print "n="n"\tsum="sum"\tmean="mean}' practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed | tail -n 1
+awk '{len=$3 - $2; sum += len; n++; mean = sum / n ; print "n="n"\tsum="sum"\tmean="mean}' \
+   practicals/chip-seq_analysis/data/ReMap_GSE69479.SOX2.ESC_peaks.bed \
+   | tail -n 1
 ```
 
 - Click the "code" button to display a chunk of R code to compute peak statistics.
