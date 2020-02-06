@@ -411,7 +411,7 @@ div.tocify {
 <li>Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC)</li>
 <li>Click on the <strong>Download by by dataset</strong> tab, and download the peak set corresponding to the tissue / cell type of your choice.</li>
 <li>Check that the number of peaks in the downloaded file corresponds to the indication on the ReMap page for your factor in the tissue / cell type and in the study identifier (GSE or other) you selected.</li>
-<li><p>Check the <em>name</em> column in the bed file to make sure that the peaks all belong to the same tissue / cell tupe and study identifier.</p></li>
+<li><p>Check the <em>name</em> column in the bed file to make sure that the peaks all belong to the same tissue / cell type and study identifier.</p></li>
 <li><p>Compute</p>
 <ul>
 <li>the number of peaks</li>
@@ -420,7 +420,7 @@ div.tocify {
 <li>the median peak length</li>
 </ul></li>
 </ul>
-<p><strong>Beware:</strong> the bed format as a somewhat confusiong convention to specify coordinate:</p>
+<p><strong>Beware:</strong> the bed format relies on a somewhat confusing convention to specify the coordinates of genomic features.</p>
 <ul>
 <li>Coordinates are 0-based (the first position of a sequence is referred to as 0).</li>
 <li>The feature start is (as expected) the first position within the feature, but the “end” is the first position <strong>after the feature</strong>.</li>
@@ -458,17 +458,17 @@ div.tocify {
 <div id="getting-motifs-from-reference-databases" class="section level2">
 <h2>Getting motifs from reference databases</h2>
 <ul>
-<li><p>Open a connection to Jaspar</p>
+<li><p>Open a connection to <a href="http://jaspar.genereg.net/">Jaspar</a></p>
 <ul>
 <li><p>Explore the database functionalities</p></li>
 <li><p>Find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.</p></li>
 </ul></li>
 <li><p>Do the same with the <a href="http://hocomoco11.autosome.ru/">Hocomoco</a> database.</p>
 <ul>
-<li>Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains.</li>
-<li>Find the transcripiton factor of interest and save its binding motif in your work directory.</li>
+<li><p>Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains.</p></li>
+<li><p>Find the transcripiton factor of interest and save its position-counts matrix (PCM) in your work directory.</p></li>
 </ul></li>
-<li><p>RSAT convert-matrix tools, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the <code>//</code> line at the end, which indicates the separation between two motifs in the same file). Save this text file as <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p></li>
+<li><p>With the RSAT tool <em>convert-matrix</em>, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the <code>//</code> line at the end, which indicates the separation between two motifs in the same file). Save this text file as <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p></li>
 </ul>
 </div>
 <div id="discovering-motifs-with-rsat-peak-motifs" class="section level2">
@@ -508,6 +508,20 @@ div.tocify {
 <li><p>Submit your peak sequences</p></li>
 <li><p>Enter the JASPAR and Hocomoco reference motifs</p></li>
 <li><p>Run the analyses</p></li>
+<li><p>Analyse the same peak sequences with <a href="http://meme-suite.org/tools/meme-chip">MEME-ChIP</a>, and convert the discovered motifs in transfac format with the RSAT tool <em>convert-matrix</em></p></li>
+<li><p>Run the RSAT tool <em>matrix-clustering</em> to merge and compare the two collections of motifs discovered by <em>RSAT peak-motifs</em> and <em>MEME-ChIP</em>, respectively.</p></li>
+<li><p>From the matrix-clustering result, retrieve the <strong>root motifs</strong>, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP.</p></li>
+<li><p>Use the RSAT tool <em>compare-matrices</em> to compre these non-redundant discovered motifs with JASPAR nonredundant vertebrate.</p></li>
+<li><p>Use <em>RSAT matrix-scan</em> to measure the rate of coverage of the peaks (percentage of peaks with at least one match)</p>
+<ul>
+<li>for each one of the non-redundant discovered motifs</li>
+<li>for each reference motifs</li>
+</ul></li>
+<li><p>Use <em>RSAT matrix-quality</em> to measure the enrichment of the peaks</p>
+<ul>
+<li>by each discovered motifs</li>
+<li>by each reference motif</li>
+</ul></li>
 <li><p>Interpret the results</p>
 <ul>
 <li>Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?</li>

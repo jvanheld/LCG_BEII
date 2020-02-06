@@ -118,7 +118,7 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 - Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC) 
 - Click on the **Download by by dataset** tab, and download the peak set corresponding to the tissue / cell type of your choice. 
 - Check that the number of peaks in the downloaded file corresponds to the indication on the ReMap page for your factor in the tissue / cell type and in the study identifier (GSE or other) you selected. 
-- Check the *name* column in the bed file to make sure that the peaks all belong to the same tissue / cell tupe and study identifier. 
+- Check the *name* column in the bed file to make sure that the peaks all belong to the same tissue / cell type and study identifier. 
 
 - Compute 
 
@@ -127,7 +127,7 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
     - the mean peak length
     - the median peak length
 
-**Beware:** the bed format as a somewhat confusiong convention to specify coordinate:
+**Beware:** the bed format relies on a somewhat confusing convention to specify the coordinates of genomic features.
 
 - Coordinates are 0-based (the first position of a sequence is referred to as 0).
 - The feature start is (as expected) the first position within the feature, but the "end" is the first position **after the feature**.
@@ -170,7 +170,7 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 
 ## Getting motifs from reference databases
 
-- Open a connection to Jaspar
+- Open a connection to [Jaspar](http://jaspar.genereg.net/)
 
     - Explore the database functionalities
 
@@ -179,9 +179,10 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 - Do the same with the [Hocomoco](http://hocomoco11.autosome.ru/) database. 
 
     - Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains. 
-    - Find the transcripiton factor of interest and save its binding motif in your work directory. 
 
-- RSAT convert-matrix tools, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the `//` line at the end, which indicates the separation between two motifs in the same file). Save this text file as `[YOUR_FACTOR_NAME]_reference-motifs.tf`.
+    - Find the transcripiton factor of interest and save its position-counts matrix (PCM) in your work directory. 
+
+- With the RSAT tool *convert-matrix*, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the `//` line at the end, which indicates the separation between two motifs in the same file). Save this text file as `[YOUR_FACTOR_NAME]_reference-motifs.tf`.
 
 ## Discovering motifs with RSAT peak-motifs
 
@@ -228,11 +229,28 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 
 - Run the analyses
 
+- Analyse the same peak sequences with [MEME-ChIP](http://meme-suite.org/tools/meme-chip), and convert the discovered motifs in transfac format with the RSAT tool *convert-matrix*
+
+- Run the RSAT tool *matrix-clustering* to merge and compare the two collections of motifs discovered by *RSAT peak-motifs* and *MEME-ChIP*, respectively. 
+
+- From the matrix-clustering result, retrieve the **root motifs**, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP. 
+
+- Use the RSAT tool *compare-matrices* to compre these non-redundant discovered motifs with JASPAR nonredundant vertebrate. 
+
+- Use *RSAT matrix-scan* to measure the rate of coverage of the peaks (percentage of peaks with at least one match)
+
+    - for each one of the non-redundant discovered motifs
+    - for each reference motifs
+    
+- Use *RSAT matrix-quality* to measure the enrichment of the peaks 
+
+    - by each discovered motifs
+    - by each reference motif
+
 - Interpret the results
 
     - Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?
     
-
 
 
 
@@ -249,3 +267,4 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
     - Rmd format: [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd). 
 
 ***Note that your report should be submitted in Word format, so I can annotate it in the margins. ** If you use Rstudio to write the report, knitr enables you to export in docx format.*
+
