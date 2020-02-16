@@ -229,37 +229,52 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 
 ## Motif encrihment analysis
 
-- On the RSAT server, open the tool**matrix-quality**
+> Note : for the 2020 session we had no time to see the theory about **matrix-quality** and motif enrichment. This section can thus be skipped for the report. 
 
-- Submit your peak sequences
+1. On the RSAT server, open the tool **matrix-quality**
 
-- Enter the JASPAR and Hocomoco reference motifs
+2. Submit your peak sequences
 
-- Run the analyses
+3. Enter the JASPAR and Hocomoco reference motifs
 
-- Analyse the same peak sequences with [MEME-ChIP](http://meme-suite.org/tools/meme-chip), and convert the discovered motifs in transfac format with the RSAT tool *convert-matrix*
+4. Run the analyses
 
-- Run the RSAT tool *matrix-clustering* to merge and compare the two collections of motifs discovered by *RSAT peak-motifs* and *MEME-ChIP*, respectively. 
+## Motif discovery with MEME
 
-- From the matrix-clustering result, retrieve the **root motifs**, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP. 
+Analyse the same peak sequences with [MEME-ChIP](http://meme-suite.org/tools/meme-chip), and convert the discovered motifs in transfac format with the RSAT tool *convert-matrix*.
 
-- Use the RSAT tool *compare-matrices* to compre these non-redundant discovered motifs with JASPAR nonredundant vertebrate. 
+Also analyse with MEME the random selections of genmic regions (negative control). 
 
-- Use *RSAT matrix-scan* to measure the rate of coverage of the peaks (percentage of peaks with at least one match)
+## Matrix clustering
+
+The tool *matrix-clustering* can be used for different purposes. Here we will use it to 
+- compare the motifs discovered respectively by MEME and RSAT peak-motifs in the peak-sequences
+- merge the similar motifs in order to obtain a non-redundant collection of motifs discoverd by the different tools in the peaks
+- compare this non-redundant collection of discovered motifs with a motif database in order to identify the associated TFs.
+
+
+
+1. Run the RSAT tool *matrix-clustering* to merge and compare the two collections of motifs discovered by *RSAT peak-motifs* and *MEME-ChIP*, respectively. 
+
+2. From the *matrix-clustering* result, retrieve the **root motifs**, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP. 
+
+3. Use the RSAT tool *compare-matrices* to compare these non-redundant discovered motifs with JASPAR nonredundant vertebrate. 
+
+4. Use *RSAT matrix-scan* to measure the rate of coverage of the peaks (percentage of peaks with at least one match)
 
     - for each one of the non-redundant discovered motifs
     - for each reference motifs
     
-- Use *RSAT matrix-quality* to measure the enrichment of the peaks 
 
-    - by each discovered motifs
-    - by each reference motif
+## Interpret the results
 
-- Interpret the results
-
-    - Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?
+- Do the motifs discovered in the peaks include the reference motifs (those correspinding to the immunoprecipitated factor)?
     
-
+- Are these motifs reported by all the motif discovery approaches or only by some of them?
+    
+- Do you discover motifs associated with other transcription factors? If so, are these factors relevant to the ChIP-seq data set under study (co-factors of the immunoprecipitated factor, factors involved in this cell/tissue type, ...)?
+    
+- Which algorithms reported significant motifs in the random selections of genomic regions? How significant are they compared to those reported in the actual peaks? How do you interpret these motifs? 
 
 
 ## Instruction for the report
@@ -270,9 +285,9 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479)
 
 3. Report template. Please used the template provided here. Read carefully the instructions. 
 
-    - Word format: [docx](LASTNAME_Firstname_chip-seq_analysis_report.docx)
-    
     - Rmd format: [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd). 
 
-***Note that your report should be submitted in Word format, so I can annotate it in the margins. ** If you use Rstudio to write the report, knitr enables you to export in docx format.*
+Please submit both the original file (Rmd) and the report compiled in Word format (in RStudio, use the command **Knit to Word**), in order to enable me to annotate it in the margins. 
+
+
 

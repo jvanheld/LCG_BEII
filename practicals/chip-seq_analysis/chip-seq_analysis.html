@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2020-02-06" />
+<meta name="date" content="2020-02-16" />
 
 <title>Practical: analysis of ChIP-seq peaks</title>
 
@@ -345,7 +345,7 @@ div.tocify {
 <h1 class="title toc-ignore">Practical: analysis of ChIP-seq peaks</h1>
 <h3 class="subtitle">LCG_BEII 2019</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2020-02-06</h4>
+<h4 class="date">2020-02-16</h4>
 
 </div>
 
@@ -487,8 +487,9 @@ div.tocify {
 <p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were computed by Ballester’s team based on the version hg38 of Human genome</p></li>
 <li><p>Send the results to <strong><a href="http://metazoa.rsat.eu/peak-motifs_form.cgi">peak-motifs</a></strong></p>
 <ul>
-<li>As motif databases, select both Jaspar non-redundant vertebrates and Hocomoco.</li>
+<li>As motif databases, select both <em>Jaspar non-redundant vertebrates</em> and <em>Hocomoco Human TFs</em>.</li>
 <li>Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code> you built in the previous section).</li>
+<li>Enter your email address</li>
 <li>Leave all other parameters unchanged an run the analysis.</li>
 </ul></li>
 <li><p>Interpret the results:</p>
@@ -511,29 +512,42 @@ div.tocify {
 </div>
 <div id="motif-encrihment-analysis" class="section level2">
 <h2>Motif encrihment analysis</h2>
-<ul>
-<li><p>On the RSAT server, open the tool<strong>matrix-quality</strong></p></li>
+<blockquote>
+<p>Note : for the 2020 session we had no time to see the theory about <strong>matrix-quality</strong> and motif enrichment. This section can thus be skipped for the report.</p>
+</blockquote>
+<ol style="list-style-type: decimal">
+<li><p>On the RSAT server, open the tool <strong>matrix-quality</strong></p></li>
 <li><p>Submit your peak sequences</p></li>
 <li><p>Enter the JASPAR and Hocomoco reference motifs</p></li>
 <li><p>Run the analyses</p></li>
-<li><p>Analyse the same peak sequences with <a href="http://meme-suite.org/tools/meme-chip">MEME-ChIP</a>, and convert the discovered motifs in transfac format with the RSAT tool <em>convert-matrix</em></p></li>
+</ol>
+</div>
+<div id="motif-discovery-with-meme" class="section level2">
+<h2>Motif discovery with MEME</h2>
+<p>Analyse the same peak sequences with <a href="http://meme-suite.org/tools/meme-chip">MEME-ChIP</a>, and convert the discovered motifs in transfac format with the RSAT tool <em>convert-matrix</em>.</p>
+<p>Also analyse with MEME the random selections of genmic regions (negative control).</p>
+</div>
+<div id="matrix-clustering" class="section level2">
+<h2>Matrix clustering</h2>
+<p>The tool <em>matrix-clustering</em> can be used for different purposes. Here we will use it to - compare the motifs discovered respectively by MEME and RSAT peak-motifs in the peak-sequences - merge the similar motifs in order to obtain a non-redundant collection of motifs discoverd by the different tools in the peaks - compare this non-redundant collection of discovered motifs with a motif database in order to identify the associated TFs.</p>
+<ol style="list-style-type: decimal">
 <li><p>Run the RSAT tool <em>matrix-clustering</em> to merge and compare the two collections of motifs discovered by <em>RSAT peak-motifs</em> and <em>MEME-ChIP</em>, respectively.</p></li>
-<li><p>From the matrix-clustering result, retrieve the <strong>root motifs</strong>, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP.</p></li>
-<li><p>Use the RSAT tool <em>compare-matrices</em> to compre these non-redundant discovered motifs with JASPAR nonredundant vertebrate.</p></li>
+<li><p>From the <em>matrix-clustering</em> result, retrieve the <strong>root motifs</strong>, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP.</p></li>
+<li><p>Use the RSAT tool <em>compare-matrices</em> to compare these non-redundant discovered motifs with JASPAR nonredundant vertebrate.</p></li>
 <li><p>Use <em>RSAT matrix-scan</em> to measure the rate of coverage of the peaks (percentage of peaks with at least one match)</p>
 <ul>
 <li>for each one of the non-redundant discovered motifs</li>
 <li>for each reference motifs</li>
 </ul></li>
-<li><p>Use <em>RSAT matrix-quality</em> to measure the enrichment of the peaks</p>
+</ol>
+</div>
+<div id="interpret-the-results" class="section level2">
+<h2>Interpret the results</h2>
 <ul>
-<li>by each discovered motifs</li>
-<li>by each reference motif</li>
-</ul></li>
-<li><p>Interpret the results</p>
-<ul>
-<li>Do you observe an enrichment of your peaks for Hocomoco and/or Jaspar reference motifs?</li>
-</ul></li>
+<li><p>Do the motifs discovered in the peaks include the reference motifs (those correspinding to the immunoprecipitated factor)?</p></li>
+<li><p>Are these motifs reported by all the motif discovery approaches or only by some of them?</p></li>
+<li><p>Do you discover motifs associated with other transcription factors? If so, are these factors relevant to the ChIP-seq data set under study (co-factors of the immunoprecipitated factor, factors involved in this cell/tissue type, …)?</p></li>
+<li><p>Which algorithms reported significant motifs in the random selections of genomic regions? How significant are they compared to those reported in the actual peaks? How do you interpret these motifs?</p></li>
 </ul>
 </div>
 <div id="instruction-for-the-report" class="section level2">
@@ -543,11 +557,10 @@ div.tocify {
 <li><p>Structure: we ask you to return a report structured as a small research article (introduction, material and methods, results and discussion, conclusions an perspective).</p></li>
 <li><p>Report template. Please used the template provided here. Read carefully the instructions.</p>
 <ul>
-<li><p>Word format: <a href="LASTNAME_Firstname_chip-seq_analysis_report.docx">docx</a></p></li>
-<li><p>Rmd format: <a href="https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd">Rmd</a>.</p></li>
+<li>Rmd format: <a href="https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd">Rmd</a>.</li>
 </ul></li>
 </ol>
-<p><em><strong>Note that your report should be submitted in Word format, so I can annotate it in the margins. </strong> If you use Rstudio to write the report, knitr enables you to export in docx format.</em></p>
+<p>Please submit both the original file (Rmd) and the report compiled in Word format (in RStudio, use the command <strong>Knit to Word</strong>), in order to enable me to annotate it in the margins.</p>
 </div>
 
 
