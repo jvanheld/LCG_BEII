@@ -144,7 +144,7 @@ For this tutorial, I will use AraC.
 
 ## Getting all upstream ("promoter") sequences of *E.coli*
 
-- Open the tool **retrieve-seq**
+- Open the tool **[retrieve-seq](http://embnet.ccg.unam.mx/rsat/retrieve-seq_form.cgi)**
 
 - Select organism *Escherichia_coli_GCF_000005845.2_ASM584v2* (top : type simply K12 in the organism query box)
 
@@ -159,9 +159,11 @@ The question addressed here is to evaulate the relative performances of the cons
 
 Note that the TFBS are expected to be found in the promoters of operon leader genes, and not in the upstream sequences of the other target genes (the genes following the leader in an operon). Thus, the reference gene set for this analysis are the leader genes of the operons regulated by our TF of interest.  
 
-- Use **dna-pattern** to scan the annotated binding sites with the degenerate consensus.
+- Use **[dna-pattern](http://embnet.ccg.unam.mx/rsat/dna-pattern.cgi)** to scan the annotated binding sites with the IUPAC consensus from RegulonDB (e.g. `cayaGcmrrwwartCCaTaw` for AraC).
 
-- Use **matrix-scan** to scan the annotated binding sites with the RegulonDB matrix
+    - Tip: uncheck the option *sequence limits* to avoid getting 4200 lines with promoter sizes.
+
+- Use **[matrix-scan]()** to scan the annotated binding sites with the RegulonDB matrix
 
 
 Interpretation: 

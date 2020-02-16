@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2020-02-05" />
+<meta name="date" content="2020-02-06" />
 
 <title>Scanning non-coding sequences with a TFBM</title>
 
@@ -234,7 +234,7 @@ div.tocify {
 <h1 class="title toc-ignore">Scanning non-coding sequences with a TFBM</h1>
 <h3 class="subtitle">LCG_BEII 2020</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2020-02-05</h4>
+<h4 class="date">2020-02-06</h4>
 
 </div>
 
@@ -257,7 +257,7 @@ div.tocify {
 <div id="choosing-a-tf-on-regulondb" class="section level2">
 <h2>Choosing a TF on RegulonDB</h2>
 <p>Each student will choose one transcription factor of interest having a reasonable number of binding sites (between 10 and 25).</p>
-<p>For this tutorial, I will use</p>
+<p>For this tutorial, I will use AraC.</p>
 <ul>
 <li><p>Open a connection to RegulonDB <a href="http://regulondb.ccg.unam.mx/" class="uri">http://regulondb.ccg.unam.mx/</a></p></li>
 <li><p>Click on the link <a href="http://regulondb.ccg.unam.mx/search?term=Regulon&amp;organism=ECK12&amp;type=All#">regulon list</a>. This opens a table with all the regulons.</p></li>
@@ -282,9 +282,9 @@ div.tocify {
 <div id="getting-all-upstream-promoter-sequences-of-e.coli" class="section level2">
 <h2>Getting all upstream (“promoter”) sequences of <em>E.coli</em></h2>
 <ul>
-<li><p>Open the tool <strong>retrieve-seq</strong></p></li>
-<li><p>Select organism <em>Escherichia coli K12</em> (top : type simply K12 in the organism query box)</p></li>
-<li><p>Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start</p></li>
+<li><p>Open the tool <strong><a href="http://embnet.ccg.unam.mx/rsat/retrieve-seq_form.cgi">retrieve-seq</a></strong></p></li>
+<li><p>Select organism <em>Escherichia_coli_GCF_000005845.2_ASM584v2</em> (top : type simply K12 in the organism query box)</p></li>
+<li><p>Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start (i.e. relative coordinates from -1 to -400).</p></li>
 <li><p>Copy the URL of the result file and save it in a text file (we will use it several times below)</p></li>
 </ul>
 </div>
@@ -293,8 +293,8 @@ div.tocify {
 <p>The question addressed here is to evaulate the relative performances of the consensus and PSSM to predict TFBSs and identify the target genes of our transcription factor of interest.</p>
 <p>Note that the TFBS are expected to be found in the promoters of operon leader genes, and not in the upstream sequences of the other target genes (the genes following the leader in an operon). Thus, the reference gene set for this analysis are the leader genes of the operons regulated by our TF of interest.</p>
 <ul>
-<li><p>Use <strong>dna-pattern</strong> to scan the annotated binding sites (extracted from RegulonDB) with the degenerate consensus.</p></li>
-<li><p>Use <strong>matrix-scan</strong> to scan the same sites with the RegulonDB matrix</p></li>
+<li><p>Use <strong>dna-pattern</strong> to scan the annotated binding sites with the degenerate consensus.</p></li>
+<li><p>Use <strong>matrix-scan</strong> to scan the annotated binding sites with the RegulonDB matrix</p></li>
 </ul>
 <p>Interpretation:</p>
 <ul>
