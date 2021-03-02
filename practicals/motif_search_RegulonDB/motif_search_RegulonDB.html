@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2020-02-06" />
+<meta name="date" content="2021-03-02" />
 
 <title>Scanning non-coding sequences with a TFBM</title>
 
@@ -26,6 +25,17 @@
 <link href="motif_search_RegulonDB_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="motif_search_RegulonDB_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="motif_search_RegulonDB_files/navigation-1.1/tabsets.js"></script>
+<link href="motif_search_RegulonDB_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="motif_search_RegulonDB_files/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
@@ -133,6 +143,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -161,6 +172,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -234,7 +251,7 @@ div.tocify {
 <h1 class="title toc-ignore">Scanning non-coding sequences with a TFBM</h1>
 <h3 class="subtitle">LCG_BEII 2020</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2020-02-06</h4>
+<h4 class="date">2021-03-02</h4>
 
 </div>
 
@@ -249,7 +266,7 @@ div.tocify {
 <h2>Collective table for the 2020 practical</h2>
 <p>Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.</p>
 <ul>
-<li>Folder: <a href="https://tinyurl.com/lcg-beii-2020" class="uri">https://tinyurl.com/lcg-beii-2020</a></li>
+<li>Folder: <a href="https://tinyurl.com/lcg-beii-2021" class="uri">https://tinyurl.com/lcg-beii-2021</a></li>
 <li>Motif scanning exercise:</li>
 </ul>
 <p>In your computer, create a folder to store the results of this practical, for example : <code>$HOME/LCG_BEII_practicals/</code> (you can change the path and name according to your own organisation of folders).</p>
@@ -293,8 +310,11 @@ div.tocify {
 <p>The question addressed here is to evaulate the relative performances of the consensus and PSSM to predict TFBSs and identify the target genes of our transcription factor of interest.</p>
 <p>Note that the TFBS are expected to be found in the promoters of operon leader genes, and not in the upstream sequences of the other target genes (the genes following the leader in an operon). Thus, the reference gene set for this analysis are the leader genes of the operons regulated by our TF of interest.</p>
 <ul>
-<li><p>Use <strong>dna-pattern</strong> to scan the annotated binding sites with the degenerate consensus.</p></li>
-<li><p>Use <strong>matrix-scan</strong> to scan the annotated binding sites with the RegulonDB matrix</p></li>
+<li><p>Use <strong><a href="http://embnet.ccg.unam.mx/rsat/dna-pattern.cgi">dna-pattern</a></strong> to scan the annotated binding sites with the IUPAC consensus from RegulonDB (e.g. <code>cayaGcmrrwwartCCaTaw</code> for AraC).</p>
+<ul>
+<li>Tip: uncheck the option <em>sequence limits</em> to avoid getting 4200 lines with promoter sizes.</li>
+</ul></li>
+<li><p>Use <strong><a href="">matrix-scan</a></strong> to scan the annotated binding sites with the RegulonDB matrix</p></li>
 </ul>
 <p>Interpretation:</p>
 <ul>
@@ -355,7 +375,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -394,7 +414,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

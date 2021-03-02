@@ -103,7 +103,7 @@ As reference genome we will use the strain *Escherichia_coli_GCF_000005845.2_ASM
 
 Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
 
-- Folder: <https://tinyurl.com/lcg-beii-2020>
+- Folder: <https://tinyurl.com/lcg-beii-2021>
 - Motif scanning exercise: 
 
 In your computer, create a folder to store the results of this practical, for example : `$HOME/LCG_BEII_practicals/` (you can change the path and name according to your own organisation of folders). 
