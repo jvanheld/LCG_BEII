@@ -220,14 +220,19 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE67282)
 
 - Open a connection to [**RSAT**](http://rsat.france-bioinformatique.fr/rsat/)
 
-- Use the tool **[fetch-sequences](http://rsat.france-bioinformatique.fr/rsat/fetch-sequences_form.cgi)** to get the sequences of your peaks. 
+- Use the tool **[fetch-sequences](http://rsat.france-bioinformatique.fr/rsat/fetch-sequences_form.php)** to get the sequences of your peaks. 
 
-    **BEWARE:** the peaks of all ChIP-seq datasets were computed by Ballester's team based on the version hg38 of Human genome
+    - **BEWARE:** the peaks of all ChIP-seq datasets were computed by Ballester's team based on the **hg38** assembly of the Human genome. You should thus use this version of the genome. 
 
-- Send the results to **[peak-motifs](http://rsat.france-bioinformatique.fr/rsat/peak-motifs_form.cgi)** 
+- Save a copy of the fasta file in your local folder (it might serve for further analyses). 
 
-    - As motif databases, select both *Jaspar non-redundant vertebrates* and *Hocomoco Human TFs*.
-    - Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file `[YOUR_FACTOR_NAME]_reference-motifs.tf` you built in the previous section). 
+- At the bottom of the *fetch-sequence* result page, click the **peak$motifs button** to send the sequences as input to **peak-motifs**. 
+
+- Set the following parameters for **peak-mortifs**
+
+    - Open the section *Compare discovered motifs with databases or custom reference motifs*. 
+    - As *motif databases*, select both *Jaspar core non-redundant vertebrates* and *Hocomoco Human TFs*.
+    - Enter as *reference motif* the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file `[YOUR_FACTOR_NAME]_reference-motifs.tf` you built in the previous section). 
     - Enter your email address
     - Leave all other parameters unchanged an run the analysis. 
 

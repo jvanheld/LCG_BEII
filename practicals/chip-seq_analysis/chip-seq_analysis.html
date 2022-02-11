@@ -571,13 +571,21 @@ class="section level2">
 <li><p>Open a connection to <a
 href="http://rsat.france-bioinformatique.fr/rsat/"><strong>RSAT</strong></a></p></li>
 <li><p>Use the tool <strong><a
-href="http://rsat.france-bioinformatique.fr/rsat/fetch-sequences_form.cgi">fetch-sequences</a></strong>
+href="http://rsat.france-bioinformatique.fr/rsat/fetch-sequences_form.php">fetch-sequences</a></strong>
 to get the sequences of your peaks.</p>
-<p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were
-computed by Ballester’s team based on the version hg38 of Human
-genome</p></li>
-<li><p>Send the results to <strong><a
-href="http://rsat.france-bioinformatique.fr/rsat/peak-motifs_form.cgi">peak-motifs</a></strong></p>
+<ul>
+<li><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were
+computed by Ballester’s team based on the <strong>hg38</strong> assembly
+of the Human genome. You should thus use this version of the
+genome.</li>
+</ul></li>
+<li><p>Save a copy of the fasta file in your local folder (it might
+serve for further analyses).</p></li>
+<li><p>At the bottom of the <em>fetch-sequence</em> result page, click
+the <strong>peak$motifs button</strong> to send the sequences as input
+to <strong>peak-motifs</strong>.</p></li>
+<li><p>Set the following parameters for
+<strong>peak-mortifs</strong></p>
 <ul>
 <li>As motif databases, select both <em>Jaspar non-redundant
 vertebrates</em> and <em>Hocomoco Human TFs</em>.</li>
