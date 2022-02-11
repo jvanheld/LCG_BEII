@@ -72,6 +72,7 @@ library(kableExtra)
 # library(formattable)
 
 options(width = 300)
+£,
 # options(encoding = 'UTF-8')
 knitr::opts_chunk$set(
   fig.width = 7, fig.height = 5, 

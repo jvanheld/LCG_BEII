@@ -1,56 +1,83 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2020-02-16" />
+<meta name="date" content="2022-02-11" />
 
 <title>Practical: analysis of ChIP-seq peaks</title>
 
-<script src="chip-seq_analysis_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="chip-seq_analysis_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="chip-seq_analysis_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="chip-seq_analysis_files/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="chip-seq_analysis_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="chip-seq_analysis_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="chip-seq_analysis_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="chip-seq_analysis_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="chip-seq_analysis_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="chip-seq_analysis_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="chip-seq_analysis_files/navigation-1.1/tabsets.js"></script>
 <script src="chip-seq_analysis_files/navigation-1.1/codefolding.js"></script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -59,9 +86,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -123,39 +150,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -165,10 +162,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -185,6 +178,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
@@ -197,7 +193,6 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -233,6 +228,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -264,6 +260,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -319,7 +321,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -330,11 +332,11 @@ div.tocify {
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -345,14 +347,16 @@ div.tocify {
 <h1 class="title toc-ignore">Practical: analysis of ChIP-seq peaks</h1>
 <h3 class="subtitle">LCG_BEII 2019</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2020-02-16</h4>
+<h4 class="date">2022-02-11</h4>
 
 </div>
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>In this practical, we will combine various bioinformatics resources to extract information from ChIP-seq experiments, and evaluate the quality of the peaks.</p>
+<p>In this practical, we will combine various bioinformatics resources
+to extract information from ChIP-seq experiments, and evaluate the
+quality of the peaks.</p>
 </div>
 <div id="resources" class="section level2">
 <h2>Resources</h2>
@@ -370,48 +374,81 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td>ReMap</td>
-<td>A database of ChIP-seq peaks (<a href="http://remap.cisreg.eu/" class="uri">http://remap.cisreg.eu/</a>)</td>
+<td>A database of ChIP-seq peaks (<a href="http://remap.cisreg.eu/"
+class="uri">http://remap.cisreg.eu/</a>)</td>
 </tr>
 <tr class="even">
 <td>Jaspar</td>
-<td>A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (<a href="http://jaspar.genereg.net/" class="uri">http://jaspar.genereg.net/</a>)</td>
+<td>A database of eukaryote TF binding motifs, mainly built from
+CHIP-seq peaks (<a href="http://jaspar.genereg.net/"
+class="uri">http://jaspar.genereg.net/</a>)</td>
 </tr>
 <tr class="odd">
 <td>Hocomoco</td>
-<td>A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<a href="http://hocomoco11.autosome.ru/" class="uri">http://hocomoco11.autosome.ru/</a>)</td>
+<td>A database of Human TF binding motifs, mainly built from CHIP-seq
+peaks (<a href="http://hocomoco11.autosome.ru/"
+class="uri">http://hocomoco11.autosome.ru/</a>)</td>
 </tr>
 <tr class="even">
 <td>RSAT</td>
-<td>Regulatory Sequence Analysis Tools <a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></td>
+<td>Regulatory Sequence Analysis Tools <a href="http://rsat.eu/"
+class="uri">http://rsat.eu/</a></td>
 </tr>
 <tr class="odd">
 <td>RSAT Metazoa</td>
-<td><a href="http://metazoa.rsat.eu/" class="uri">http://metazoa.rsat.eu/</a></td>
+<td><a href="http://metazoa.rsat.eu/"
+class="uri">http://metazoa.rsat.eu/</a></td>
 </tr>
 <tr class="even">
 <td>UCSC NGS file formats</td>
-<td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html" class="uri">https://genome.ucsc.edu/FAQ/FAQformat.html</a></td>
+<td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html"
+class="uri">https://genome.ucsc.edu/FAQ/FAQformat.html</a></td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="creating-a-workspace-for-this-practical" class="section level2">
+<div id="creating-a-workspace-for-this-practical"
+class="section level2">
 <h2>Creating a workspace for this practical</h2>
 <ul>
-<li>Create a new folder to store the results of this practical (e.g. <code>~/LCG_BEII/chip-seq_practical/</code>)</li>
+<li>Create a new folder to store the results of this practical
+(e.g. <code>~/LCG_BEII/chip-seq_practical/</code>)</li>
 <li>Set this folder as your working direct</li>
 </ul>
 </div>
 <div id="getting-peaks-from-remap" class="section level2">
 <h2>Getting peaks from ReMap</h2>
-<p>ReMap (<a href="http://remap.cisreg.eu/" class="uri">http://remap.cisreg.eu/</a>) is a database of TF binding regions based on an extensive re-analysis of published ChIP-seq data for human transcription factors. ory (<code>setwd()</code>)</p>
+<p>ReMap (<a href="https://remap.univ-amu.fr/"
+class="uri">https://remap.univ-amu.fr/</a>) is a database of TF binding
+regions based on an extensive re-analysis of published ChIP-seq data for
+human transcription factors. ory (<code>setwd()</code>)</p>
 <ul>
-<li>Open a connection to ReMap</li>
-<li>Explore the interface</li>
-<li>Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC)</li>
-<li>Click on the <strong>Download by by dataset</strong> tab, and download the peak set corresponding to the tissue / cell type of your choice.</li>
-<li>Check that the number of peaks in the downloaded file corresponds to the indication on the ReMap page for your factor in the tissue / cell type and in the study identifier (GSE or other) you selected.</li>
-<li><p>Check the <em>name</em> column in the bed file to make sure that the peaks all belong to the same tissue / cell type and study identifier.</p></li>
+<li><p>Open a connection to <a
+href="https://remap.univ-amu.fr/">ReMap</a></p></li>
+<li><p>Select <em>Homo sapiens</em></p></li>
+<li><p>Explore the interface</p></li>
+<li><p>Choose a transcription factor and a tissue / cell type of
+interest.</p>
+<ul>
+<li>For a same factor, you wil generally find several datasets resulting
+from different studies, in different tissues (biotypes).</li>
+<li>For your exercise, I recommend to select a dataset with a reasonable
+number of peaks</li>
+<li>For this tutorial I will use Sox2 in <a
+href="https://remap.univ-amu.fr/biotype_page/glioma:9606">glioma</a>,
+where ReMap peaks were identified from the original <a
+href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE67282">GEO
+dataset GSE67282</a></li>
+</ul></li>
+<li><p>Click on the <strong>Download icon</strong> tab, besides the
+number of peaks. This downloads a compressed (gzipped) bed file
+(tab-separated columns describing genomic features).</p></li>
+<li><p>Check that the number of peaks in the downloaded file corresponds
+to the indication on the ReMap page for your factor in the tissue / cell
+type and in the study identifier (GSE or other) you selected.</p></li>
+<li><p>Check the <em>name</em> column in the bed file to make sure that
+the peaks all belong to the same tissue / cell type and study
+identifier.</p></li>
 <li><p>Compute</p>
 <ul>
 <li>the number of peaks</li>
@@ -420,83 +457,126 @@ div.tocify {
 <li>the median peak length</li>
 </ul></li>
 </ul>
-<p><strong>Beware:</strong> the bed format relies on a somewhat confusing convention to specify the coordinates of genomic features.</p>
+<p><strong>Beware:</strong> the bed format relies on a somewhat
+confusing convention to specify the coordinates of genomic features.</p>
 <ul>
-<li>Coordinates are 0-based (the first position of a sequence is referred to as 0).</li>
-<li>The feature start is (as expected) the first position within the feature, but the “end” is the first position <strong>after the feature</strong>.</li>
-<li>Consequently, the feature length can be computed as <span class="math inline">\(l = end - start\)</span>, whereas with other formats it should be <span class="math inline">\(l = end - start = 1\)</span>.</li>
+<li>Coordinates are 0-based (the first position of a sequence is
+referred to as 0).</li>
+<li>The feature start is (as expected) the first position within the
+feature, but the “end” is the first position <strong>after the
+feature</strong>.</li>
+<li>Consequently, the feature length can be computed as <span
+class="math inline">\(l = end - start\)</span>, whereas with other
+formats it should be <span class="math inline">\(l = end - start =
+1\)</span>.</li>
 </ul>
 <p><strong>Tips:</strong></p>
 <ul>
-<li><p>The peak statistics can be computed with a spreadsheet (Excel, LibreOffice Calc), R, or the Unix command line.</p></li>
-<li><p>Click the “code” button to display a bash line to compute peak statistics.</p></li>
+<li><p>The peak statistics can be computed with a spreadsheet (Excel,
+LibreOffice Calc), R, or the Unix command line.</p></li>
+<li><p>Click the “code” button to display a bash line to compute peak
+statistics.</p></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="va">RESULT_DIR=</span>~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="va">PEAKS=${RESULT_DIR}</span>/GSE69479.SOX2.hESC_peaks.narrowPeak.gz</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">gunzip</span> -c <span class="va">${PEAKS}</span> \</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">   <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{len=$3 - $2; sum += len; n++; mean = sum / n ; print &quot;n=&quot;n&quot;\tsum=&quot;sum&quot;\tmean=&quot;mean}&#39;</span> \</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">   <span class="kw">|</span> <span class="fu">tail</span> -n 1</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">RESULT_DIR</span><span class="op">=</span>~/LCG_BEII/chip-seq_practical/SOX2_glioma_GSE67282</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">PEAKS</span><span class="op">=</span><span class="va">${RESULT_DIR}</span>/GSE67282.SOX2.glioma_stem.bed.gz</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> <span class="at">-c</span> <span class="va">${PEAKS}</span> <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{len=$3 - $2; sum += len; n++; mean = sum / n ; print &quot;n=&quot;n&quot;\tsum=&quot;sum&quot;\tmean=&quot;mean}&#39;</span> <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">|</span> <span class="fu">tail</span> <span class="at">-n</span> 1</span></code></pre></div>
 <ul>
-<li>Click the “code” button to display a chunk of R code to compute peak statistics.</li>
+<li>Click the “code” button to display a chunk of R code to compute peak
+statistics.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">resultDir &lt;-<span class="st"> &quot;~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479&quot;</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">peakBase &lt;-<span class="st"> &quot;GSE69479.SOX2.hESC_peaks.narrowPeak.gz&quot;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">peakFile &lt;-<span class="st"> </span><span class="kw">file.path</span>(resultDir, peakBase)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#peakFile &lt;- &quot;data/ReMap_GSE69479.SOX2.ESC_peaks.bed&quot;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">peaks &lt;-<span class="st"> </span><span class="kw">read.delim</span>(peakFile, <span class="dt">header =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">peaks &lt;-<span class="st"> </span>peaks[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] <span class="co"># Keep the fields used for this analysis</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">names</span>(peaks) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;chr&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name&quot;</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">peaks<span class="op">$</span>len &lt;-<span class="st"> </span>peaks<span class="op">$</span>end <span class="op">-</span><span class="st"> </span>peaks<span class="op">$</span>start</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">head</span>(peaks) <span class="co"># print the first peaks</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">sum &lt;-<span class="st"> </span><span class="kw">sum</span>(peaks<span class="op">$</span>len)</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">mean &lt;-<span class="st"> </span><span class="kw">mean</span>(peaks<span class="op">$</span>len)</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">n &lt;-<span class="st"> </span><span class="kw">nrow</span>(peaks)</a></code></pre></div>
-<p>In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479) we obtain:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>resultDir <span class="ot">&lt;-</span> <span class="st">&quot;~/LCG_BEII/chip-seq_practical/SOX2_glioma_GSE67282&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>peakBase <span class="ot">&lt;-</span> <span class="st">&quot;GSE67282.SOX2.glioma_stem.bed.gz&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>peakFile <span class="ot">&lt;-</span> <span class="fu">file.path</span>(resultDir, peakBase)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#peakFile &lt;- &quot;data/ReMap_GSE67282.SOX2.ESC_peaks.bed&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>peaks <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(peakFile, <span class="at">header =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>peaks <span class="ot">&lt;-</span> peaks[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># Keep the fields used for this analysis</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(peaks) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;chr&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name&quot;</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>peaks<span class="sc">$</span>len <span class="ot">&lt;-</span> peaks<span class="sc">$</span>end <span class="sc">-</span> peaks<span class="sc">$</span>start</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(peaks) <span class="co"># print the first peaks</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">sum</span>(peaks<span class="sc">$</span>len)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(peaks<span class="sc">$</span>len)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(peaks)</span></code></pre></div>
+<p>In our example (Sox2 peaks in embryonic stem cells from the GEO
+series GSE67282) we obtain:</p>
 <ul>
-<li>Number of peaks: <span class="math inline">\(n = 2,352\)</span></li>
-<li>Sum of peak lengths: <span class="math inline">\(sum = 589,344\)</span></li>
-<li>Mean peak lengths: <span class="math inline">\(mean = 250.6\)</span></li>
+<li>Number of peaks: <span class="math inline">\(n = 3,859\)</span></li>
+<li>Sum of peak lengths: <span class="math inline">\(sum =
+1,154,851\)</span></li>
+<li>Mean peak lengths: <span class="math inline">\(mean =
+299.3\)</span></li>
 </ul>
 </div>
-<div id="getting-motifs-from-reference-databases" class="section level2">
+<div id="getting-motifs-from-reference-databases"
+class="section level2">
 <h2>Getting motifs from reference databases</h2>
 <ul>
-<li><p>Open a connection to <a href="http://jaspar.genereg.net/">Jaspar</a></p>
+<li><p>Open a connection to <a
+href="http://jaspar.genereg.net/">Jaspar</a></p>
 <ul>
 <li><p>Explore the database functionalities</p></li>
-<li><p>Find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.</p></li>
+<li><p>Find the transcription factor binding motifs for your TF of
+interest. Download the corresponding matrix in your working
+directory.</p></li>
 </ul></li>
-<li><p>Do the same with the <a href="http://hocomoco11.autosome.ru/">Hocomoco</a> database.</p>
+<li><p>Do the same with the <a
+href="http://hocomoco11.autosome.ru/">Hocomoco</a> database.</p>
 <ul>
-<li><p>Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains.</p></li>
-<li><p>Find the transcripiton factor of interest and save its position-counts matrix (PCM) in your work directory.</p></li>
+<li><p>Note the classification of transcription factors on the home
+page. You can browse it to observe TF families, defined based on their
+binding domains.</p></li>
+<li><p>Find the transcripiton factor of interest and save its
+position-counts matrix (PCM) in your work directory.</p></li>
 </ul></li>
-<li><p>With the RSAT tool <em>convert-matrix</em>, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the <code>//</code> line at the end, which indicates the separation between two motifs in the same file). Save this text file as <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p>
+<li><p>With the RSAT tool <em>convert-matrix</em>, convert the Jaspar
+and Hocomoco motifs of your factor to transfac format, and paste them
+together in a text file (make sure that you paste the whole record,
+including the <code>//</code> line at the end, which indicates the
+separation between two motifs in the same file). Save this text file as
+<code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p>
 <ul>
-<li><strong>Tip:</strong> the format Hocomoco is not displayed yet in the list of input formats for <em>convert-matrix</em>, but it is actually identical to cluster-buster.</li>
+<li><strong>Tip:</strong> the format Hocomoco is not displayed yet in
+the list of input formats for <em>convert-matrix</em>, but it is
+actually identical to cluster-buster.</li>
 </ul></li>
 </ul>
 </div>
-<div id="discovering-motifs-with-rsat-peak-motifs" class="section level2">
+<div id="discovering-motifs-with-rsat-peak-motifs"
+class="section level2">
 <h2>Discovering motifs with RSAT peak-motifs</h2>
 <ul>
-<li><p>Open a connection to <a href="http://metazoa.rsat.eu/">RSAT Metazoa</a></p></li>
-<li><p>Use the tool <strong><a href="http://metazoa.rsat.eu/fetch-sequences_form.cgi">fetch-sequences</a></strong> to get the sequences of your peaks.</p>
-<p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were computed by Ballester’s team based on the version hg38 of Human genome</p></li>
-<li><p>Send the results to <strong><a href="http://metazoa.rsat.eu/peak-motifs_form.cgi">peak-motifs</a></strong></p>
+<li><p>Open a connection to <a href="http://metazoa.rsat.eu/">RSAT
+Metazoa</a></p></li>
+<li><p>Use the tool <strong><a
+href="http://metazoa.rsat.eu/fetch-sequences_form.cgi">fetch-sequences</a></strong>
+to get the sequences of your peaks.</p>
+<p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were
+computed by Ballester’s team based on the version hg38 of Human
+genome</p></li>
+<li><p>Send the results to <strong><a
+href="http://metazoa.rsat.eu/peak-motifs_form.cgi">peak-motifs</a></strong></p>
 <ul>
-<li>As motif databases, select both <em>Jaspar non-redundant vertebrates</em> and <em>Hocomoco Human TFs</em>.</li>
-<li>Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file <code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code> you built in the previous section).</li>
+<li>As motif databases, select both <em>Jaspar non-redundant
+vertebrates</em> and <em>Hocomoco Human TFs</em>.</li>
+<li>Enter as reference motif the transfac-formatted file with the JASPAR
+and Hocomoco motifs for your TF of interest (the file
+<code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code> you built in the
+previous section).</li>
 <li>Enter your email address</li>
 <li>Leave all other parameters unchanged an run the analysis.</li>
 </ul></li>
 <li><p>Interpret the results:</p>
 <ul>
 <li>Did you obtain significant results? How significant ?</li>
-<li>If so, were they characterized by over-representation (<em>oligo-analysis</em>), positional bias (<em>position-analysis</em>) or both?</li>
-<li>Did some of the discovered motifs match the reference motifs for your TF in Jaspar and/or Hocomoco ?</li>
+<li>If so, were they characterized by over-representation
+(<em>oligo-analysis</em>), positional bias (<em>position-analysis</em>)
+or both?</li>
+<li>Did some of the discovered motifs match the reference motifs for
+your TF in Jaspar and/or Hocomoco ?</li>
 <li>Did you discover other motifs</li>
 <li></li>
 </ul></li>
@@ -505,18 +585,23 @@ div.tocify {
 <div id="negative-control" class="section level2">
 <h2>Negative control</h2>
 <ul>
-<li><p>Use *RSAT random genome fragments** to pick up random regions having the same sizes as your peaks</p></li>
+<li><p>Use *RSAT random genome fragments** to pick up random regions
+having the same sizes as your peaks</p></li>
 <li><p>Run the same analyses as above with peak-motifs</p></li>
-<li><p>Compare the results of this negative control with those obtained above with your peaks, and interpret them.</p></li>
+<li><p>Compare the results of this negative control with those obtained
+above with your peaks, and interpret them.</p></li>
 </ul>
 </div>
 <div id="motif-encrihment-analysis" class="section level2">
 <h2>Motif encrihment analysis</h2>
 <blockquote>
-<p>Note : for the 2020 session we had no time to see the theory about <strong>matrix-quality</strong> and motif enrichment. This section can thus be skipped for the report.</p>
+<p>Note : for the 2020 session we had no time to see the theory about
+<strong>matrix-quality</strong> and motif enrichment. This section can
+thus be skipped for the report.</p>
 </blockquote>
 <ol style="list-style-type: decimal">
-<li><p>On the RSAT server, open the tool <strong>matrix-quality</strong></p></li>
+<li><p>On the RSAT server, open the tool
+<strong>matrix-quality</strong></p></li>
 <li><p>Submit your peak sequences</p></li>
 <li><p>Enter the JASPAR and Hocomoco reference motifs</p></li>
 <li><p>Run the analyses</p></li>
@@ -524,17 +609,35 @@ div.tocify {
 </div>
 <div id="motif-discovery-with-meme" class="section level2">
 <h2>Motif discovery with MEME</h2>
-<p>Analyse the same peak sequences with <a href="http://meme-suite.org/tools/meme-chip">MEME-ChIP</a>, and convert the discovered motifs in transfac format with the RSAT tool <em>convert-matrix</em>.</p>
-<p>Also analyse with MEME the random selections of genmic regions (negative control).</p>
+<p>Analyse the same peak sequences with <a
+href="http://meme-suite.org/tools/meme-chip">MEME-ChIP</a>, and convert
+the discovered motifs in transfac format with the RSAT tool
+<em>convert-matrix</em>.</p>
+<p>Also analyse with MEME the random selections of genmic regions
+(negative control).</p>
 </div>
 <div id="matrix-clustering" class="section level2">
 <h2>Matrix clustering</h2>
-<p>The tool <em>matrix-clustering</em> can be used for different purposes. Here we will use it to - compare the motifs discovered respectively by MEME and RSAT peak-motifs in the peak-sequences - merge the similar motifs in order to obtain a non-redundant collection of motifs discoverd by the different tools in the peaks - compare this non-redundant collection of discovered motifs with a motif database in order to identify the associated TFs.</p>
+<p>The tool <em>matrix-clustering</em> can be used for different
+purposes. Here we will use it to - compare the motifs discovered
+respectively by MEME and RSAT peak-motifs in the peak-sequences - merge
+the similar motifs in order to obtain a non-redundant collection of
+motifs discoverd by the different tools in the peaks - compare this
+non-redundant collection of discovered motifs with a motif database in
+order to identify the associated TFs.</p>
 <ol style="list-style-type: decimal">
-<li><p>Run the RSAT tool <em>matrix-clustering</em> to merge and compare the two collections of motifs discovered by <em>RSAT peak-motifs</em> and <em>MEME-ChIP</em>, respectively.</p></li>
-<li><p>From the <em>matrix-clustering</em> result, retrieve the <strong>root motifs</strong>, which will provide you with a non-redundant collection of the motifs resulting from RSAT peak-motifs and MEME-ChIP.</p></li>
-<li><p>Use the RSAT tool <em>compare-matrices</em> to compare these non-redundant discovered motifs with JASPAR nonredundant vertebrate.</p></li>
-<li><p>Use <em>RSAT matrix-scan</em> to measure the rate of coverage of the peaks (percentage of peaks with at least one match)</p>
+<li><p>Run the RSAT tool <em>matrix-clustering</em> to merge and compare
+the two collections of motifs discovered by <em>RSAT peak-motifs</em>
+and <em>MEME-ChIP</em>, respectively.</p></li>
+<li><p>From the <em>matrix-clustering</em> result, retrieve the
+<strong>root motifs</strong>, which will provide you with a
+non-redundant collection of the motifs resulting from RSAT peak-motifs
+and MEME-ChIP.</p></li>
+<li><p>Use the RSAT tool <em>compare-matrices</em> to compare these
+non-redundant discovered motifs with JASPAR nonredundant
+vertebrate.</p></li>
+<li><p>Use <em>RSAT matrix-scan</em> to measure the rate of coverage of
+the peaks (percentage of peaks with at least one match)</p>
 <ul>
 <li>for each one of the non-redundant discovered motifs</li>
 <li>for each reference motifs</li>
@@ -544,23 +647,38 @@ div.tocify {
 <div id="interpret-the-results" class="section level2">
 <h2>Interpret the results</h2>
 <ul>
-<li><p>Do the motifs discovered in the peaks include the reference motifs (those correspinding to the immunoprecipitated factor)?</p></li>
-<li><p>Are these motifs reported by all the motif discovery approaches or only by some of them?</p></li>
-<li><p>Do you discover motifs associated with other transcription factors? If so, are these factors relevant to the ChIP-seq data set under study (co-factors of the immunoprecipitated factor, factors involved in this cell/tissue type, …)?</p></li>
-<li><p>Which algorithms reported significant motifs in the random selections of genomic regions? How significant are they compared to those reported in the actual peaks? How do you interpret these motifs?</p></li>
+<li><p>Do the motifs discovered in the peaks include the reference
+motifs (those correspinding to the immunoprecipitated factor)?</p></li>
+<li><p>Are these motifs reported by all the motif discovery approaches
+or only by some of them?</p></li>
+<li><p>Do you discover motifs associated with other transcription
+factors? If so, are these factors relevant to the ChIP-seq data set
+under study (co-factors of the immunoprecipitated factor, factors
+involved in this cell/tissue type, …)?</p></li>
+<li><p>Which algorithms reported significant motifs in the random
+selections of genomic regions? How significant are they compared to
+those reported in the actual peaks? How do you interpret these
+motifs?</p></li>
 </ul>
 </div>
 <div id="instruction-for-the-report" class="section level2">
 <h2>Instruction for the report</h2>
 <ol style="list-style-type: decimal">
-<li><p>Volume: 4 - 5 pages of text (without counting the figures and the supp. material)</p></li>
-<li><p>Structure: we ask you to return a report structured as a small research article (introduction, material and methods, results and discussion, conclusions an perspective).</p></li>
-<li><p>Report template. Please used the template provided here. Read carefully the instructions.</p>
+<li><p>Volume: 4 - 5 pages of text (without counting the figures and the
+supp. material)</p></li>
+<li><p>Structure: we ask you to return a report structured as a small
+research article (introduction, material and methods, results and
+discussion, conclusions an perspective).</p></li>
+<li><p>Report template. Please used the template provided here. Read
+carefully the instructions.</p>
 <ul>
-<li>Rmd format: <a href="https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd">Rmd</a>.</li>
+<li>Rmd format: <a
+href="https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd">Rmd</a>.</li>
 </ul></li>
 </ol>
-<p>Please submit both the original file (Rmd) and the report compiled in Word format (in RStudio, use the command <strong>Knit to Word</strong>), in order to enable me to annotate it in the margins.</p>
+<p>Please submit both the original file (Rmd) and the report compiled in
+Word format (in RStudio, use the command <strong>Knit to Word</strong>),
+in order to enable me to annotate it in the margins.</p>
 </div>
 
 
@@ -574,7 +692,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -592,7 +710,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -607,6 +725,9 @@ $(document).ready(function () {
 <script>
 $(document).ready(function ()  {
 
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
         .removeClass('toc-ignore')
@@ -618,7 +739,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

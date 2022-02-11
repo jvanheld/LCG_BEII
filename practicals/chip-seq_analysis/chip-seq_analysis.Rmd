@@ -111,13 +111,24 @@ In this practical, we will combine various bioinformatics resources to extract i
 
 ## Getting peaks from ReMap
 
-ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on an extensive re-analysis of published ChIP-seq data for human transcription factors. ory (`setwd()`)
+ReMap (<https://remap.univ-amu.fr/>) is a database of TF binding regions based on an extensive re-analysis of published ChIP-seq data for human transcription factors. ory (`setwd()`)
 
-- Open a connection to ReMap
+- Open a connection to [ReMap](https://remap.univ-amu.fr/)
+
+- Select *Homo sapiens*
+
 - Explore the interface
-- Choose a transcription factor and a tissue / cell type of interest (for this tutorial I will use Sox2 in Embryonic stem cells, ESC) 
-- Click on the **Download by by dataset** tab, and download the peak set corresponding to the tissue / cell type of your choice. 
+
+- Choose a transcription factor and a tissue / cell type of interest. 
+
+    - For a same factor, you wil generally find several datasets resulting from different studies, in different tissues (biotypes). 
+    - For your exercise, I recommend to select a dataset with a reasonable number of peaks
+    - For this tutorial I will use Sox2 in 	[glioma](https://remap.univ-amu.fr/biotype_page/glioma:9606), where ReMap peaks were identified from the original [GEO dataset	GSE67282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE67282)
+
+- Click on the **Download icon** tab, besides the number of peaks. This downloads a compressed (gzipped) bed file (tab-separated columns describing genomic features). 
+
 - Check that the number of peaks in the downloaded file corresponds to the indication on the ReMap page for your factor in the tissue / cell type and in the study identifier (GSE or other) you selected. 
+
 - Check the *name* column in the bed file to make sure that the peaks all belong to the same tissue / cell type and study identifier. 
 
 - Compute 
@@ -140,8 +151,8 @@ ReMap (<http://remap.cisreg.eu/>) is a database of TF binding regions based on a
 - Click the "code" button to display a bash line to compute peak statistics.
 
 ```{bash peak_stats_bash, eval=FALSE, echo=TRUE}
-RESULT_DIR=~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479
-PEAKS=${RESULT_DIR}/GSE69479.SOX2.hESC_peaks.narrowPeak.gz
+RESULT_DIR=~/LCG_BEII/chip-seq_practical/SOX2_glioma_GSE67282
+PEAKS=${RESULT_DIR}/GSE67282.SOX2.glioma_stem.bed.gz
 gunzip -c ${PEAKS} \
    | awk '{len=$3 - $2; sum += len; n++; mean = sum / n ; print "n="n"\tsum="sum"\tmean="mean}' \
    | tail -n 1
@@ -150,10 +161,10 @@ gunzip -c ${PEAKS} \
 - Click the "code" button to display a chunk of R code to compute peak statistics.
 
 ```{r pak_stats_r, eval=TRUE, echo=TRUE}
-resultDir <- "~/LCG_BEII/chip-seq_practical/SOX2_hESC_GSE69479"
-peakBase <- "GSE69479.SOX2.hESC_peaks.narrowPeak.gz"
+resultDir <- "~/LCG_BEII/chip-seq_practical/SOX2_glioma_GSE67282"
+peakBase <- "GSE67282.SOX2.glioma_stem.bed.gz"
 peakFile <- file.path(resultDir, peakBase)
-#peakFile <- "data/ReMap_GSE69479.SOX2.ESC_peaks.bed"
+#peakFile <- "data/ReMap_GSE67282.SOX2.ESC_peaks.bed"
 peaks <- read.delim(peakFile, header = FALSE)
 peaks <- peaks[, 1:4] # Keep the fields used for this analysis
 names(peaks) <- c("chr", "start", "end", "name")
@@ -167,7 +178,7 @@ n <- nrow(peaks)
 
 ```
 
-In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE69479) we obtain: 
+In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE67282) we obtain: 
 
 - Number of peaks: $n = `r prettyNum(n, big.mark = ",")`$ 
 - Sum of peak lengths: $sum = `r prettyNum(sum, big.mark = ",")`$ 
