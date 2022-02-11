@@ -4,12 +4,6 @@ subtitle: "LCG BEII personal work -- 2022"
 author: "Firstname LASTNAME"
 date: "`r Sys.Date()`"
 output:
-  word_document: default
-  pdf_document:
-    fig_caption: yes
-    highlight: zenburn
-    toc: yes
-    toc_depth: 3
   html_document:
     df_print: paged
     code_folding: hide
@@ -20,6 +14,12 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  word_document: default
 ---
 
 ## Instructions
