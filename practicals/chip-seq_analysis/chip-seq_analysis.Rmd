@@ -102,6 +102,8 @@ In this practical, we will combine various bioinformatics resources to extract i
 | Hocomoco | A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<http://hocomoco11.autosome.ru/>) |
 | RSAT| Regulatory Sequence Analysis Tools <http://rsat.eu/> |
 | RSAT Metazoa | <http://metazoa.rsat.eu/> |
+| RSAT Teaching | <http://teaching.rsat.eu/> |
+| RSAT server at IFB | <http://rsat.france-bioinformatique.fr/rsat/> |
 | UCSC NGS file formats | <https://genome.ucsc.edu/FAQ/FAQformat.html> | 
 
 ## Creating a workspace for this practical
@@ -148,7 +150,7 @@ ReMap (<https://remap.univ-amu.fr/>) is a database of TF binding regions based o
 
 - The peak statistics can be computed with a spreadsheet (Excel, LibreOffice Calc), R, or the Unix command line. 
 
-- Click the "code" button to display a bash line to compute peak statistics.
+- Click the "code" button to display a bash line to compute peak statistics (number, sum of lengths and mean length) from a `bed`file.
 
 ```{bash peak_stats_bash, eval=FALSE, echo=TRUE}
 RESULT_DIR=~/LCG_BEII/chip-seq_practical/SOX2_glioma_GSE67282
@@ -172,17 +174,21 @@ names(peaks) <- c("chr", "start", "end", "name")
 peaks$len <- peaks$end - peaks$start
 head(peaks) # print the first peaks
 
-sum <- sum(peaks$len)
-mean <- mean(peaks$len)
-n <- nrow(peaks)
+peak_stats <- data.frame(
+  sum = sum(peaks$len),
+  mean = mean(peaks$len),
+  n = nrow(peaks))
+
+library(knitr)
+kable(peak_stats)
 
 ```
 
 In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE67282) we obtain: 
 
-- Number of peaks: $n = `r prettyNum(n, big.mark = ",")`$ 
-- Sum of peak lengths: $sum = `r prettyNum(sum, big.mark = ",")`$ 
-- Mean peak lengths: $mean = `r round(digits=1, mean)`$ 
+- Number of peaks: $n = `r prettyNum(peak_stats$n, big.mark = ",")`$ 
+- Sum of peak lengths: $sum = `r prettyNum(peak_stats$sum, big.mark = ",")`$ 
+- Mean peak lengths: $mean = `r round(digits=1, peak_stats$mean)`$ 
 
 ## Getting motifs from reference databases
 
@@ -190,28 +196,35 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE67282)
 
     - Explore the database functionalities
 
-    - Find the transcription factor binding motifs for your TF of interest. Download the corresponding matrix in your working directory.
+    - Find the transcription factor binding motifs for your TF of interest. 
+    
+    - Download the corresponding matrix in your working directory. 
+    
+        - Note: JASPAR proposes several matrix formats. All these formats are supported yb RSAT, but for convenience you can choose the TRANSFAC format.
 
-- Do the same with the [Hocomoco](http://hocomoco11.autosome.ru/) database. 
+    - Save this transfac-formatted motif in a text file named `[YOUR_FACTOR_NAME]_reference-motifs.tf`.
+
+
+- ***Optional***: Do the same with the [Hocomoco](http://hocomoco11.autosome.ru/) database. 
 
     - Note the classification of transcription factors on the home page. You can browse it to observe TF families, defined based on their binding domains. 
 
     - Find the transcripiton factor of interest and save its position-counts matrix (PCM) in your work directory. 
 
-- With the RSAT tool *convert-matrix*, convert the Jaspar and Hocomoco motifs of your factor to transfac format, and paste them together in a text file (make sure that you paste the whole record, including the `//` line at the end, which indicates the separation between two motifs in the same file). Save this text file as `[YOUR_FACTOR_NAME]_reference-motifs.tf`.
-
+    - With the RSAT tool *convert-matrix*, convert  Hocomoco motif of your factor to transfac format, and paste it below the Jaspar motif (make sure that you paste the whole record, including the `//` line at the end, which indicates the separation between two motifs in the same file). 
+    
     - **Tip:** the format Hocomoco is not displayed yet in the list of input formats for *convert-matrix*, but it is actually identical to cluster-buster.
 
 ## Discovering motifs with RSAT peak-motifs
 
 
-- Open a connection to [RSAT Metazoa](http://metazoa.rsat.eu/)
+- Open a connection to [**RSAT**](http://rsat.france-bioinformatique.fr/rsat/)
 
-- Use the tool **[fetch-sequences](http://metazoa.rsat.eu/fetch-sequences_form.cgi)** to get the sequences of your peaks. 
+- Use the tool **[fetch-sequences](http://rsat.france-bioinformatique.fr/rsat/fetch-sequences_form.cgi)** to get the sequences of your peaks. 
 
     **BEWARE:** the peaks of all ChIP-seq datasets were computed by Ballester's team based on the version hg38 of Human genome
 
-- Send the results to **[peak-motifs](http://metazoa.rsat.eu/peak-motifs_form.cgi)** 
+- Send the results to **[peak-motifs](http://rsat.france-bioinformatique.fr/rsat/peak-motifs_form.cgi)** 
 
     - As motif databases, select both *Jaspar non-redundant vertebrates* and *Hocomoco Human TFs*.
     - Enter as reference motif the transfac-formatted file with the JASPAR and Hocomoco motifs for your TF of interest (the file `[YOUR_FACTOR_NAME]_reference-motifs.tf` you built in the previous section). 
@@ -222,9 +235,8 @@ In our example (Sox2 peaks in embryonic stem cells from the GEO series GSE67282)
 
     - Did you obtain significant results? How significant ?
     - If so, were they characterized by over-representation (*oligo-analysis*), positional bias (*position-analysis*) or both?
-    - Did some of the discovered motifs match the reference motifs for your TF in Jaspar and/or Hocomoco ?
-    - Did you discover other motifs
-    - 
+    - Did some of the discovered motifs match the reference motifs for your TF in Jaspar and/or Hocomoco?
+    - Did you discover other motifs?
 
 
 

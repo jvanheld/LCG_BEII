@@ -400,6 +400,16 @@ class="uri">http://rsat.eu/</a></td>
 class="uri">http://metazoa.rsat.eu/</a></td>
 </tr>
 <tr class="even">
+<td>RSAT Teaching</td>
+<td><a href="http://teaching.rsat.eu/"
+class="uri">http://teaching.rsat.eu/</a></td>
+</tr>
+<tr class="odd">
+<td>RSAT server at IFB</td>
+<td><a href="http://rsat.france-bioinformatique.fr/rsat/"
+class="uri">http://rsat.france-bioinformatique.fr/rsat/</a></td>
+</tr>
+<tr class="even">
 <td>UCSC NGS file formats</td>
 <td><a href="https://genome.ucsc.edu/FAQ/FAQformat.html"
 class="uri">https://genome.ucsc.edu/FAQ/FAQformat.html</a></td>
@@ -475,7 +485,8 @@ formats it should be <span class="math inline">\(l = end - start =
 <li><p>The peak statistics can be computed with a spreadsheet (Excel,
 LibreOffice Calc), R, or the Unix command line.</p></li>
 <li><p>Click the “code” button to display a bash line to compute peak
-statistics.</p></li>
+statistics (number, sum of lengths and mean length) from a
+<code>bed</code>file.</p></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">RESULT_DIR</span><span class="op">=</span>~/LCG_BEII/chip-seq_practical/SOX2_glioma_GSE67282</span>
@@ -498,9 +509,13 @@ statistics.</li>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>peaks<span class="sc">$</span>len <span class="ot">&lt;-</span> peaks<span class="sc">$</span>end <span class="sc">-</span> peaks<span class="sc">$</span>start</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(peaks) <span class="co"># print the first peaks</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">sum</span>(peaks<span class="sc">$</span>len)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(peaks<span class="sc">$</span>len)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(peaks)</span></code></pre></div>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>peak_stats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">sum =</span> <span class="fu">sum</span>(peaks<span class="sc">$</span>len),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">mean</span>(peaks<span class="sc">$</span>len),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">nrow</span>(peaks))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(peak_stats)</span></code></pre></div>
 <p>In our example (Sox2 peaks in embryonic stem cells from the GEO
 series GSE67282) we obtain:</p>
 <ul>
@@ -520,10 +535,17 @@ href="http://jaspar.genereg.net/">Jaspar</a></p>
 <ul>
 <li><p>Explore the database functionalities</p></li>
 <li><p>Find the transcription factor binding motifs for your TF of
-interest. Download the corresponding matrix in your working
-directory.</p></li>
+interest.</p></li>
+<li><p>Download the corresponding matrix in your working directory.</p>
+<ul>
+<li>Note: JASPAR proposes several matrix formats. All these formats are
+supported yb RSAT, but for convenience you can choose the TRANSFAC
+format.</li>
 </ul></li>
-<li><p>Do the same with the <a
+<li><p>Save this transfac-formatted motif in a text file named
+<code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p></li>
+</ul></li>
+<li><p><strong><em>Optional</em></strong>: Do the same with the <a
 href="http://hocomoco11.autosome.ru/">Hocomoco</a> database.</p>
 <ul>
 <li><p>Note the classification of transcription factors on the home
@@ -531,17 +553,14 @@ page. You can browse it to observe TF families, defined based on their
 binding domains.</p></li>
 <li><p>Find the transcripiton factor of interest and save its
 position-counts matrix (PCM) in your work directory.</p></li>
-</ul></li>
-<li><p>With the RSAT tool <em>convert-matrix</em>, convert the Jaspar
-and Hocomoco motifs of your factor to transfac format, and paste them
-together in a text file (make sure that you paste the whole record,
-including the <code>//</code> line at the end, which indicates the
-separation between two motifs in the same file). Save this text file as
-<code>[YOUR_FACTOR_NAME]_reference-motifs.tf</code>.</p>
-<ul>
-<li><strong>Tip:</strong> the format Hocomoco is not displayed yet in
+<li><p>With the RSAT tool <em>convert-matrix</em>, convert Hocomoco
+motif of your factor to transfac format, and paste it below the Jaspar
+motif (make sure that you paste the whole record, including the
+<code>//</code> line at the end, which indicates the separation between
+two motifs in the same file).</p></li>
+<li><p><strong>Tip:</strong> the format Hocomoco is not displayed yet in
 the list of input formats for <em>convert-matrix</em>, but it is
-actually identical to cluster-buster.</li>
+actually identical to cluster-buster.</p></li>
 </ul></li>
 </ul>
 </div>
@@ -549,16 +568,16 @@ actually identical to cluster-buster.</li>
 class="section level2">
 <h2>Discovering motifs with RSAT peak-motifs</h2>
 <ul>
-<li><p>Open a connection to <a href="http://metazoa.rsat.eu/">RSAT
-Metazoa</a></p></li>
+<li><p>Open a connection to <a
+href="http://rsat.france-bioinformatique.fr/rsat/"><strong>RSAT</strong></a></p></li>
 <li><p>Use the tool <strong><a
-href="http://metazoa.rsat.eu/fetch-sequences_form.cgi">fetch-sequences</a></strong>
+href="http://rsat.france-bioinformatique.fr/rsat/fetch-sequences_form.cgi">fetch-sequences</a></strong>
 to get the sequences of your peaks.</p>
 <p><strong>BEWARE:</strong> the peaks of all ChIP-seq datasets were
 computed by Ballester’s team based on the version hg38 of Human
 genome</p></li>
 <li><p>Send the results to <strong><a
-href="http://metazoa.rsat.eu/peak-motifs_form.cgi">peak-motifs</a></strong></p>
+href="http://rsat.france-bioinformatique.fr/rsat/peak-motifs_form.cgi">peak-motifs</a></strong></p>
 <ul>
 <li>As motif databases, select both <em>Jaspar non-redundant
 vertebrates</em> and <em>Hocomoco Human TFs</em>.</li>
@@ -576,9 +595,8 @@ previous section).</li>
 (<em>oligo-analysis</em>), positional bias (<em>position-analysis</em>)
 or both?</li>
 <li>Did some of the discovered motifs match the reference motifs for
-your TF in Jaspar and/or Hocomoco ?</li>
-<li>Did you discover other motifs</li>
-<li></li>
+your TF in Jaspar and/or Hocomoco?</li>
+<li>Did you discover other motifs?</li>
 </ul></li>
 </ul>
 </div>
