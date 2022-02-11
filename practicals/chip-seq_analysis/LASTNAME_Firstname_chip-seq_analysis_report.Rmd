@@ -1,6 +1,6 @@
 ---
 title: "Adapt this title to indicate what you did"
-subtitle: "LCG BEII personal work -- 2019"
+subtitle: "LCG BEII personal work -- 2022"
 author: "Firstname LASTNAME"
 date: "`r Sys.Date()`"
 output:
@@ -47,7 +47,7 @@ output:
 
 
 - ~ *1/2 page + all details in supplementary material*
-- *indicate the main resources and tools usd in your analysis, and what they were used to do *
+- *indicate the main resources and tools used in your analysis, and what they were used to do *
 - *explanation of the main methodological choices*
 
 

@@ -306,7 +306,7 @@ The tool *matrix-clustering* can be used for different purposes. Here we will us
 
 2. Structure: we ask you to return a report structured as a small research article (introduction, material and methods, results and discussion, conclusions an perspective). 
 
-3. Report template. Please used the template provided here. Read carefully the instructions. 
+3. **Report template.** Please use the template provided here. Read carefully the instructions. 
 
     - Rmd format: [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd). 
 
