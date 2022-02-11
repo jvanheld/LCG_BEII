@@ -50,7 +50,7 @@ data.
 ****************************************************************
 ## Teaching material
 
-### Day 1: from TF binding sites to motifs and back
+### From TF binding sites to motifs and back (days 1-2)
 
 
 | Topics                                                | Supports |
@@ -63,16 +63,16 @@ data.
 | **Exercises:** scaning sequences with a reference motif |  [[html](practicals/motif_search_RegulonDB/motif_search_RegulonDB.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_search_RegulonDB/motif_search_RegulonDB.Rmd)]  |
 | **Solutions** scaning sequences with a reference motif |  [[html](practicals/motif_search_RegulonDB/motif_search_RegulonDB_solutions.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_search_RegulonDB/motif_search_RegulonDB_solutions.Rmd)] | 
   
-### Day 2: motif discovery
+### Motif discovery (day 3)
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
 | Introduction to motif discovery |  [[slides](http://rsat-doc.github.io/course/pdf_files/03.1.pattern_discovery_intro.pdf)] |
 | String-based pattern discovery | [[slides](http://rsat-doc.github.io/course/pdf_files/03.2.1.pattern_discovery_strings.pdf)] |
-| **Tutorial:** mlotif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
+| **Tutorial:** motif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
 | **Exercise:** discovering a motif discovery algorithm | [[html](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)] [[pdf](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.pdf)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_discovery/discovering_a_motif_discovery_algorithm.Rmd)] |
 
-### Day 3: ChIP-seq analysis
+### ChIP-seq analysis (day 4)
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
