@@ -310,6 +310,9 @@ The tool *matrix-clustering* can be used for different purposes. Here we will us
 
     - Rmd format: [Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.Rmd). 
 
+    - Word format: [docx](practicals/chip-seq_analysis/LASTNAME_Firstname_chip-seq_analysis_report.docx). 
+
+
 Please submit both the original file (Rmd) and the report compiled in Word format (in RStudio, use the command **Knit to Word**), in order to enable me to annotate it in the margins. 
 
 
