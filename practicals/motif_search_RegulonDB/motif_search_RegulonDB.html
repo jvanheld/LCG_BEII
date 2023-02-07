@@ -11,22 +11,30 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2021-03-02" />
+<meta name="date" content="2023-02-07" />
 
 <title>Scanning non-coding sequences with a TFBM</title>
 
-<script src="motif_search_RegulonDB_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="motif_search_RegulonDB_files/header-attrs-2.20/header-attrs.js"></script>
+<script src="motif_search_RegulonDB_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="motif_search_RegulonDB_files/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="motif_search_RegulonDB_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="motif_search_RegulonDB_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="motif_search_RegulonDB_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="motif_search_RegulonDB_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="motif_search_RegulonDB_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="motif_search_RegulonDB_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="motif_search_RegulonDB_files/navigation-1.1/tabsets.js"></script>
-<link href="motif_search_RegulonDB_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="motif_search_RegulonDB_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -40,32 +48,8 @@
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 
 
@@ -75,10 +59,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -95,6 +75,12 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
@@ -107,13 +93,12 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -121,16 +106,9 @@ summary {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -233,7 +211,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -244,123 +222,207 @@ div.tocify {
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
-<h1 class="title toc-ignore">Scanning non-coding sequences with a TFBM</h1>
+<h1 class="title toc-ignore">Scanning non-coding sequences with a
+TFBM</h1>
 <h3 class="subtitle">LCG_BEII 2020</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2021-03-02</h4>
+<h4 class="date">2023-02-07</h4>
 
 </div>
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>The goal of this practical is to evaluate the respective performances of two modes of representations for transcription factor binding motifs (<strong>TFBMs</strong>) to predict transcription factor binding sites (<strong>TFBS</strong>).</p>
-<p>As reference genome we will use the strain <em>Escherichia_coli_GCF_000005845.2_ASM584v2</em>.</p>
-<p><strong>Tip:</strong> in the RSAT Web site, you can type <code>ASM584</code> to quickly select this strain. This is much easier than typing the whole name.</p>
+<p>The goal of this practical is to evaluate the respective performances
+of two modes of representations for transcription factor binding motifs
+(<strong>TFBMs</strong>) to predict transcription factor binding sites
+(<strong>TFBS</strong>).</p>
+<p>As reference genome we will use the strain
+<em>Escherichia_coli_GCF_000005845.2_ASM584v2</em>.</p>
+<p><strong>Tip:</strong> in the RSAT Web site, you can type
+<code>ASM584</code> to quickly select this strain. This is much easier
+than typing the whole name.</p>
 </div>
-<div id="collective-table-for-the-2020-practical" class="section level2">
-<h2>Collective table for the 2020 practical</h2>
-<p>Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.</p>
+<div id="collective-table-for-the-2023-practical"
+class="section level2">
+<h2>Collective table for the 2023 practical</h2>
+<p>Students will store their results in a shared spreadsheet, which will
+be used to compare their results and get a broader landscape from the
+comparison of the results obtained with different transcription
+factors.</p>
 <ul>
-<li>Folder: <a href="https://tinyurl.com/lcg-beii-2021" class="uri">https://tinyurl.com/lcg-beii-2021</a></li>
-<li>Motif scanning exercise:</li>
+<li><p>Shared folder (in edit mode): <a
+href="https://drive.google.com/drive/folders/139B72oJOoI5fDWn3FfxhK7u-K3TXhPEV"
+class="uri">https://drive.google.com/drive/folders/139B72oJOoI5fDWn3FfxhK7u-K3TXhPEV</a></p></li>
+<li><p>Result table (one row per student) : <a
+href="https://docs.google.com/spreadsheets/d/1US2dyzgGsh0MWTIq8E5Eh3EpE5pKRN_8/edit#gid=64497152"
+class="uri">https://docs.google.com/spreadsheets/d/1US2dyzgGsh0MWTIq8E5Eh3EpE5pKRN_8/edit#gid=64497152</a></p></li>
 </ul>
-<p>In your computer, create a folder to store the results of this practical, for example : <code>$HOME/LCG_BEII_practicals/</code> (you can change the path and name according to your own organisation of folders).</p>
+</div>
+<div id="motif-scanning-exercise" class="section level2">
+<h2>Motif scanning exercise</h2>
+<p>In your computer, create a folder to store the results of this
+practical, for example :</p>
+<p><code>$HOME/LCG_BEII_practicals/</code></p>
+<p>(you can change the path and name according to your own organisation
+of folders).</p>
 </div>
 <div id="choosing-a-tf-on-regulondb" class="section level2">
 <h2>Choosing a TF on RegulonDB</h2>
-<p>Each student will choose one transcription factor of interest having a reasonable number of binding sites (between 10 and 25).</p>
-<p>For this tutorial, I will use AraC.</p>
+<p>Each student will choose one transcription factor of interest having
+a reasonable number of binding sites (between 10 and 25).</p>
+<p>For this tutorial, I will use <em>AraC</em>.</p>
 <ul>
-<li><p>Open a connection to RegulonDB <a href="http://regulondb.ccg.unam.mx/" class="uri">http://regulondb.ccg.unam.mx/</a></p></li>
-<li><p>Click on the link <a href="http://regulondb.ccg.unam.mx/search?term=Regulon&amp;organism=ECK12&amp;type=All#">regulon list</a>. This opens a table with all the regulons.</p></li>
-<li><p>Click on the top of the column “Total of Regulated Genes” to sort factors by decreasing number of target genes.</p></li>
-<li><p>Choose your TF of interest and open its record. <strong>Check that there is a matrix for this TF</strong>. If not, come back to the table and choose another TF.</p></li>
+<li><p>Open a connection to RegulonDB <a
+href="http://regulondb.ccg.unam.mx/"
+class="uri">http://regulondb.ccg.unam.mx/</a></p></li>
+<li><p>Click on the link <a
+href="http://regulondb.ccg.unam.mx/search?term=Regulon&amp;organism=ECK12&amp;type=All#">regulon
+list</a>. This opens a table with all the regulons.</p></li>
+<li><p>Click on the top of the column “Total of Regulated Genes” to sort
+factors by decreasing number of target genes.</p></li>
+<li><p>Choose your TF of interest and open its record. <strong>Check
+that there is a matrix for this TF</strong>. If not, come back to the
+table and choose another TF.</p></li>
 <li><p>Fill up the details of the collective exploration table.</p></li>
-<li><p>Save a text file with the target gene names (one per row).</p></li>
-<li><p>Save another text file with the names of the operon leader genes (one gene per row). These will serve as reference to compute the rate of recovery of the target genes with the different motif representations (consensus or matrix, resp.).</p></li>
-<li><p>Save a fasta file with the sequences of the known binding sites for your TF (tip: click on the bug “+” button in the header of the binding site section)</p></li>
-<li><p>Save in a text file the matrix (PSSM) associated to your factor, in tab format.</p></li>
+<li><p>Save a text file with the target gene names (one per
+row).</p></li>
+<li><p>Save another text file with the names of the operon leader genes
+(one gene per row). These will serve as reference to compute the rate of
+recovery of the target genes with the different motif representations
+(consensus or matrix, resp.).</p></li>
+<li><p>Save a fasta file with the sequences of the known binding sites
+for your TF (tip: click on the bug “+” button in the header of the
+binding site section)</p></li>
+<li><p>Save in a text file the matrix (PSSM) associated to your factor,
+in tab format.</p></li>
 </ul>
 </div>
-<div id="computing-the-degenerate-consensus-from-the-reference-matrix" class="section level2">
+<div id="computing-the-degenerate-consensus-from-the-reference-matrix"
+class="section level2">
 <h2>Computing the degenerate consensus from the reference matrix</h2>
 <ul>
-<li><p>Connect RSAT server: <a href="http://rsat.eu/" class="uri">http://rsat.eu/</a></p></li>
-<li><p>Choose the bacterial server</p></li>
-<li><p>Use <strong>convert-matrix</strong> to compute frequencies, weights, parameters and display a logo of your matrix.</p></li>
-<li><p>In the result, get the degenerated consensus and save it to a separate text file.</p></li>
+<li><p>Connect RSAT server: <a href="http://rsat.eu/"
+class="uri">http://rsat.eu/</a></p></li>
+<li><p>Choose the <a href="http://prokaryotes.rsat.eu/">Prokaryote
+server</a></p></li>
+<li><p>Use <strong>convert-matrix</strong> to compute frequencies,
+weights, parameters and display a logo of your matrix.</p></li>
+<li><p>In the result, get the degenerated consensus and save it to a
+separate text file.</p></li>
 </ul>
 </div>
-<div id="getting-all-upstream-promoter-sequences-of-e.coli" class="section level2">
+<div id="getting-all-upstream-promoter-sequences-of-e.coli"
+class="section level2">
 <h2>Getting all upstream (“promoter”) sequences of <em>E.coli</em></h2>
 <ul>
-<li><p>Open the tool <strong><a href="http://embnet.ccg.unam.mx/rsat/retrieve-seq_form.cgi">retrieve-seq</a></strong></p></li>
-<li><p>Select organism <em>Escherichia_coli_GCF_000005845.2_ASM584v2</em> (top : type simply K12 in the organism query box)</p></li>
-<li><p>Set all parameters to get the non-coding sequences located upstream of all genes with a maximal distance of 400 bp from the gene start (i.e. relative coordinates from -1 to -400).</p></li>
-<li><p>Copy the URL of the result file and save it in a text file (we will use it several times below)</p></li>
+<li><p>Open the tool <strong><a
+href="http://embnet.ccg.unam.mx/rsat/retrieve-seq_form.cgi">retrieve-seq</a></strong></p></li>
+<li><p>Select organism
+<em>Escherichia_coli_GCF_000005845.2_ASM584v2</em> (top : type simply
+K12 in the organism query box)</p></li>
+<li><p>Set all parameters to get the non-coding sequences located
+upstream of all genes with a maximal distance of 400 bp from the gene
+start (i.e. relative coordinates from -1 to -400).</p></li>
+<li><p>Copy the URL of the result file and save it in a text file (we
+will use it several times below)</p></li>
 </ul>
 </div>
-<div id="coverage-of-the-annotated-binding-sites-by-the-reference-motif" class="section level2">
+<div id="coverage-of-the-annotated-binding-sites-by-the-reference-motif"
+class="section level2">
 <h2>Coverage of the annotated binding sites by the reference motif</h2>
-<p>The question addressed here is to evaulate the relative performances of the consensus and PSSM to predict TFBSs and identify the target genes of our transcription factor of interest.</p>
-<p>Note that the TFBS are expected to be found in the promoters of operon leader genes, and not in the upstream sequences of the other target genes (the genes following the leader in an operon). Thus, the reference gene set for this analysis are the leader genes of the operons regulated by our TF of interest.</p>
+<p>The question addressed here is to evaulate the relative performances
+of the consensus and PSSM to predict TFBSs and identify the target genes
+of our transcription factor of interest.</p>
+<p>Note that the TFBS are expected to be found in the promoters of
+operon leader genes, and not in the upstream sequences of the other
+target genes (the genes following the leader in an operon). Thus, the
+reference gene set for this analysis are the leader genes of the operons
+regulated by our TF of interest.</p>
 <ul>
-<li><p>Use <strong><a href="http://embnet.ccg.unam.mx/rsat/dna-pattern.cgi">dna-pattern</a></strong> to scan the annotated binding sites with the IUPAC consensus from RegulonDB (e.g. <code>cayaGcmrrwwartCCaTaw</code> for AraC).</p>
+<li><p>Use <strong><a
+href="http://embnet.ccg.unam.mx/rsat/dna-pattern.cgi">dna-pattern</a></strong>
+to scan the annotated binding sites with the IUPAC consensus from
+RegulonDB (e.g. <code>cayaGcmrrwwartCCaTaw</code> for AraC).</p>
 <ul>
-<li>Tip: uncheck the option <em>sequence limits</em> to avoid getting 4200 lines with promoter sizes.</li>
+<li>Tip: uncheck the option <em>sequence limits</em> to avoid getting
+4200 lines with promoter sizes.</li>
 </ul></li>
-<li><p>Use <strong><a href="">matrix-scan</a></strong> to scan the annotated binding sites with the RegulonDB matrix</p></li>
+<li><p>Use <strong><a href="">matrix-scan</a></strong> to scan the
+annotated binding sites with the RegulonDB matrix</p></li>
 </ul>
 <p>Interpretation:</p>
 <ul>
-<li><p>Compute the coverage rate of the two respective modes of representation (consensus versus matrix).</p></li>
+<li><p>Compute the coverage rate of the two respective modes of
+representation (consensus versus matrix).</p></li>
 <li><p>Compare the values and comment the results.</p></li>
 </ul>
 </div>
-<div id="binding-site-prediction-in-all-promoters" class="section level2">
+<div id="binding-site-prediction-in-all-promoters"
+class="section level2">
 <h2>Binding site prediction in all promoters</h2>
 <ul>
-<li><p>Use the same tools (dna-pattern and matrix-scan) to predict binding sites in all the promoters of E.coli.</p></li>
-<li><p>For <strong>matrix-scan</strong>, run the analysis with a threshold of p-value of either 0.001 or 0.0001.</p></li>
+<li><p>Use the same tools (dna-pattern and matrix-scan) to predict
+binding sites in all the promoters of E.coli.</p></li>
+<li><p>For <strong>matrix-scan</strong>, run the analysis with a
+threshold of p-value of either 0.001 or 0.0001.</p></li>
 </ul>
 <p>Interpretation:</p>
 <ul>
-<li><p>Compare the number of matches obtained in these respective searches.</p></li>
-<li><p>With the respective p-values used for the scanning, how many matches would you expect by chance ?</p></li>
+<li><p>Compare the number of matches obtained in these respective
+searches.</p></li>
+<li><p>With the respective p-values used for the scanning, how many
+matches would you expect by chance ?</p></li>
 <li><p>Comment the results.</p></li>
 </ul>
 </div>
-<div id="negative-control-1-scan-artificial-sequences-with-your-motif" class="section level2">
+<div id="negative-control-1-scan-artificial-sequences-with-your-motif"
+class="section level2">
 <h2>Negative control 1: scan artificial sequences with your motif</h2>
-<p>As a negative control, we will run exactly the same analysis in sequences where there should be no specific site for our transcription factor. For this, we will generate</p>
+<p>As a negative control, we will run exactly the same analysis in
+sequences where there should be no specific site for our transcription
+factor. For this, we will generate</p>
 <ul>
 <li><p>RSAT <em>random-sequences</em>, generate random sequences</p>
 <ul>
-<li><p>use the same background model as you used to scan the promoter sequences in the above steps</p></li>
-<li><p>use the promoter sequences retrieved above as model in order to obtain random sequences of the same sizes.</p></li>
+<li><p>use the same background model as you used to scan the promoter
+sequences in the above steps</p></li>
+<li><p>use the promoter sequences retrieved above as model in order to
+obtain random sequences of the same sizes.</p></li>
 </ul></li>
 <li><p>Run the same analysis as above (all promoters)</p></li>
 </ul>
 <p>Interpretation:</p>
 <ul>
 <li>How many sites were predicted?</li>
-<li>How many sites would be expected by chance according to your parameters?</li>
+<li>How many sites would be expected by chance according to your
+parameters?</li>
 <li>Do the two numbers correspond?</li>
 </ul>
 </div>
-<div id="negative-control-2-permute-the-columns-of-the-matrix" class="section level2">
+<div id="negative-control-2-permute-the-columns-of-the-matrix"
+class="section level2">
 <h2>Negative control 2: permute the columns of the matrix</h2>
-<p>A second type of negative control consists in scanning the actual biological sequences (all the promoters of <em>E.coli</em>, as analysed above), but to permute the columns of the PSSM. Such a permutation between the columns preserves statistical properties of the matrix (number of occurrences, information content of each column, total information content) but looses the biological information (the specific sequences recognized by the transcription factor).</p>
+<p>A second type of negative control consists in scanning the actual
+biological sequences (all the promoters of <em>E.coli</em>, as analysed
+above), but to permute the columns of the PSSM. Such a permutation
+between the columns preserves statistical properties of the matrix
+(number of occurrences, information content of each column, total
+information content) but looses the biological information (the specific
+sequences recognized by the transcription factor).</p>
 <ul>
-<li><p>Use the tool <strong>permute-matrix</strong> in order to generate 10 randomized copies of the motif</p></li>
-<li><p>Send these randomiazed matrices to <strong>convert-matrix</strong> and check their logo.</p></li>
-<li><p>Run the same analyses as above with the randomized matrix</p></li>
-<li><p>Compare the number of sites obtained between the RegulonDB matrix and the randomized matrix derived from it.</p></li>
+<li><p>Use the tool <strong>permute-matrix</strong> in order to generate
+10 randomized copies of the motif</p></li>
+<li><p>Send these randomiazed matrices to
+<strong>convert-matrix</strong> and check their logo.</p></li>
+<li><p>Run the same analyses as above with the randomized
+matrix</p></li>
+<li><p>Compare the number of sites obtained between the RegulonDB matrix
+and the randomized matrix derived from it.</p></li>
 </ul>
 </div>
 
@@ -393,7 +455,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -402,6 +464,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

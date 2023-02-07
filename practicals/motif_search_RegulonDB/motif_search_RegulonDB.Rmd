@@ -99,20 +99,29 @@ As reference genome we will use the strain *Escherichia_coli_GCF_000005845.2_ASM
 **Tip:** in the RSAT Web site, you can type `ASM584` to quickly select this strain. This is much easier than typing the whole name. 
 
 
-## Collective table for the 2020 practical
+## Collective table for the 2023 practical
 
 Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
 
-- Folder: <https://tinyurl.com/lcg-beii-2021>
-- Motif scanning exercise: 
+- Shared folder (in edit mode): <https://drive.google.com/drive/folders/139B72oJOoI5fDWn3FfxhK7u-K3TXhPEV>
 
-In your computer, create a folder to store the results of this practical, for example : `$HOME/LCG_BEII_practicals/` (you can change the path and name according to your own organisation of folders). 
+- **Shared result table** (one row per student) : <https://docs.google.com/spreadsheets/d/1US2dyzgGsh0MWTIq8E5Eh3EpE5pKRN_8/edit#gid=64497152>
+
+    Add a line with your name and email. You will progressively fill in the other columns during the pratical. 
+
+## Motif scanning exercise
+
+In your computer, create a folder to store the results of this practical, for example : 
+
+`$HOME/LCG_BEII_practicals/` 
+
+(you can change the path and name according to your own organisation of folders). 
 
 ## Choosing a TF on RegulonDB
 
 Each student will choose one transcription factor of interest having a reasonable number of binding sites (between 10 and 25). 
 
-For this tutorial, I will use AraC.
+For this tutorial, I will use *AraC*.
 
 - Open a connection to RegulonDB  <http://regulondb.ccg.unam.mx/>
 
@@ -136,9 +145,9 @@ For this tutorial, I will use AraC.
 
 - Connect RSAT server: <http://rsat.eu/>
 
-- Choose the bacterial server
+- Choose the [Prokaryote server](http://prokaryotes.rsat.eu/)
 
-- Use **convert-matrix** to compute frequencies, weights, parameters and display a logo of your matrix.
+- Use **convert-matrix** to compute frequencies, weights, parameters and display a logo of your matrix. Paste this logo in the shared result table (see link above)
 
 - In the result, get the degenerated consensus and save it to a separate text file. 
 
