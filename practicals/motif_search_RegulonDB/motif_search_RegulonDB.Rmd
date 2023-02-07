@@ -175,7 +175,7 @@ Note that the TFBS are expected to be found in the promoters of operon leader ge
 - Use **[matrix-scan]()** to scan the annotated binding sites with the RegulonDB matrix
 
 
-Interpretation: 
+### Interpretation 
 
 - Compute the coverage rate of the two respective modes of representation (consensus versus matrix). 
 
@@ -188,7 +188,7 @@ Interpretation:
 
 - For **matrix-scan**, run the analysis with a threshold of p-value of either 0.001 or 0.0001. 
 
-Interpretation:
+### Interpretation
 
 - Compare the number of matches obtained in these respective searches. 
 
@@ -208,7 +208,7 @@ As a negative control, we will run exactly the same analysis in sequences where 
 
 - Run the same analysis as above (all promoters) 
 
-Interpretation: 
+### Interpretation 
 
 - How many sites were predicted?
 - How many sites would be expected by chance according to your parameters?
