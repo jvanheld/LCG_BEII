@@ -98,6 +98,15 @@ As reference genome we will use the strain *Escherichia_coli_GCF_000005845.2_ASM
 
 **Tip:** in the RSAT Web site, you can type `ASM584` to quickly select this strain. This is much easier than typing the whole name. 
 
+## Resources
+
+| Acronym | Description | URL |
+|--------|--------------------------|---------------------|
+| RegulonDB | Database of transcriptional regulation in *Escherichia coli* | <https://regulondb.ccg.unam.mx/> |
+| RSAT | Regulatory Sequence Analysis Tools | <http://rsat.eu> |
+| RSAT Prokaryotes | RSAT server specialised for Prokaryote genomes | <http://prokaryotes.rsat.eu> | 
+| Classification statistics | Wikipedia page with the key formula to compute performance statistics from a confusion matrix | <https://en.wikipedia.org/wiki/Confusion_matrix> |
+| Sensitivity and Specificity | Wikipedia page defining these key performance indicators | <https://en.wikipedia.org/wiki/Sensitivity_and_specificity> |
 
 ## Collective table for the 2023 practical
 
@@ -226,6 +235,16 @@ A second type of negative control consists in scanning the actual biological seq
 
 - Compare the number of sites obtained between the RegulonDB matrix and the randomized matrix derived from it.
 
+## Scientific report
 
+### Structure of the report
+
+Each student should return a scientific report containing 
+
+1.  A summary of the principal results and their interpretation. This section should be synthetic, and cannot exceed 2 pages. 
+2. A full list of the complete RSAT commands used for the successive steps of the analysis
+3. As many figures and tables as useful (not counted in the two pages, but numbered in order to enable cross-references from the text to these elements)
+
+### Evaluation criteria
 
 
