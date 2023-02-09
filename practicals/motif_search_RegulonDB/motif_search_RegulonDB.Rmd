@@ -249,7 +249,9 @@ Reports should be deposited before XX/XX/2023 on the Moodle server of the LCG.
 
 ### Evaluation criteria
 
-- Precision of the results (e.g. number of annotated sites, genes, operons in RegulonDB, number of putative sites and genes detected by matrix-scan, number of overlapping genes, ...)
+- Completion of the result in the shared result table on GDrive. 
+
+- Precision of the results in the report (e.g. number of annotated sites, genes, operons in RegulonDB, number of putative sites and genes detected by matrix-scan, number of overlapping genes, ...)
 
 - Correctness of the values in the confusion matrix and derived statistics
 
