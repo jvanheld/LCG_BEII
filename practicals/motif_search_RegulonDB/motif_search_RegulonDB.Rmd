@@ -272,7 +272,7 @@ Reports should be deposited before XX/XX/2023 on the Moodle server of the LCG.
 - Interpretation of negative control
 
 <div class="alert alert-block alert-warning">
-<b>Attention:</b> The biological interpretation of the findings is crucial for your score.
+<b>Attention:</b> The biological interpretation of the findings is crucial for your score.<br>**Plagiarism will not be tolerated**
 </div>
 
 
