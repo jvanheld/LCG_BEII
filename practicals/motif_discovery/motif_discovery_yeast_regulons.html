@@ -1,65 +1,58 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2019-02-07" />
+<meta name="date" content="2023-02-09" />
 
 <title>Practical: motif discovery in yeast regulons</title>
 
-<script src="motif_discovery_yeast_regulons_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="motif_discovery_yeast_regulons_files/header-attrs-2.20/header-attrs.js"></script>
+<script src="motif_discovery_yeast_regulons_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="motif_discovery_yeast_regulons_files/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="motif_discovery_yeast_regulons_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="motif_discovery_yeast_regulons_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="motif_discovery_yeast_regulons_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="motif_discovery_yeast_regulons_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="motif_discovery_yeast_regulons_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="motif_discovery_yeast_regulons_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="motif_discovery_yeast_regulons_files/navigation-1.1/tabsets.js"></script>
 
-
-
-
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
-</head>
 
-<body>
+
+
+
+
+
+
 
 <style type = "text/css">
 .main-container {
@@ -67,13 +60,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -87,11 +75,15 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -101,13 +93,12 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -115,16 +106,9 @@ summary {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -137,6 +121,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -149,48 +134,9 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -204,6 +150,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -239,8 +191,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -250,8 +200,18 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -262,27 +222,38 @@ div.tocify {
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
-<h1 class="title toc-ignore">Practical: motif discovery in yeast regulons</h1>
-<h3 class="subtitle"><em>LCG_BEII 2019</em></h3>
-<h4 class="author"><em>Jacques van Helden</em></h4>
-<h4 class="date"><em>2019-02-07</em></h4>
+<h1 class="title toc-ignore">Practical: motif discovery in yeast
+regulons</h1>
+<h3 class="subtitle">LCG_BEII 2019</h3>
+<h4 class="author">Jacques van Helden</h4>
+<h4 class="date">2023-02-09</h4>
 
 </div>
 
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>In this tutorial, we will use <strong>R</strong> to detect over-represented motifs in the regulatory sequences of a set of genes involved in a biological process of interest.</p>
-<p><strong>Our study case:</strong> We examplify the approach with the <strong>methionine biosynthetic process</strong> in the yeast <em>Saccharomyces cerevisiae</em>.</p>
-<p>Each student will be invited to run the same analyses with a different biological process, and we will compare the results gathered by all of us in order to draw some general insight into the relevance of the approach.</p>
+<p>In this tutorial, we will use <strong>R</strong> to detect
+over-represented motifs in the regulatory sequences of a set of genes
+involved in a biological process of interest.</p>
+<p><strong>Our study case:</strong> We examplify the approach with the
+<strong>methionine biosynthetic process</strong> in the yeast
+<em>Saccharomyces cerevisiae</em>.</p>
+<p>Each student will be invited to run the same analyses with a
+different biological process, and we will compare the results gathered
+by all of us in order to draw some general insight into the relevance of
+the approach.</p>
 </div>
 <div id="suggested-biological-processes" class="section level2">
 <h2>Suggested biological processes</h2>
-<p>I provide here some examples of biological processes of the yeast Saccharomyces cerevisiae. Note that these processes may have different names depending on the databases, so you will have to adapt them in different steps of the tutorial.</p>
+<p>I provide here some examples of biological processes of the yeast
+Saccharomyces cerevisiae. Note that these processes may have different
+names depending on the databases, so you will have to adapt them in
+different steps of the tutorial.</p>
 <ul>
 <li>L-methionine biosynthesis</li>
 <li>L-arginine biosyntesis</li>
@@ -298,6 +269,10 @@ div.tocify {
 <div id="resources" class="section level2">
 <h2>Resources</h2>
 <table>
+<colgroup>
+<col width="39%" />
+<col width="60%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Resource</th>
@@ -307,15 +282,18 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td>Gene Ontology Consortium</td>
-<td><a href="http://www.geneontology.org/" class="uri">http://www.geneontology.org/</a></td>
+<td><a href="http://www.geneontology.org/"
+class="uri">http://www.geneontology.org/</a></td>
 </tr>
 <tr class="even">
 <td>Ensembl BioMart</td>
-<td><a href="https://www.ensembl.org/" class="uri">https://www.ensembl.org/</a></td>
+<td><a href="https://www.ensembl.org/"
+class="uri">https://www.ensembl.org/</a></td>
 </tr>
 <tr class="odd">
 <td>RSAT</td>
-<td>Regulatory Sequence Analysis Tools (<a href="http://rsat.eu/" class="uri">http://rsat.eu/</a>)</td>
+<td>Regulatory Sequence Analysis Tools (<a href="http://rsat.eu/"
+class="uri">http://rsat.eu/</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -323,47 +301,83 @@ div.tocify {
 <div id="viewing-metabolic-pathways-on-biocyc" class="section level2">
 <h2>Viewing metabolic pathways on BioCyc</h2>
 <ul>
-<li>Open a connection to <strong>BioCyc</strong> (<a href="https://biocyc.org/" class="uri">https://biocyc.org/</a>)</li>
-<li>In the right-left corner, click <strong>change organism database</strong> and select <em>Saccharomyces cerevisiae S288c</em>.</li>
-<li>Select the function <strong>Metabolism</strong> &gt; <strong>Generate a metabolic map poster</strong> to get an overview of the whole metabolism.</li>
-<li><p>Select the tool <em>Browse pathway ontology</em> and select a pathway of your choice (not too big, not too small, let us say between 5 and 50 genes).</p></li>
-<li>As an example I select two pathways:
+<li><p>Open a connection to <strong>BioCyc</strong> (<a
+href="https://biocyc.org/" class="uri">https://biocyc.org/</a>)</p></li>
+<li><p>In the right-left corner, click <strong>change organism
+database</strong> and select <em>Saccharomyces cerevisiae
+S288c</em>.</p></li>
+<li><p>Select the function <strong>Metabolism</strong> &gt;
+<strong>Generate a metabolic map poster</strong> to get an overview of
+the whole metabolism.</p></li>
+<li><p>Select the tool <em>Browse pathway ontology</em> and select a
+pathway of your choice (not too big, not too small, let us say between 5
+and 50 genes).</p></li>
+<li><p>As an example I select two pathways:</p>
 <ul>
 <li>“superpathway of sulfur amino acid biosynthesis”</li>
 <li>“L-methionine de novo biosynthesis”</li>
 </ul></li>
-<li><p>Click on the pathway instances to display the pathway maps. PLay with the options to increase/decrease the level of detail.</p></li>
-<li><p>In your custom result folder, save a figure that provides a nice view of the pathway, and could be used for example in the introduction of a report.</p></li>
+<li><p>Click on the pathway instances to display the pathway maps. PLay
+with the options to increase/decrease the level of detail.</p></li>
+<li><p>In your custom result folder, save a figure that provides a nice
+view of the pathway, and could be used for example in the introduction
+of a report.</p></li>
 </ul>
 </div>
 <div id="finding-a-process-in-the-gene-ontology" class="section level2">
 <h2>Finding a process in the Gene Ontology</h2>
 <ul>
-<li><p>Open a connection to the Gene Ontology Consortium (<a href="http://www.geneontology.org/" class="uri">http://www.geneontology.org/</a>)</p></li>
-<li><p>In the menu at the top of the page, select <strong>Tools</strong> &gt; <strong>AmiGO 2</strong>.</p></li>
-<li><p>In the quick search box, type the name of your biological process of interest (e.g. ‘methionine biosynthetic process’). As you type, a pop-up menu appears to display the subset of GO terms corresponding to your query. Select the one you need (e.g. “L-methionine biosynthetic process”).</p></li>
+<li><p>Open a connection to the Gene Ontology Consortium (<a
+href="http://www.geneontology.org/"
+class="uri">http://www.geneontology.org/</a>)</p></li>
+<li><p>In the menu at the top of the page, select <strong>Tools</strong>
+&gt; <strong>AmiGO 2</strong>.</p></li>
+<li><p>In the quick search box, type the name of your biological process
+of interest (e.g. ‘methionine biosynthetic process’). As you type, a
+pop-up menu appears to display the subset of GO terms corresponding to
+your query. Select the one you need (e.g. “L-methionine biosynthetic
+process”).</p></li>
 </ul>
-<p>This opens the record describing the biological process you chose.</p>
+<p>This opens the record describing the biological process you
+chose.</p>
 <ul>
-<li><p>Before anything else, take note of the GO dientifier (e.g.: <a href="GO:0071265" class="uri">GO:0071265</a>)</p></li>
-<li><p>Read the <strong>Term description</strong> box and check that the description corresponds to your choice.</p></li>
-<li><p>At the bottom of the <strong>Term description</strong> page, click on the <strong>Link to all genes and gene products annotated to [your] process</strong>.</p></li>
-<li><p>In the filter box, type “Saccharomyces cerevisiae” and count the number of genes associated to your process in the budding yeast.</p></li>
+<li><p>Before anything else, take note of the GO dientifier (e.g.: <a
+href="GO:0071265" class="uri">GO:0071265</a>)</p></li>
+<li><p>Read the <strong>Term description</strong> box and check that the
+description corresponds to your choice.</p></li>
+<li><p>At the bottom of the <strong>Term description</strong> page,
+click on the <strong>Link to all genes and gene products annotated to
+[your] process</strong>.</p></li>
+<li><p>In the filter box, type “Saccharomyces cerevisiae” and count the
+number of genes associated to your process in the budding
+yeast.</p></li>
 </ul>
 </div>
 <div id="getting-genes-from-biomart" class="section level2">
 <h2>Getting genes from BioMart</h2>
 <ul>
-<li><p>Open a connection to <strong>Ensembl</strong> (<a href="https://www.ensembl.org/" class="uri">https://www.ensembl.org/</a>) and select the <strong>BioMart</strong> tool.</p></li>
-<li><p><strong>Choose the database:</strong> <em>Ensembl Genes [version]</em> (note: the current version is 95 in Feb 2019)</p></li>
-<li><p><strong>Choose dataset:</strong> <em>Saccharomyces cerevisiae genes (R-46-1-1)</em></p></li>
-<li><p>In the left menu, click <strong>Filters</strong> and open the section <strong>Gene Ontology</strong>.</p></li>
-<li><p>Type the GO term accession ID of your choice (e.g. <a href="GO:0071265" class="uri">GO:0071265</a>).</p></li>
-<li><p>In the top corner of the windfow, click <strong>Count</strong> and check that you have a reasonable number of genes (with <a href="GO:0071265" class="uri">GO:0071265</a>, there are 13 genes).</p></li>
+<li><p>Open a connection to <strong>Ensembl</strong> (<a
+href="https://www.ensembl.org/"
+class="uri">https://www.ensembl.org/</a>) and select the
+<strong>BioMart</strong> tool.</p></li>
+<li><p><strong>Choose the database:</strong> <em>Ensembl Genes
+[version]</em> (note: the current version is 95 in Feb 2019)</p></li>
+<li><p><strong>Choose dataset:</strong> <em>Saccharomyces cerevisiae
+genes (R-46-1-1)</em></p></li>
+<li><p>In the left menu, click <strong>Filters</strong> and open the
+section <strong>Gene Ontology</strong>.</p></li>
+<li><p>Type the GO term accession ID of your choice (e.g. <a
+href="GO:0071265" class="uri">GO:0071265</a>).</p></li>
+<li><p>In the top corner of the windfow, click <strong>Count</strong>
+and check that you have a reasonable number of genes (with <a
+href="GO:0071265" class="uri">GO:0071265</a>, this returns 14 genes in
+Feb 2023).</p></li>
 </ul>
-<p>We will now customize the attributes to be extracted from BioMart.</p>
+<p>We will now customize the attributes to be extracted from
+BioMart.</p>
 <ul>
-<li><p>In the left menu, click <strong>Attributes</strong>, then <strong>Genes</strong></p></li>
+<li><p>In the left menu, click <strong>Attributes</strong>, then
+<strong>Genes</strong></p></li>
 <li><p>Activate the following attributes:</p>
 <ul>
 <li>Gene stable ID</li>
@@ -372,21 +386,36 @@ div.tocify {
 <li>Gene name</li>
 </ul></li>
 </ul>
-<p>Note: BioMart is a flexible way to quickly get a lot of information about genes. For other tasks you might be led to select additional attributes.</p>
+<p>Note: BioMart is a flexible way to quickly get a lot of information
+about genes. For other tasks you might be led to select additional
+attributes.</p>
 <ul>
-<li><p>In the top left corner, click <strong>Results</strong> to get the selected genes.</p></li>
-<li><p>Select <strong>Export all results to File</strong> and <strong>TSV</strong> (tab-separted values) and click <strong>Go</strong>. This will download a tab-delimited text file in tge Download folder of your Web browser. Save this file on your computer.</p></li>
-<li><p>Rename the downloaded file (e.g. <code>Scerevisiae_methionine-biosynthetic-process_GO-0071265_genes.tsv</code>).</p></li>
-<li><p>Open the TSV file to check its content. The most convenient is to open it with a spreadsheet tool (e.g. LibreOffice Calc, Excel), but you can also view it with a simple text editor.</p></li>
+<li><p>In the top left corner, click <strong>Results</strong> to get the
+selected genes.</p></li>
+<li><p>Select <strong>Export all results to File</strong> and
+<strong>TSV</strong> (tab-separted values) and click
+<strong>Go</strong>. This will download a tab-delimited text file in tge
+Download folder of your Web browser. Save this file on your
+computer.</p></li>
+<li><p>Rename the downloaded file
+(e.g. <code>Scerevisiae_methionine-biosynthetic-process_GO-0071265_genes.tsv</code>).</p></li>
+<li><p>Open the TSV file to check its content. The most convenient is to
+open it with a spreadsheet tool (e.g. LibreOffice Calc, Excel), but you
+can also view it with a simple text editor.</p></li>
 </ul>
-<p>At this stage, we dispose of a table with the description of all the genes associated to the biological process of our choice.</p>
+<p>At this stage, we dispose of a table with the description of all the
+genes associated to the biological process of our choice.</p>
 </div>
-<div id="discovering-motifs-in-promoters-of-go-associated-related-genes" class="section level2">
+<div id="discovering-motifs-in-promoters-of-go-associated-related-genes"
+class="section level2">
 <h2>Discovering motifs in promoters of GO-associated related genes</h2>
-<p>We will try to discover over-represented motifs in the promoters of the genes involved in our pathway of interest.</p>
+<p>We will try to discover over-represented motifs in the promoters of
+the genes involved in our pathway of interest.</p>
 <ul>
-<li>Open the TSV file with the genes involved in your biological process.</li>
-<li>Select the colum with stable gene identifiers. In my case I have the 13 following IDs.</li>
+<li>Open the TSV file with the genes involved in your biological
+process.</li>
+<li>Select the colum with stable gene identifiers. In my case I have the
+13 following IDs.</li>
 </ul>
 <pre><code>YAL012W
 YPL273W
@@ -406,34 +435,57 @@ YHR208W
 YPR118W
 YLR017W</code></pre>
 <ul>
-<li>Open a connection to the fungal RSATv server (<a href="http://fungi.rsat.eu/" class="uri">http://fungi.rsat.eu/</a>)</li>
-<li><p>With the tool <strong>retrieve sequence</strong>, get the non-coding sequences located upstream of your genes.</p></li>
-<li><p>In the <strong>Next Step</strong> box of the rsult page, click the button <strong>oligo-analysis</strong>.</p></li>
-<li><p>For <strong>oligomer lengths</strong> select <em>6</em> (uncheck the values 7 and 8 that are selected by default).</p></li>
-<li><p>Leave all other options unchanged and click <strong>GO</strong></p></li>
-<li><p>Do the same analysis with <strong>dyad-analysis</strong> instead of oligo-analysis.</p></li>
+<li><p>Open a connection to the fungal RSATv server (<a
+href="http://fungi.rsat.eu/"
+class="uri">http://fungi.rsat.eu/</a>)</p></li>
+<li><p>With the tool <strong>retrieve sequence</strong>, get the
+non-coding sequences located upstream of your genes.</p></li>
+<li><p>In the <strong>Next Step</strong> box of the rsult page, click
+the button <strong>oligo-analysis</strong>.</p></li>
+<li><p>For <strong>oligomer lengths</strong> select <em>6</em> (uncheck
+the values 7 and 8 that are selected by default).</p></li>
+<li><p>Leave all other options unchanged and click
+<strong>GO</strong></p></li>
+<li><p>Do the same analysis with <strong>dyad-analysis</strong> instead
+of oligo-analysis.</p></li>
 </ul>
 <div id="questions" class="section level3">
 <h3>Questions</h3>
 <ul>
 <li>Did you obtain significant motifs ?</li>
-<li>If so, report the P-value, E-value and signiicance index of the most significant hexanucleotide in the colllective result table.</li>
+<li>If so, report the P-value, E-value and signiicance index of the most
+significant hexanucleotide in the colllective result table.</li>
 </ul>
 </div>
 </div>
-<div id="discovering-motifs-in-promoters-of-go-associated-related-genes-1" class="section level2">
+<div
+id="discovering-motifs-in-promoters-of-go-associated-related-genes-1"
+class="section level2">
 <h2>Discovering motifs in promoters of GO-associated related genes</h2>
 <ul>
-<li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool <strong>Gene information</strong> select genes based on the names found in your GO selection. For examplen for methionine biosynthesis, I enter <code>MET\d+</code> to get all genes whose name contains “MET”" followed by one or more digits.</p></li>
-<li><p>How many genes do you obtain? Is this more than the number of GO-associated genes?</p></li>
-<li><p>Send the results to <strong>retrieve-seq</strong>, then <strong>oligo-analysis</strong>, select hexanucleotides only, and run the same analysis. Do you obtain similar, better or worse results?</p></li>
+<li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool
+<strong>Gene information</strong> select genes based on the names found
+in your GO selection. For examplen for methionine biosynthesis, I enter
+<code>MET\d+</code> to get all genes whose name contains “MET”” followed
+by one or more digits.</p></li>
+<li><p>How many genes do you obtain? Is this more than the number of
+GO-associated genes?</p></li>
+<li><p>Send the results to <strong>retrieve-seq</strong>, then
+<strong>oligo-analysis</strong>, select hexanucleotides only, and run
+the same analysis. Do you obtain similar, better or worse
+results?</p></li>
 </ul>
 </div>
 <div id="negative-control" class="section level2">
 <h2>Negative control</h2>
 <ul>
-<li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool <strong>Random gene selection</strong>, select <em>Saccharomyces cerevisiae</em> and set the number of genes to the size of the gene set analysed above (choose the one that gave the best result).</p></li>
-<li><p>Run the same analyses as above with the random selection of genes, and take note of the scores of the most significant hexanucleotide</p></li>
+<li><p>In <a href="http://fungi.rsat.eu/">RSAT Fungi</a>, open the tool
+<strong>Random gene selection</strong>, select <em>Saccharomyces
+cerevisiae</em> and set the number of genes to the size of the gene set
+analysed above (choose the one that gave the best result).</p></li>
+<li><p>Run the same analyses as above with the random selection of
+genes, and take note of the scores of the most significant
+hexanucleotide</p></li>
 </ul>
 <hr />
 <p>data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv</p>
@@ -450,13 +502,59 @@ YLR017W</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

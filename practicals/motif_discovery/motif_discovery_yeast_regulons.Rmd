@@ -164,7 +164,7 @@ This opens the record describing the biological process you chose.
 
 - Type the GO term accession ID of your choice (e.g. GO:0071265).
 
-- In the top corner of the windfow, click **Count** and check that you have a reasonable number of genes (with GO:0071265, there are 13 genes). 
+- In the top corner of the windfow, click **Count** and check that you have a reasonable number of genes (with GO:0071265, this returns 14 genes in Feb 2023). 
 
 We will now customize the attributes to be extracted from BioMart.
 
