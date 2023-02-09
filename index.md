@@ -96,6 +96,7 @@ data.
 | ChIP-seq tutorial | Tutorial on chip-seq analysis written by Morgane Thomas-Chollier, from which I used the FNR dataset used in this course <http://www.biologie.ens.fr/~mthomas/other/chip-seq-training/> |
 | Stats4bioinfo | Supporting site for an introductory course about statistics for bioingormatics  <http://pedagogix-tagc.univ-mrs.fr/courses/statistics_bioinformatics/> |
 |  AVIESAN NGS ChIP-seq course |  [http://jvanheld.github.io/EBA15\_stats\_RStudio/](http://jvanheld.github.io/stats_avec_RStudio_EBA/) |
+| Classification performance indicators | [Confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix), [Sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)|
 
 
 ### Support or Contact
