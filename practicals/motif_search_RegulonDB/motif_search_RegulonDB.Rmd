@@ -245,6 +245,15 @@ Each student should return a scientific report containing
 2. A full list of the complete RSAT commands used for the successive steps of the analysis
 3. As many figures and tables as useful (not counted in the two pages, but numbered in order to enable cross-references from the text to these elements)
 
+Reports should be deposited before XX/XX/2023 on the Moodle server of the LCG.
+
 ### Evaluation criteria
+
+- Precision of the results (e.g. number of annotated sites, genes, operons in RegulonDB, number of putative sites and genes detected by matrix-scan, number of overlapping genes, ...)
+
+- Correctness of the values in the confusion matrix and derived statistics
+
+- Interpretation of the confusion table and derived statistics
+
 
 
