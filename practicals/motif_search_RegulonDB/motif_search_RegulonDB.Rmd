@@ -266,6 +266,8 @@ Reports should be deposited before XX/XX/2023 on the Moodle server of the LCG.
   - False negative (FN)
   - Sensitivity TP / (TP + FN)
   - Positive predictive value TP/ (TP + FP)
+  - ...
+  - ...
 
 - Interpretation of negative control
 
