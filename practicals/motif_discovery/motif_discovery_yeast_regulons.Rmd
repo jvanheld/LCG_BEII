@@ -276,5 +276,21 @@ data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv
 
 
 
+### Evaluation criteria
+
+- Completion of the result in the shared result table on GDrive. 
+
+- Precision of the results in the report (e.g. number of non-redundant genes, e-value, p-value, ...)
+
+- Correctness of the values in the confusion matrix and derived statistics
+
+- Interpretation of results (e.g. relevance of the found genes and motifs, compare motifs significance between dyads and oligos, ...)
+
+- Interpretation of negative control
+
+<div class="alert alert-block alert-warning">
+<b>Attention:</b> The biological interpretation of the findings is crucial for your score.<br>**Plagiarism will not be tolerated**
+</div>
+
 
 
