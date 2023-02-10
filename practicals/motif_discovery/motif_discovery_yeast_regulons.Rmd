@@ -117,6 +117,7 @@ I provide here some examples of biological processes of the yeast Saccharomyces 
 | Gene Ontology Consortium | Official site of the Gene Ontology, with tools enabling to explore and retrieve data | <http://www.geneontology.org/> |
 | Ensembl BioMart  | Genomic platform maintained by the European Bioinformatics Institute | <https://www.ensembl.org/> |
 | RSAT | Regulatory Sequence Analysis Tools | <http://rsat.eu/> |
+| RSAT Fungi | Fungi server of the Regulatory Sequence Analysis Tools | <https://rsat.france-bioinformatique.fr/fungi/> |
 
 ## Collective table for the 2023 practical
 
