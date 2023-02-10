@@ -111,18 +111,29 @@ I provide here some examples of biological processes of the yeast Saccharomyces 
 
 ## Resources
 
-| Resource | URL |
-|-----------------------------|--------------------------------------------|
-| Gene Ontology Consortium | <http://www.geneontology.org/> |
-| Ensembl BioMart | <https://www.ensembl.org/> |
-| RSAT | Regulatory Sequence Analysis Tools (<http://rsat.eu/>) |
+| Resource | Description | URL |
+|-----------|---------------------------|--------------------------------------------|
+| Biocyc | Data base of metabolic pathways | |
+| Gene Ontology Consortium | Official site of the Gene Ontology, with tools enabling to explore and retrieve data | <http://www.geneontology.org/> |
+| Ensembl BioMart  | Genomic platform maintained by the European Bioinformatics Institute | <https://www.ensembl.org/> |
+| RSAT | Regulatory Sequence Analysis Tools | <http://rsat.eu/> |
+
+## Collective table for the 2023 practical
+
+Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
+
+- Shared folder (in edit mode): <https://drive.google.com/drive/folders/139B72oJOoI5fDWn3FfxhK7u-K3TXhPEV>
+
+- **Shared result table** (one row per student) :  <https://docs.google.com/spreadsheets/d/1XuG4DcLtktlgY2GLzyS7SA09BzSTG7vh/edit#gid=711917257>
+
+    Add a line with your name and email. You will progressively fill in the other columns during the pratical. 
 
 
 ## Viewing metabolic pathways on BioCyc
 
 - Open a connection to **BioCyc** (<https://biocyc.org/>)
 - Click on the button **change organism database** and select *Saccharomyces cerevisiae S288c*.
-- Select the function **Metabolism** > **Generate a metabolic map poster** to get an overview of the whole metabolism.
+- In the Tools menu, select the function **Metabolism** > **Generate a metabolic map poster** to get an overview of the whole metabolism.
 - Select the tool *Browse pathway ontology* and select a pathway of your choice (not too big, not too small, let us say between 5 and 50 genes). 
 
 - As an example I select two pathways: 
