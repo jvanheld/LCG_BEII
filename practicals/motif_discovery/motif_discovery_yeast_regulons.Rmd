@@ -280,7 +280,7 @@ data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv
 
 - Completion of the result in the shared result table on GDrive. 
 
-- Precision of the results in the report (e.g. number of non-redundant genes, e-value, p-value, ...)
+- Precision of the results in the report (e.g. number of non-redundant genes, e-value, p-value, significance, ...)
 
 - Correctness of the values in the confusion matrix and derived statistics
 
