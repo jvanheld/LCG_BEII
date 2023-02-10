@@ -11,7 +11,7 @@
 
 <meta name="author" content="Jacques van Helden" />
 
-<meta name="date" content="2023-02-09" />
+<meta name="date" content="2023-02-10" />
 
 <title>Practical: motif discovery in yeast regulons</title>
 
@@ -230,7 +230,7 @@ div.tocify {
 regulons</h1>
 <h3 class="subtitle">LCG_BEII 2019</h3>
 <h4 class="author">Jacques van Helden</h4>
-<h4 class="date">2023-02-09</h4>
+<h4 class="date">2023-02-10</h4>
 
 </div>
 
@@ -330,28 +330,37 @@ of a report.</p></li>
 <li><p>Open a connection to the Gene Ontology Consortium (<a
 href="http://www.geneontology.org/"
 class="uri">http://www.geneontology.org/</a>)</p></li>
-<li><p>In the menu at the top of the page, select <strong>Tools</strong>
-&gt; <strong>AmiGO 2</strong>.</p></li>
-<li><p>In the quick search box, type the name of your biological process
-of interest (e.g. ‘methionine biosynthetic process’). As you type, a
-pop-up menu appears to display the subset of GO terms corresponding to
-your query. Select the one you need (e.g. “L-methionine biosynthetic
-process”).</p></li>
+<li><p>In the search box, type the name of your biological process of
+interest (e.g. ‘methionine biosynthesis’). Check the option “Ontology”
+and start the search. This opens a page with the list of matching terms
+in the Gene Ontology.</p></li>
 </ul>
+<p>. Select the one you need (e.g. “<em>L-methionine biosynthetic
+process</em>”).</p>
 <p>This opens the record describing the biological process you
 chose.</p>
 <ul>
 <li><p>Before anything else, take note of the GO dientifier (e.g.: <a
-href="GO:0071265" class="uri">GO:0071265</a>)</p></li>
-<li><p>Read the <strong>Term description</strong> box and check that the
+href="http://amigo.geneontology.org/amigo/term/GO:0071265">GO:0071265</a>
+for the L-methionine biosynthetic process)</p></li>
+<li><p>Read the <strong>Term definition</strong> check that the
 description corresponds to your choice.</p></li>
-<li><p>At the bottom of the <strong>Term description</strong> page,
-click on the <strong>Link to all genes and gene products annotated to
-[your] process</strong>.</p></li>
-<li><p>In the filter box, type “Saccharomyces cerevisiae” and count the
-number of genes associated to your process in the budding
-yeast.</p></li>
+<li><p>In the <strong>Annotations</strong> tab, check the number of
+genes associated to this term (for <a
+href="http://amigo.geneontology.org/amigo/term/GO:0071265">GO:0071265</a>,
+there 896 genes on Feb 10, 2023). Note that these genes belong to
+different organisms.</p></li>
+<li><p>In the left menu, click <strong>Organisms</strong> and click on
+the “+” button besides “<em>Saccharomyces cerevisiae S288C</em>”. This
+will add a filter on the genes.</p></li>
+<li><p>Click on the <strong>Download</strong> button. Drag the field
+<em>Gene/product bioentity label</em> from left to right in order to use
+it as first field in the “Selected fields” box. This will provide us
+with the common gene name, which is more convenient to select genes in
+RSAT.</p></li>
 </ul>
+<p>Question: how many genes are associated to your process in the
+budding yeast ?</p>
 </div>
 <div id="getting-genes-from-biomart" class="section level2">
 <h2>Getting genes from BioMart</h2>

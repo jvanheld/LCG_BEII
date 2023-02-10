@@ -121,7 +121,7 @@ I provide here some examples of biological processes of the yeast Saccharomyces 
 ## Viewing metabolic pathways on BioCyc
 
 - Open a connection to **BioCyc** (<https://biocyc.org/>)
-- In the right-left corner, click **change organism database** and select *Saccharomyces cerevisiae S288c*.
+- Click on the button **change organism database** and select *Saccharomyces cerevisiae S288c*.
 - Select the function **Metabolism** > **Generate a metabolic map poster** to get an overview of the whole metabolism.
 - Select the tool *Browse pathway ontology* and select a pathway of your choice (not too big, not too small, let us say between 5 and 50 genes). 
 
@@ -138,19 +138,23 @@ I provide here some examples of biological processes of the yeast Saccharomyces 
 
 - Open a connection to the Gene Ontology Consortium (<http://www.geneontology.org/>)
 
-- In the menu at the top of the page, select **Tools** > **AmiGO 2**. 
+- In the search box, type the name of your biological process of interest (e.g. 'methionine biosynthesis'). Check the option "Ontology" and start the search. This opens a page with the list of matching terms in the Gene Ontology. 
 
-- In the quick search box, type the name of your biological process of interest (e.g. 'methionine biosynthetic process'). As you type, a pop-up menu appears to display the subset of GO terms corresponding to your query. Select the one you need (e.g. "L-methionine biosynthetic process").
+. Select the one you need (e.g. "*L-methionine biosynthetic process*").
 
 This opens the record describing the biological process you chose. 
 
-- Before anything else, take note of the GO dientifier (e.g.: GO:0071265)
+- Before anything else, take note of the GO dientifier (e.g.: [GO:0071265](http://amigo.geneontology.org/amigo/term/GO:0071265) for the L-methionine biosynthetic process)
 
-- Read the **Term description** box and check that the description corresponds to your choice. 
+- Read the **Term definition**  check that the description corresponds to your choice. 
 
-- At the bottom of the **Term description** page, click on the **Link to all genes and gene products annotated to [your] process**.
+- In the **Annotations** tab, check the number of genes associated to this term (for [GO:0071265](http://amigo.geneontology.org/amigo/term/GO:0071265), there 896 genes on Feb 10, 2023). Note that these genes belong to different organisms. 
 
-- In the filter box, type "Saccharomyces cerevisiae" and count the number of genes associated to your process in the budding yeast. 
+- In the left menu, click **Organisms** and click on the "+" button besides "*Saccharomyces cerevisiae S288C*". This will add a filter on the genes.
+
+- Click on the **Download** button. Drag the field *Gene/product bioentity label* from left to right in order to use it as first field in the "Selected fields" box. This will provide us with the common gene name, which is more convenient to select genes in RSAT. 
+
+Question:  how many genes are associated to your process in the budding yeast ?
 
 ## Getting genes from BioMart
 
