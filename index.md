@@ -97,7 +97,7 @@ data.
 | Stats4bioinfo | Supporting site for an introductory course about statistics for bioingormatics  <http://pedagogix-tagc.univ-mrs.fr/courses/statistics_bioinformatics/> |
 |  AVIESAN NGS ChIP-seq course |  [http://jvanheld.github.io/EBA15\_stats\_RStudio/](http://jvanheld.github.io/stats_avec_RStudio_EBA/) |
 | Classification performance indicators | [Confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix), [Sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)|
-
+| JASPAR | Open-access database for eukaryotic transcription factor binding profiles: <https://jaspar.genereg.net> |
 
 ### Support or Contact
 
