@@ -282,8 +282,6 @@ data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv
 
 - Precision of the results in the report (e.g. number of non-redundant genes, e-value, p-value, significance, ...)
 
-- Correctness of the values in the confusion matrix and derived statistics
-
 - Interpretation of results (e.g. relevance of the found genes and motifs, compare motifs significance between dyads and oligos, ...)
 
 - Interpretation of negative control
