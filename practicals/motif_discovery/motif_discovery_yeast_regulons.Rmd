@@ -275,6 +275,7 @@ YLR017W
 data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv
 
 
+### Expected format for the report
 
 ### Evaluation criteria
 
@@ -282,9 +283,14 @@ data/Scerevisiae_MET-genes_oligos-6nt-2str-noov_occ-freq.tsv
 
 - Precision of the results in the report (e.g. number of non-redundant genes, e-value, p-value, significance, ...)
 
-- Interpretation of results (e.g. relevance of the found genes and motifs, compare motifs significance between dyads and oligos, ...)
+- Interpretation of results, e.g. 
 
-- Interpretation of negative control
+    - relevance of the genes found by the different gene selection approaches;
+    - statistical significance of the discovered motifs (including comparison between dyads and oligos);
+    - relevance of the discovered motifs relative to the motifs known to be involved in the regulation of the considered biological process;
+    - ...
+
+- Interpretation of negative controls
 
 <div class="alert alert-block alert-warning">
 <b>Attention:</b> The biological interpretation of the findings is crucial for your score.<br>**Plagiarism will not be tolerated**
