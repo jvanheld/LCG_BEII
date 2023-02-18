@@ -242,10 +242,18 @@ A second type of negative control consists in scanning the actual biological seq
 Each student should return a scientific report containing 
 
 1.  A summary of the principal results and their interpretation. This section should be synthetic, and cannot exceed 2 pages. 
-2. A full list of the complete RSAT commands used for the successive steps of the analysis
-3. As many figures and tables as useful (not counted in the two pages, but numbered in order to enable cross-references from the text to these elements)
 
-Reports should be deposited before XX/XX/2023 on the Moodle server of the LCG.
+2. A full list of the complete RSAT commands used for the successive steps of the analysis
+
+3. As many figures and tables as useful
+
+    - Figures and tables are not counted in the two pages, but numbered in order to enable cross-references from the text to these elements;
+
+    - Each figure or table should have a title (in bold) and a legend sufficiently detailed to enable the reader understanding their contents. 
+
+### Report submission date
+
+Reports should be deposited before **March 9, 2023** on the Moodle server of the LCG.
 
 
 <iframe src="https://free.timeanddate.com/countdown/i8pquh0d/n4377/cf100/cm0/cu4/ct0/cs0/ca0/cr0/ss0/cac000/cpc000/pcfff/tcfff/fs100/szw320/szh135/tatTime%20left%20to%20deliver/tac000/tptTime%20since%20Event%20started%20in/tpc000/mac000/mpc000/iso2023-03-10T00:00:00" allowtransparency="true" frameborder="0" width="320" height="135"></iframe>
