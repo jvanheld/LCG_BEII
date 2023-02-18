@@ -257,21 +257,22 @@ Reports should be deposited before XX/XX/2023 on the Moodle server of the LCG.
 
 - Precision of the results in the report (e.g. number of annotated sites, genes, operons in RegulonDB, number of putative sites and genes detected by matrix-scan, number of overlapping genes, ...)
 
-- The probabilities taking into account:
-  - Background
-  - Motif
+- Interpretation of the probabilities of detected binding sites, taking into account:
+
+    - background
+    - motif
 
 - Correctness of the values in the confusion matrix and derived statistics
 
 - Interpretation of the confusion table and [derived statistics](https://en.wikipedia.org/wiki/Sensitivity_and_specificity ): 
-  - True positive (TP)
-  - True negative (TN)
-  - False positive (FP)
-  - False negative (FN)
-  - Sensitivity TP / (TP + FN)
-  - Positive predictive value TP/ (TP + FP)
-  - ...
-  - ...
+
+    - True positive (TP)
+    - True negative (TN)
+    - False positive (FP)
+    - False negative (FN)
+    - Sensitivity TP / (TP + FN)
+    - Positive predictive value TP/ (TP + FP)
+    - ...
 
 - Interpretation of negative control
 
