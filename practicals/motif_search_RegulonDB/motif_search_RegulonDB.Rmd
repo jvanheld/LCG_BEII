@@ -253,10 +253,10 @@ Each student should return a scientific report containing
 
 ### Report submission date
 
-Reports should be deposited before **March 9, 2023** on the Moodle server of the LCG.
+Reports should be deposited **before February 26, 2023** on the Moodle server of the LCG.
 
+<iframe src="https://free.timeanddate.com/countdown/i8qb9ez7/n4377/cf12/cm0/cu4/ct0/cs0/cac000/cr0/ss0/cac000/cpc000/pcfff/tcfff/fs100/szw320/szh135/tatTime%20left%20to%20deliver/tac000/tptTime%20since%20Event%20started%20in/tpc000/mac000/mpc000/iso2023-02-26T00:00:00" allowtransparency="true" frameborder="0" width="170" height="68"></iframe>
 
-<iframe src="https://free.timeanddate.com/countdown/i8pquh0d/n4377/cf100/cm0/cu4/ct0/cs0/ca0/cr0/ss0/cac000/cpc000/pcfff/tcfff/fs100/szw320/szh135/tatTime%20left%20to%20deliver/tac000/tptTime%20since%20Event%20started%20in/tpc000/mac000/mpc000/iso2023-03-10T00:00:00" allowtransparency="true" frameborder="0" width="320" height="135"></iframe>
 
 
 ### Evaluation criteria
@@ -264,11 +264,6 @@ Reports should be deposited before **March 9, 2023** on the Moodle server of the
 - Completion of the result in the shared result table on GDrive. 
 
 - Precision of the results in the report (e.g. number of annotated sites, genes, operons in RegulonDB, number of putative sites and genes detected by matrix-scan, number of overlapping genes, ...)
-
-- Interpretation of the probabilities of detected binding sites, taking into account:
-
-    - background
-    - motif
 
 - Correctness of the values in the confusion matrix and derived statistics
 
@@ -281,6 +276,8 @@ Reports should be deposited before **March 9, 2023** on the Moodle server of the
     - Sensitivity TP / (TP + FN)
     - Positive predictive value TP/ (TP + FP)
     - ...
+
+- Significance evaluation of the putative sites detected by matrix-scan (Take into account weight and p-value)
 
 - Interpretation of negative control
 
