@@ -50,15 +50,20 @@ data.
 ****************************************************************
 ## Teaching material
 
+The slides presented in this course are a subset of a general course on Regulatory Sequence Analysis, available on github. 
+
+- [Web site on gitlab](https://rsa-tools.github.io/course/)
+- [gitlab repository](https://github.com/rsa-tools/course)
+
 ### From TF binding sites to motifs and back (days 1-2)
 
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| Transcriptional regulation | [[slides](http://rsa-tools.github.io/course/pdf_files/01.2_regulatory_sequences_intro.pdf)] |
-| Position-specific scoring matrices (PSSM) | [[slides](http://rsa-tools.github.io/course/pdf_files/01.4.PSSM_theory.pdf)] |
-| Sequence models (Bernoulli, Markov chains) | [[slides](http://rsa-tools.github.io/course/pdf_files/01.3.sequence_models.pdf)] |
-| Matrix-based pattern matching | [[slides](http://rsa-tools.github.io/course/pdf_files/02.3.pattern_matching_matrices.pdf)] |
+| Transcriptional regulation | [[slides](https://rsa-tools.github.io/course/pdf_files/01.2_regulatory_sequences_intro.pdf)] |
+| Position-specific scoring matrices (PSSM) | [[slides](https://rsa-tools.github.io/course/pdf_files/01.4.PSSM_theory.pdf)] |
+| Sequence models (Bernoulli, Markov chains) | [[slides](https://rsa-tools.github.io/course/pdf_files/01.3.sequence_models.pdf)] |
+| Matrix-based pattern matching | [[slides](https://rsa-tools.github.io/course/pdf_files/02.3.pattern_matching_matrices.pdf)] |
 | **Exercises:** scaning sequences with a reference motif |  [[html](practicals/motif_search_RegulonDB/motif_search_RegulonDB.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_search_RegulonDB/motif_search_RegulonDB.Rmd)]  |
 | **Solutions** scaning sequences with a reference motif |  [[html](practicals/motif_search_RegulonDB/motif_search_RegulonDB_solutions.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_search_RegulonDB/motif_search_RegulonDB_solutions.Rmd)] | 
   
