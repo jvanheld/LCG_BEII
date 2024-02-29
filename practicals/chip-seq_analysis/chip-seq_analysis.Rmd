@@ -97,7 +97,7 @@ In this practical, we will combine various bioinformatics resources to extract i
 
 | Resource Name | URL |
 |-------------------------|--------------------------------------|
-| ReMap | A database of ChIP-seq peaks (<http://remap.cisreg.eu/>) |
+| ReMap | A database of ChIP-seq peaks (<https://remap.univ-amu.fr/>) |
 | Jaspar | A database of eukaryote TF binding motifs, mainly built from CHIP-seq peaks (<http://jaspar.genereg.net/>) |
 | Hocomoco | A database of Human TF binding motifs, mainly built from CHIP-seq peaks (<http://hocomoco11.autosome.ru/>) |
 | RSAT| Regulatory Sequence Analysis Tools <http://rsat.eu/> |
