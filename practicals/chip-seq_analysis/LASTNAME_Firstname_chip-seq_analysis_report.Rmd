@@ -1,6 +1,6 @@
 ---
 title: "Adapt this title to indicate what you did"
-subtitle: "LCG BEII personal work -- 2022"
+subtitle: "LCG BEII personal work -- 2024"
 author: "Firstname LASTNAME"
 date: "`r Sys.Date()`"
 output:
