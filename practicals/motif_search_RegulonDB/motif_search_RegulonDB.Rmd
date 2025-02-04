@@ -60,7 +60,7 @@ output:
     theme: Montpellier
     toc: yes
 font-import: http://fonts.googleapis.com/css?family=Risque
-subtitle: LCG_BEII 2020
+subtitle: LCG_BEII 2025
 font-family: Garamond
 transition: linear
 ---
