@@ -46,6 +46,10 @@ data.
 
 - Jacques van Helden ([ORCID 0000-0002-8799-8584](https://orcid.org/0000-0002-8799-8584))
 
+- Alfredo Hernandez (UNAM, Cuernavaca, Mexico) : deployment of the RSAT server on the LCG server; RSAT containerisation on Singularity
+
+
+
 
 ****************************************************************
 ## Teaching material
