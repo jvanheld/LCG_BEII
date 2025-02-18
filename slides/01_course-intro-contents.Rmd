@@ -3,6 +3,18 @@ title: "LCG - BEII - Introduction and contents"
 author: "Jacques van Helden"
 date: '`r Sys.Date()`'
 output:
+  beamer_presentation:
+    colortheme: dolphin
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    fonttheme: structurebold
+    highlight: tango
+    incremental: no
+    keep_tex: no
+    slide_level: 2
+    theme: Montpellier
+    toc: yes
   slidy_presentation:
     smart: no
     slide_level: 2
@@ -17,18 +29,6 @@ output:
     theme: cerulean
     toc: yes
     widescreen: yes
-  beamer_presentation:
-    colortheme: dolphin
-    fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    fonttheme: structurebold
-    highlight: tango
-    incremental: no
-    keep_tex: no
-    slide_level: 2
-    theme: Montpellier
-    toc: yes
   revealjs::revealjs_presentation:
     theme: night
     transition: none
@@ -60,7 +60,7 @@ output:
     toc: yes
     widescreen: yes
 font-import: http://fonts.googleapis.com/css?family=Risque
-subtitle: DUBii 2019
+subtitle: LCG-BEII 2019
 font-family: Garamond
 transition: linear
 bibliography: ../bibliography_LCG_BEII.bib

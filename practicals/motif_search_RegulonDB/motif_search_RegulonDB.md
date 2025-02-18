@@ -3,20 +3,15 @@ title: "Scanning non-coding sequences with a TFBM"
 author: "Jacques van Helden"
 date: '2020-02-04'
 output:
-  slidy_presentation:
-    smart: no
-    slide_level: 2
-    self_contained: yes
+  powerpoint_presentation:
+  html_document:
+    self_contained: no
     fig_caption: yes
-    fig_height: 6
-    fig_width: 7
-    highlight: tango
-    incremental: no
-    keep_md: yes
-    smaller: yes
+    highlight: zenburn
     theme: cerulean
     toc: yes
-    widescreen: yes
+    toc_depth: 3
+    toc_float: yes
   ioslides_presentation:
     slide_level: 2
     self_contained: no
@@ -34,14 +29,20 @@ output:
     transition: none
     self_contained: true
     css: ../slides.css
-  html_document:
-    self_contained: no
+  slidy_presentation:
+    smart: no
+    slide_level: 2
+    self_contained: yes
     fig_caption: yes
-    highlight: zenburn
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    incremental: no
+    keep_md: yes
+    smaller: yes
     theme: cerulean
     toc: yes
-    toc_depth: 3
-    toc_float: yes
+    widescreen: yes
   pdf_document:
     fig_caption: yes
     highlight: zenburn
@@ -75,7 +76,7 @@ The goal of this practical is to evaluate the respective performances of two mod
 
 
 | Parameter | Value | 
-| | | 
+|---------|----------------| 
 | Reference genome | `Escherichia_coli_GCF_001308065.1_ASM130806v1`|
 
 
