@@ -4,3 +4,5 @@ This site contains the support for the courses  taught by Jacques van Helden to 
 Licenciatura en Ciencias Genomicas de la Universidad Nacional Autonoma
 de Mexico, in the module  **"Bioinformatica & Estadistica II"**.
 
+- Github repo: <>
+- Github web pages: <>

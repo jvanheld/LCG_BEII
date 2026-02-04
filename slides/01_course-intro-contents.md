@@ -1,7 +1,7 @@
 ---
 title: "LCG - BEII - Introduction and contents"
 author: "Jacques van Helden"
-date: '2019-02-07'
+date: '2025-02-04'
 output:
   slidy_presentation:
     smart: no
@@ -60,7 +60,7 @@ output:
     toc: yes
     widescreen: yes
 font-import: http://fonts.googleapis.com/css?family=Risque
-subtitle: DUBii 2019
+subtitle: LCG-BEII 2019
 font-family: Garamond
 transition: linear
 bibliography: ../bibliography_LCG_BEII.bib
