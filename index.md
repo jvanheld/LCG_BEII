@@ -56,10 +56,10 @@ The slides presented in this course are a subset of a general course on Regulato
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| Transcriptional regulation | [[slides](https://rsa-tools.github.io/course/pdf_files/01.2_regulatory_sequences_intro.pdf)] |
-| Position-specific scoring matrices (PSSM) | [[slides](https://rsa-tools.github.io/course/pdf_files/01.4.PSSM_theory.pdf)] |
-| Sequence models (Bernoulli, Markov chains) | [[slides](https://rsa-tools.github.io/course/pdf_files/01.3.sequence_models.pdf)] |
-| Matrix-based pattern matching | [[slides](https://rsa-tools.github.io/course/pdf_files/02.3.pattern_matching_matrices.pdf)] |
+| Transcriptional regulation | [[slides](https://rsa-tools.github.io/course/pdf_files/01-2_regulatory_sequences_intro.pdf)] |
+| Position-specific scoring matrices (PSSM) | [[slides](https://rsa-tools.github.io/course/pdf_files/01-4_PSSM_theory.pdf)] |
+| Sequence models (Bernoulli, Markov chains) | [[slides](https://rsa-tools.github.io/course/pdf_files/01-3_sequence_models.pdf)] |
+| Matrix-based pattern matching | [[slides](https://rsa-tools.github.io/course/pdf_files/02-3_pattern_matching_matrices.pdf)] |
 
 
 <!--
@@ -71,8 +71,8 @@ The slides presented in this course are a subset of a general course on Regulato
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| Introduction to motif discovery |  [[slides](http://rsa-tools.github.io/course/pdf_files/03.1.pattern_discovery_intro.pdf)] |
-| String-based pattern discovery | [[slides](http://rsa-tools.github.io/course/pdf_files/03.2.1.pattern_discovery_strings.pdf)] |
+| Introduction to motif discovery |  [[slides](http://rsa-tools.github.io/course/pdf_files/03-1_pattern_discovery_intro.pdf)] |
+| String-based pattern discovery | [[slides](http://rsa-tools.github.io/course/pdf_files/03-2-1_pattern_discovery_strings.pdf)] |
 | **Tutorial:** motif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
 | **Exercise:** discovering a motif discovery algorithm | [[html](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)] [[pdf](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.pdf)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_discovery/discovering_a_motif_discovery_algorithm.Rmd)] |
 
@@ -91,9 +91,9 @@ The slides presented in this course are a subset of a general course on Regulato
 | RSAT | Regulatory sequence analysis tools: <http://rsat.eu/> |
 | RegulonDB | Transcription factor database: <http://regulondb.ccg.unam.mx/> |
 | RSAT course | Teaching material about the analysis of regulatory sequences <http://rsa-tools.github.io/course/> |
-| Classification performance indicators | [Confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix), [Sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)|
 | JASPAR | Open-access database for eukaryotic transcription factor binding profiles: <https://jaspar.genereg.net> |
 | ReMap | Catalogues of TF binding peaks obtained with high-throughput methods (ChIP-seq, ChIP-exo, DAP-seq) for *Homo sapiens*, *Mus musculus* and *Drosophila melanogaster*: <https://remap.univ-amu.fr/> |
+| Classification performance indicators | [Confusion matrix](https://en.wikipedia.org/wiki/Confusion_matrix), [Sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)|
 
 <!--
 | ChIP-seq tutorial | Tutorial on chip-seq analysis written by Morgane Thomas-Chollier, from which I used the FNR dataset used in this course <http://www.biologie.ens.fr/~mthomas/other/chip-seq-training/> |
