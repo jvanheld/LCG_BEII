@@ -71,8 +71,8 @@ The slides presented in this course are a subset of a general course on Regulato
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| Introduction to motif discovery |  [[slides](http://rsa-tools.github.io/course/pdf_files/03-1_pattern_discovery_intro.pdf)] |
-| String-based pattern discovery | [[slides](http://rsa-tools.github.io/course/pdf_files/03-2-1_pattern_discovery_strings.pdf)] |
+| Introduction to motif discovery |  [[slides](http://rsa-tools.github.io/course/pdf_files/03-1_motif_discovery_intro.pdf)] |
+| String-based pattern discovery | [[slides](http://rsa-tools.github.io/course/pdf_files/03-2-1_motif_discovery_strings.pdf)] |
 | **Tutorial:** motif discovery in promoters of yeast regulons | [[tutorial](practicals/motif_discovery/motif_discovery_yeast_regulons.html)]
 | **Exercise:** discovering a motif discovery algorithm | [[html](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.html)] [[pdf](practicals/motif_discovery/discovering_a_motif_discovery_algorithm.pdf)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/motif_discovery/discovering_a_motif_discovery_algorithm.Rmd)] |
 
