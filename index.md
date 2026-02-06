@@ -80,7 +80,7 @@ The slides presented in this course are a subset of a general course on Regulato
 
 | Topics                                                | Supports |
 |-------------------------------------------------------|----------|
-| Slides: ChIP-seq technology + motif discovery | [[pdf](slides/ChIP-seq_compilation.pdf)]|
+| Slides: ChIP-seq technology + motif discovery | [[pdf](http://rsa-tools.github.io/course/pdf_files//12-1_ChIP-seq_analysis.pdf)]|
 | Practical: analyzing ChIP-seq peaks | [[html](practicals/chip-seq_analysis/chip-seq_analysis.html)] [[Rmd](https://raw.githubusercontent.com/jvanheld/LCG_BEII/gh-pages/practicals/chip-seq_analysis/chip-seq_analysis.Rmd)] |
 
 
