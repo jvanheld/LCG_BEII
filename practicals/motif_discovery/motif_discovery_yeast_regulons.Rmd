@@ -123,11 +123,11 @@ I provide here some examples of biological processes of the yeast Saccharomyces 
 
 Students will store their results in a shared spreadsheet, which will be used to compare their results and get a broader landscape from the comparison of the results obtained with different transcription factors.  
 
-- Shared folder (in edit mode): <https://drive.google.com/drive/folders/139B72oJOoI5fDWn3FfxhK7u-K3TXhPEV>
+- Shared folder (in edit mode): see moodle 
 
-- **Shared result table** (one row per student) :  <https://docs.google.com/spreadsheets/d/1XuG4DcLtktlgY2GLzyS7SA09BzSTG7vh/edit#gid=711917257>
+- **Shared result table** (one row per student): see moodle
 
-    Add a line with your name and email. You will progressively fill in the other columns during the pratical. 
+Add a line with your name and email. You will progressively fill in the other columns during the pratical. 
 
 
 ## Viewing metabolic pathways on BioCyc
